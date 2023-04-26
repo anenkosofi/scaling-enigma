@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/scaling-enigma/static/css/main.e6c13ad2.css",
+    "main.js": "/scaling-enigma/static/js/main.69911822.js",
+    "index.html": "/scaling-enigma/index.html",
+    "main.e6c13ad2.css.map": "/scaling-enigma/static/css/main.e6c13ad2.css.map",
+    "main.69911822.js.map": "/scaling-enigma/static/js/main.69911822.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e6c13ad2.css",
+    "static/js/main.69911822.js"
+  ]
+}
