@@ -1,14 +1,16 @@
 import { createStore } from 'redux';
-import { combineReducers } from 'redux';
 import { devToolsEnhancer } from '@redux-devtools/extension';
 
-import { todosReducer } from './todos/reducer';
-import { filtersReducer } from './filters/reducer';
+const initialState = {
+  todos: [],
+  filters: {
+    status: 'all',
+  },
+};
 
-const rootReducer = combineReducers({
-  todos: todosReducer,
-  filters: filtersReducer,
-});
+const rootReducer = (state = initialState) => {
+  return state;
+};
 
 const enhancer = devToolsEnhancer();
 
