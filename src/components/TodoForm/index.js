@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { HiPlus } from 'react-icons/hi';
 
 import { addTodo } from '../../redux/todos/actions';
-import { getDate } from '../../helpers/dateFormatter';
+import { getFormattedDate } from '../../helpers/dateFormatter';
 import { Modal } from '../Modal';
 import { PlusForm } from '../PlusForm';
 
@@ -12,6 +12,7 @@ import css from './TodoForm.module.css';
 export const TodoForm = () => {
   const [modal, setModal] = useState(false);
   const [text, setText] = useState('');
+  const [error, setError] = useState(null);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -20,20 +21,39 @@ export const TodoForm = () => {
     bodyEl.style.overflow = modal ? 'hidden' : 'visible';
   }, [modal]);
 
-  const changeHandler = e => {
-    setText(e.currentTarget.value);
-  };
+  useEffect(() => {
+    const regex = /^[a-zA-Z0-9\s\u0400-\u04FF']*$/;
+    if (!regex.test(text)) {
+      return setError('Special symbols like !@#$%^&*()_+= are not allowed.');
+    }
+    return setError(null);
+  }, [text]);
 
   const submitHandler = e => {
     e.preventDefault();
 
-    const start = new Date();
-    const end = new Date(start);
-    end.setDate(end.getDate() + 1);
+    if (!text.trim().length) {
+      return setError('This field can not be empty.');
+    }
+    if (!error) {
+      const start = new Date();
+      const end = new Date(start);
+      end.setDate(end.getDate() + 1);
 
-    dispatch(addTodo({ text: text, start: getDate(start), end: getDate(end) }));
+      dispatch(
+        addTodo({
+          text: text,
+          start: getFormattedDate(start),
+          end: getFormattedDate(end),
+        })
+      );
 
-    setText('');
+      setText('');
+    }
+  };
+
+  const changeHandler = e => {
+    setText(e.target.value);
   };
 
   const closeModalHandler = () => {
@@ -48,21 +68,22 @@ export const TodoForm = () => {
     <section className={css.section}>
       <div className={css.container}>
         <form className={css.form} onSubmit={submitHandler} autoComplete="off">
-          <label htmlFor="text" className={css.formLabel}>
-            Add a task
-          </label>
-          <input
-            id="text"
-            type="text"
-            name="text"
-            value={text}
-            pattern="^[A-Za-z0-9' ]+$"
-            placeholder="Add a task"
-            onChange={changeHandler}
-            className={css.formInput}
-            title="Description may contain only letters, numbers and spaces."
-            required
-          />
+          <div className={css.field}>
+            <label htmlFor="text" className={css.formLabel}>
+              Add a task
+            </label>
+            <input
+              id="text"
+              type="text"
+              name="text"
+              value={text}
+              placeholder="Add a task"
+              onChange={changeHandler}
+              className={css.formInput}
+              title="Description may contain only letters, numbers and spaces."
+            />
+            {error !== null && <p className={css.errorMessage}>{error}</p>}
+          </div>
           <button type="submit" className={css.formButton}>
             Add
           </button>

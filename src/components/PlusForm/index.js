@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { getInputDate, getDate } from '../../helpers/dateFormatter';
+import { getInputDate, getFormattedDate } from '../../helpers/dateFormatter';
 import { addTodo } from '../../redux/todos/actions';
 
 import css from './PlusForm.module.css';
@@ -13,6 +13,7 @@ export const PlusForm = ({ stateFn, clearFn, text }) => {
     start: '',
     end: '',
   });
+  const [error, setError] = useState({ text: null, start: null, end: null });
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -27,7 +28,45 @@ export const PlusForm = ({ stateFn, clearFn, text }) => {
     }));
   }, []);
 
-  const handleChange = e => {
+  useEffect(() => {
+    const errors = { text: null, start: null, end: null };
+
+    const regex = /^[a-zA-Z0-9\s\u0400-\u04FF']*$/;
+    if (!regex.test(form.text)) {
+      errors.text = 'Special symbols like !@#$%^&*()_+= are not allowed.';
+    }
+
+    if (!isNaN(form.start)) {
+      errors.start = 'This field is required.';
+    }
+    if (!isNaN(form.end)) {
+      errors.end = 'This field is required.';
+    }
+
+    const [startYear] = form.start.split('-');
+    const [endYear] = form.end.split('-');
+
+    if (parseInt(startYear) > 9999) {
+      errors.start = 'Invalid date value.';
+    }
+    if (parseInt(endYear) > 9999) {
+      errors.end = 'Invalid date value.';
+    }
+
+    const startDate = new Date(form.start);
+    const endDate = new Date(form.end);
+
+    if (startDate.getTime() === endDate.getTime()) {
+      errors.start = 'Dates can not be the same.';
+    }
+    if (startDate.getTime() > endDate.getTime()) {
+      errors.start = 'Start date can not be greater than end date.';
+    }
+
+    setError(errors);
+  }, [form.text, form.start, form.end]);
+
+  const changeHandler = e => {
     const { name, value } = e.currentTarget;
     setForm(prevForm => ({ ...prevForm, [name]: value }));
   };
@@ -35,48 +74,62 @@ export const PlusForm = ({ stateFn, clearFn, text }) => {
   const submitHandler = e => {
     e.preventDefault();
 
-    dispatch(
-      addTodo({
-        text: form.text,
-        start: getDate(new Date(form.start)),
-        end: getDate(new Date(form.end)),
-      })
-    );
+    if (!form.text.trim().length) {
+      return setError(prevState => ({
+        ...prevState,
+        text: 'This field can not be empty.',
+      }));
+    }
 
-    setForm({ text: '', start: '', end: '' });
+    if (Object.values(error).every(value => !value)) {
+      dispatch(
+        addTodo({
+          text: form.text,
+          start: getFormattedDate(new Date(form.start)),
+          end: getFormattedDate(new Date(form.end)),
+        })
+      );
 
-    stateFn();
-    clearFn();
+      setForm({ text: '', start: '', end: '' });
+
+      stateFn();
+      clearFn();
+    }
   };
 
   return (
     <form className={css.form} onSubmit={submitHandler} autoComplete="off">
       <div className={css.formField}>
-        <label htmlFor="text">Task</label>
+        <label htmlFor="text" className={css.formLabel}>
+          Add a task
+        </label>
         <input
           id="text"
           type="text"
           name="text"
           value={form.text}
-          pattern="^[A-Za-z0-9' ]+$"
           placeholder="Add a task"
-          onChange={handleChange}
+          onChange={changeHandler}
           className={css.formInput}
           title="Description may contain only letters, numbers and spaces."
-          required
         />
+        {error.text !== null && (
+          <p className={css.errorMessage}>{error.text}</p>
+        )}
       </div>
       <div className={css.formField}>
         <label htmlFor="start">Start date</label>
         <input
           id="start"
           type="datetime-local"
-          min={getInputDate(new Date())}
           name="start"
           value={form.start}
           className={css.formInput}
-          onChange={handleChange}
+          onChange={changeHandler}
         />
+        {error.start !== null && (
+          <p className={css.errorMessage}>{error.start}</p>
+        )}
       </div>
       <div className={css.formField}>
         <label htmlFor="end">Due date</label>
@@ -86,8 +139,9 @@ export const PlusForm = ({ stateFn, clearFn, text }) => {
           name="end"
           value={form.end}
           className={css.formInput}
-          onChange={handleChange}
+          onChange={changeHandler}
         />
+        {error.end !== null && <p className={css.errorMessage}>{error.end}</p>}
       </div>
       <div className={css.buttonWrapper}>
         <button type="submit" className={css.saveButton}>
