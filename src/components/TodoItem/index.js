@@ -11,7 +11,7 @@ export const TodoItem = ({
 }) => {
   return (
     <li className={css.todoCard}>
-      <p>{text}</p>
+      <p className={css.text}>{text}</p>
       <p className={css.date}>
         <TbClock size={20} />
         <span className={css.dateDescr}>

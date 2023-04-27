@@ -11,6 +11,10 @@
   border: 1px solid rgb(200, 200, 200);
 }
 
+.text {
+  word-break: break-word;
+}
+
 .date {
   display: flex;
   align-items: center;
