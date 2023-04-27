@@ -1,13 +1,12 @@
 import { nanoid } from 'nanoid';
 
-export const addTodo = ({ title, description, start, end }) => {
+export const addTodo = ({ text, start, end }) => {
   return {
     type: 'todos/addTodo',
     payload: {
       id: nanoid(),
       completed: false,
-      title,
-      description,
+      text,
       time: {
         start,
         end,

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { HiPlus } from 'react-icons/hi';
 
@@ -11,62 +11,57 @@ import css from './TodoForm.module.css';
 
 export const TodoForm = () => {
   const [modal, setModal] = useState(false);
-  const [information, setInformation] = useState(null);
+  const [text, setText] = useState('');
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const bodyEl = document.getElementById('body');
+
+    bodyEl.style.overflow = modal ? 'hidden' : 'visible';
+  }, [modal]);
+
+  const changeHandler = e => {
+    setText(e.currentTarget.value);
+  };
 
   const submitHandler = e => {
     e.preventDefault();
 
-    const form = e.target;
+    const start = new Date();
+    const end = new Date(start);
+    end.setDate(end.getDate() + 1);
 
-    const description = form.elements.description.value;
+    dispatch(addTodo({ text: text, start: getDate(start), end: getDate(end) }));
 
-    if (!information) {
-      const start = new Date();
-      const end = start;
-      end.setDate(start.getDate() + 1);
-
-      dispatch(
-        addTodo({ description, start: getDate(start), end: getDate(end) })
-      );
-    } else {
-      const { title, start, end } = information;
-      dispatch(
-        addTodo({
-          description,
-          title,
-          start: getDate(new Date(start)),
-          end: getDate(new Date(end)),
-        })
-      );
-    }
-
-    form.reset();
+    setText('');
   };
 
   const closeModalHandler = () => {
     setModal(prevState => !prevState);
   };
 
-  const getInfo = info => {
-    setInformation(info);
+  const clearInputHandler = () => {
+    setText('');
   };
 
   return (
-    <>
+    <section className={css.section}>
       <div className={css.container}>
         <form className={css.form} onSubmit={submitHandler} autoComplete="off">
-          <label htmlFor="description" className={css.formLabel}>
+          <label htmlFor="text" className={css.formLabel}>
             Add a task
           </label>
           <input
             id="description"
             type="text"
-            name="description"
+            name="text"
+            value={text}
             pattern="^[A-Za-z0-9' ]+$"
             placeholder="Add a task"
+            onChange={changeHandler}
             className={css.formInput}
             title="Description may contain only letters, numbers and spaces."
+            required
           />
           <button type="submit" className={css.formButton}>
             Add
@@ -82,9 +77,13 @@ export const TodoForm = () => {
       </div>
       {modal && (
         <Modal stateFn={closeModalHandler}>
-          <PlusForm stateFn={closeModalHandler} onGetInfo={getInfo} />
+          <PlusForm
+            text={text}
+            stateFn={closeModalHandler}
+            clearFn={clearInputHandler}
+          />
         </Modal>
       )}
-    </>
+    </section>
   );
 };

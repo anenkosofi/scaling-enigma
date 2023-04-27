@@ -1,21 +1,24 @@
 import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
-import { getInputDate } from '../../helpers/dateFormatter';
+import { getInputDate, getDate } from '../../helpers/dateFormatter';
+import { addTodo } from '../../redux/todos/actions';
 
 import css from './PlusForm.module.css';
 
 // eslint-disable-next-line react/prop-types
-export const PlusForm = ({ stateFn, onGetInfo }) => {
+export const PlusForm = ({ stateFn, clearFn, text }) => {
   const [form, setForm] = useState({
-    title: '',
+    text: text,
     start: '',
     end: '',
   });
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const start = new Date();
-    const end = start;
-    end.setDate(start.getDate() + 1);
+    const end = new Date(start);
+    end.setDate(end.getDate() + 1);
 
     setForm(prevState => ({
       ...prevState,
@@ -32,25 +35,33 @@ export const PlusForm = ({ stateFn, onGetInfo }) => {
   const submitHandler = e => {
     e.preventDefault();
 
-    onGetInfo(form);
+    dispatch(
+      addTodo({
+        text: form.text,
+        start: getDate(new Date(form.start)),
+        end: getDate(new Date(form.end)),
+      })
+    );
 
-    e.target.reset();
+    setForm({ text: '', start: '', end: '' });
 
     stateFn();
+    clearFn();
   };
 
   return (
     <form className={css.form} onSubmit={submitHandler} autoComplete="off">
       <div className={css.formField}>
-        <label htmlFor="title">Title</label>
+        <label htmlFor="text">Task</label>
         <input
-          id="title"
+          id="text"
           type="text"
-          name="title"
-          value={form.title}
-          placeholder="Add a title"
+          name="text"
+          value={form.text}
+          placeholder="Add a task"
           className={css.formInput}
           onChange={handleChange}
+          required
         />
       </div>
       <div className={css.formField}>
