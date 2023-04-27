@@ -58,9 +58,11 @@ export const PlusForm = ({ stateFn, clearFn, text }) => {
           type="text"
           name="text"
           value={form.text}
+          pattern="^[A-Za-z0-9' ]+$"
           placeholder="Add a task"
-          className={css.formInput}
           onChange={handleChange}
+          className={css.formInput}
+          title="Description may contain only letters, numbers and spaces."
           required
         />
       </div>

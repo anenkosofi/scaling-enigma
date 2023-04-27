@@ -52,7 +52,7 @@ export const TodoForm = () => {
             Add a task
           </label>
           <input
-            id="description"
+            id="text"
             type="text"
             name="text"
             value={text}
