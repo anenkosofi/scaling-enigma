@@ -39,8 +39,8 @@ export const PlusForm = ({ stateFn, clearFn, text }) => {
   const submitHandler = e => {
     e.preventDefault();
 
-    const error = validateTextLength(form.text);
-    setError(prevState => ({ ...prevState, text: error }));
+    const textError = validateTextLength(form.text);
+    setError(prevState => ({ ...prevState, text: textError }));
 
     if (Object.values(error).every(value => !value)) {
       dispatch(
