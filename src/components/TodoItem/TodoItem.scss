@@ -1,28 +1,78 @@
 @import '../../styles/shared.scss';
 
-.todoCard {
+.todo {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 12px;
+  align-items: center;
+  gap: 16px;
 
   padding: 16px;
   width: 60%;
 
   border-radius: 16px;
   border: 1px solid $primary-grey;
-}
 
-.todoCard-text {
-  word-break: break-word;
-}
+  &__input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    border: 0;
+    padding: 0;
 
-.todoCard-date {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
+    white-space: nowrap;
+    clip-path: inset(100%);
+    clip: rect(0 0 0 0);
+    overflow: hidden;
 
-.todoCard-date__descr {
-  font-size: 16px;
+    &:checked + .todo__checkbox > .todo__icon {
+      opacity: 1;
+    }
+  }
+
+  &__checkbox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 28px;
+    height: 28px;
+
+    border-radius: 4px;
+    border: 1px solid $secondary-black;
+  }
+
+  &__icon {
+    stroke: $light-green;
+
+    opacity: 0;
+
+    transition: opacity 250ms $timing-function;
+  }
+
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  &__text {
+    word-break: break-word;
+  }
+
+  &__crossed-text {
+    text-decoration: line-through;
+    word-break: break-word;
+
+    color: $secondary-black;
+  }
+
+  &__date {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    &__descr {
+      font-size: 16px;
+    }
+  }
 }

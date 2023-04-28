@@ -67,10 +67,8 @@ export const PlusForm = ({ stateFn, clearFn, text }) => {
 
   return (
     <form className="form" onSubmit={submitHandler} autoComplete="off">
-      <div className="formField">
-        <label htmlFor="text" className="formLabel">
-          Add a task
-        </label>
+      <div className="form__field">
+        <label htmlFor="text">Add a task</label>
         <input
           id="text"
           type="text"
@@ -78,40 +76,40 @@ export const PlusForm = ({ stateFn, clearFn, text }) => {
           value={form.text}
           placeholder="Add a task"
           onChange={changeHandler}
-          className="formInput"
+          className="form__input"
           title="Description may contain only letters, numbers and spaces."
         />
-        {error.text !== null && <p className="errorMessage">{error.text}</p>}
+        {error.text !== null && <p className="error-message">{error.text}</p>}
       </div>
-      <div className="formField">
+      <div className="form__field">
         <label htmlFor="start">Start date</label>
         <input
           id="start"
           type="datetime-local"
           name="start"
           value={form.start}
-          className="formInput"
+          className="form__input"
           onChange={changeHandler}
         />
-        {error.start !== null && <p className="errorMessage">{error.start}</p>}
+        {error.start !== null && <p className="error-message">{error.start}</p>}
       </div>
-      <div className="formField">
+      <div className="form__field">
         <label htmlFor="end">Due date</label>
         <input
           id="end"
           type="datetime-local"
           name="end"
           value={form.end}
-          className="formInput"
+          className="form__input"
           onChange={changeHandler}
         />
-        {error.end !== null && <p className="errorMessage">{error.end}</p>}
+        {error.end !== null && <p className="error-message">{error.end}</p>}
       </div>
-      <div className="buttonWrapper">
-        <button type="submit" className="saveButton">
+      <div className="button-wrapper">
+        <button type="submit" className="save-button">
           Save
         </button>
-        <button type="button" onClick={stateFn} className="cancelButton">
+        <button type="button" onClick={stateFn} className="cancel-button">
           Cancel
         </button>
       </div>
