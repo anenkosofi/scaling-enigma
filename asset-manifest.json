@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/scaling-enigma/static/css/main.297fc813.css",
-    "main.js": "/scaling-enigma/static/js/main.910ea3a7.js",
+    "main.js": "/scaling-enigma/static/js/main.3f66b9e9.js",
     "index.html": "/scaling-enigma/index.html",
     "main.297fc813.css.map": "/scaling-enigma/static/css/main.297fc813.css.map",
-    "main.910ea3a7.js.map": "/scaling-enigma/static/js/main.910ea3a7.js.map"
+    "main.3f66b9e9.js.map": "/scaling-enigma/static/js/main.3f66b9e9.js.map"
   },
   "entrypoints": [
     "static/css/main.297fc813.css",
-    "static/js/main.910ea3a7.js"
+    "static/js/main.3f66b9e9.js"
   ]
 }
