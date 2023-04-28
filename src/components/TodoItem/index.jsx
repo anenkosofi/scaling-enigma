@@ -10,16 +10,16 @@ export const TodoItem = ({
   },
 }) => {
   return (
-    <li className="TodoCard">
-      <p className="TodoCard-text">{text}</p>
-      <p className="TodoCard-date">
+    <li className="todoCard">
+      <p className="todoCard-text">{text}</p>
+      <p className="todoCard-date">
         <TbClock size={20} />
-        <span className="TodoCard-date__descr">
+        <span className="todoCard-date__descr">
           <b>Start: </b>
           {start}
         </span>
       </p>
-      <p className="TodoCard-date">
+      <p className="todoCard-date">
         <TbCalendarTime size={20} />
         <span className="TodoCard-date__descr">
           <b>Due to: </b>

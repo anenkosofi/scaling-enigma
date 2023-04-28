@@ -66,9 +66,9 @@ export const PlusForm = ({ stateFn, clearFn, text }) => {
   };
 
   return (
-    <form className="Form" onSubmit={submitHandler} autoComplete="off">
-      <div className="FormField">
-        <label htmlFor="text" className="FormLabel">
+    <form className="form" onSubmit={submitHandler} autoComplete="off">
+      <div className="formField">
+        <label htmlFor="text" className="formLabel">
           Add a task
         </label>
         <input
@@ -78,40 +78,40 @@ export const PlusForm = ({ stateFn, clearFn, text }) => {
           value={form.text}
           placeholder="Add a task"
           onChange={changeHandler}
-          className="FormInput"
+          className="formInput"
           title="Description may contain only letters, numbers and spaces."
         />
-        {error.text !== null && <p className="ErrorMessage">{error.text}</p>}
+        {error.text !== null && <p className="errorMessage">{error.text}</p>}
       </div>
-      <div className="FormField">
+      <div className="formField">
         <label htmlFor="start">Start date</label>
         <input
           id="start"
           type="datetime-local"
           name="start"
           value={form.start}
-          className="FormInput"
+          className="formInput"
           onChange={changeHandler}
         />
-        {error.start !== null && <p className="ErrorMessage">{error.start}</p>}
+        {error.start !== null && <p className="errorMessage">{error.start}</p>}
       </div>
-      <div className="FormField">
+      <div className="formField">
         <label htmlFor="end">Due date</label>
         <input
           id="end"
           type="datetime-local"
           name="end"
           value={form.end}
-          className="FormInput"
+          className="formInput"
           onChange={changeHandler}
         />
-        {error.end !== null && <p className="ErrorMessage">{error.end}</p>}
+        {error.end !== null && <p className="errorMessage">{error.end}</p>}
       </div>
-      <div className="ButtonWrapper">
-        <button type="submit" className="SaveButton">
+      <div className="buttonWrapper">
+        <button type="submit" className="saveButton">
           Save
         </button>
-        <button type="button" onClick={stateFn} className="CancelButton">
+        <button type="button" onClick={stateFn} className="cancelButton">
           Cancel
         </button>
       </div>

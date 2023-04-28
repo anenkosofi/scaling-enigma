@@ -1,12 +1,12 @@
 @import '../../styles/shared.scss';
 
-.Form {
+.form {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.FormField {
+.formField {
   position: relative;
 
   display: flex;
@@ -14,17 +14,17 @@
   gap: 8px;
 }
 
-.FormInput {
+.formInput {
   @extend %input;
 }
 
-.ButtonWrapper {
+.buttonWrapper {
   display: flex;
   justify-content: center;
   gap: 12px;
 }
 
-.SaveButton {
+.saveButton {
   @extend %button;
   width: 200px;
   height: 50px;
@@ -44,7 +44,7 @@
   }
 }
 
-.CancelButton {
+.cancelButton {
   @extend %button;
   width: 200px;
   height: 50px;
@@ -67,7 +67,7 @@
   }
 }
 
-.ErrorMessage {
+.errorMessage {
   @extend %error;
   font-size: 12px;
 }
