@@ -1,0 +1,27 @@
+@import '../../styles/shared.scss';
+
+.todoListSection {
+  padding: 48px 0;
+}
+
+.todoList-title {
+  margin-bottom: 20px;
+
+  font-size: 30px;
+  line-height: calc(38 / 30);
+  text-align: center;
+}
+
+.todoList {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+
+  margin: 0 auto;
+}
+
+.todoList__notification {
+  text-align: center;
+}
