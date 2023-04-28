@@ -4,10 +4,11 @@ import { HiPlus } from 'react-icons/hi';
 
 import { addTodo } from '../../redux/todos/actions';
 import { getFormattedDate } from '../../helpers/dateFormatter';
+import { Container } from '../Container';
 import { Modal } from '../Modal';
 import { PlusForm } from '../PlusForm';
 
-import css from './TodoForm.module.css';
+import './TodoForm.scss';
 
 export const TodoForm = () => {
   const [modal, setModal] = useState(false);
@@ -65,37 +66,43 @@ export const TodoForm = () => {
   };
 
   return (
-    <section className={css.section}>
-      <div className={css.container}>
-        <form className={css.form} onSubmit={submitHandler} autoComplete="off">
-          <div className={css.field}>
-            <label htmlFor="text" className={css.formLabel}>
-              Add a task
-            </label>
-            <input
-              id="text"
-              type="text"
-              name="text"
-              value={text}
-              placeholder="Add a task"
-              onChange={changeHandler}
-              className={css.formInput}
-              title="Description may contain only letters, numbers and spaces."
-            />
-            {error !== null && <p className={css.errorMessage}>{error}</p>}
-          </div>
-          <button type="submit" className={css.formButton}>
-            Add
+    <section className="TodoFormSection">
+      <Container>
+        <div className="TodoForm-container">
+          <form
+            className="TodoForm"
+            onSubmit={submitHandler}
+            autoComplete="off"
+          >
+            <div className="TodoFormField">
+              <label htmlFor="text" className="TodoFormLabel">
+                Add a task
+              </label>
+              <input
+                id="text"
+                type="text"
+                name="text"
+                value={text}
+                placeholder="Add a task"
+                onChange={changeHandler}
+                className="TodoFormInput"
+                title="Description may contain only letters, numbers and spaces."
+              />
+              {error !== null && <p className="ErrorMessage">{error}</p>}
+            </div>
+            <button type="submit" className="TodoFormButton">
+              Add
+            </button>
+          </form>
+          <button
+            type="button"
+            className="AddButton"
+            onClick={closeModalHandler}
+          >
+            <HiPlus size={24} />
           </button>
-        </form>
-        <button
-          type="button"
-          className={css.addButton}
-          onClick={closeModalHandler}
-        >
-          <HiPlus size={24} />
-        </button>
-      </div>
+        </div>
+      </Container>
       {modal && (
         <Modal stateFn={closeModalHandler}>
           <PlusForm

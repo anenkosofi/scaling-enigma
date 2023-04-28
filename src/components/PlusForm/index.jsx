@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import { getInputDate, getFormattedDate } from '../../helpers/dateFormatter';
+import { validateValues } from '../../helpers/inputValidator';
 import { addTodo } from '../../redux/todos/actions';
 
-import css from './PlusForm.module.css';
+import './PlusForm.scss';
 
-// eslint-disable-next-line react/prop-types
 export const PlusForm = ({ stateFn, clearFn, text }) => {
   const [form, setForm] = useState({
     text: text,
@@ -29,39 +30,11 @@ export const PlusForm = ({ stateFn, clearFn, text }) => {
   }, []);
 
   useEffect(() => {
-    const errors = { text: null, start: null, end: null };
-
-    const regex = /^[a-zA-Z0-9\s\u0400-\u04FF']*$/;
-    if (!regex.test(form.text)) {
-      errors.text = 'Special symbols like !@#$%^&*()_+= are not allowed.';
-    }
-
-    if (!isNaN(form.start)) {
-      errors.start = 'This field is required.';
-    }
-    if (!isNaN(form.end)) {
-      errors.end = 'This field is required.';
-    }
-
-    const [startYear] = form.start.split('-');
-    const [endYear] = form.end.split('-');
-
-    if (parseInt(startYear) > 9999) {
-      errors.start = 'Invalid date value.';
-    }
-    if (parseInt(endYear) > 9999) {
-      errors.end = 'Invalid date value.';
-    }
-
-    const startDate = new Date(form.start);
-    const endDate = new Date(form.end);
-
-    if (startDate.getTime() === endDate.getTime()) {
-      errors.start = 'Dates can not be the same.';
-    }
-    if (startDate.getTime() > endDate.getTime()) {
-      errors.start = 'Start date can not be greater than end date.';
-    }
+    const errors = validateValues({
+      text: form.text,
+      start: form.start,
+      end: form.end,
+    });
 
     setError(errors);
   }, [form.text, form.start, form.end]);
@@ -73,13 +46,6 @@ export const PlusForm = ({ stateFn, clearFn, text }) => {
 
   const submitHandler = e => {
     e.preventDefault();
-
-    if (!form.text.trim().length) {
-      return setError(prevState => ({
-        ...prevState,
-        text: 'This field can not be empty.',
-      }));
-    }
 
     if (Object.values(error).every(value => !value)) {
       dispatch(
@@ -98,9 +64,9 @@ export const PlusForm = ({ stateFn, clearFn, text }) => {
   };
 
   return (
-    <form className={css.form} onSubmit={submitHandler} autoComplete="off">
-      <div className={css.formField}>
-        <label htmlFor="text" className={css.formLabel}>
+    <form className="Form" onSubmit={submitHandler} autoComplete="off">
+      <div className="FormField">
+        <label htmlFor="text" className="FormLabel">
           Add a task
         </label>
         <input
@@ -110,47 +76,49 @@ export const PlusForm = ({ stateFn, clearFn, text }) => {
           value={form.text}
           placeholder="Add a task"
           onChange={changeHandler}
-          className={css.formInput}
+          className="FormInput"
           title="Description may contain only letters, numbers and spaces."
         />
-        {error.text !== null && (
-          <p className={css.errorMessage}>{error.text}</p>
-        )}
+        {error.text !== null && <p className="ErrorMessage">{error.text}</p>}
       </div>
-      <div className={css.formField}>
+      <div className="FormField">
         <label htmlFor="start">Start date</label>
         <input
           id="start"
           type="datetime-local"
           name="start"
           value={form.start}
-          className={css.formInput}
+          className="FormInput"
           onChange={changeHandler}
         />
-        {error.start !== null && (
-          <p className={css.errorMessage}>{error.start}</p>
-        )}
+        {error.start !== null && <p className="ErrorMessage">{error.start}</p>}
       </div>
-      <div className={css.formField}>
+      <div className="FormField">
         <label htmlFor="end">Due date</label>
         <input
           id="end"
           type="datetime-local"
           name="end"
           value={form.end}
-          className={css.formInput}
+          className="FormInput"
           onChange={changeHandler}
         />
-        {error.end !== null && <p className={css.errorMessage}>{error.end}</p>}
+        {error.end !== null && <p className="ErrorMessage">{error.end}</p>}
       </div>
-      <div className={css.buttonWrapper}>
-        <button type="submit" className={css.saveButton}>
+      <div className="ButtonWrapper">
+        <button type="submit" className="SaveButton">
           Save
         </button>
-        <button type="button" onClick={stateFn} className={css.cancelButton}>
+        <button type="button" onClick={stateFn} className="CancelButton">
           Cancel
         </button>
       </div>
     </form>
   );
+};
+
+PlusForm.propTypes = {
+  stateFn: PropTypes.func.isRequired,
+  clearFn: PropTypes.func.isRequired,
+  text: PropTypes.string.isRequired,
 };

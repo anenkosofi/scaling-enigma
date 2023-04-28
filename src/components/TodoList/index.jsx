@@ -1,29 +1,30 @@
 import { useSelector } from 'react-redux';
 
 import { getTodos } from '../../redux/todos/selectors';
+import { Container } from '../Container';
 import { TodoItem } from '../TodoItem';
 
-import css from './TodoList.module.css';
+import './TodoList.scss';
 
 export const TodoList = () => {
   const todos = useSelector(getTodos);
 
   return (
-    <section className={css.section}>
-      <div className={css.container}>
-        <h1 className={css.todosTitle}>Tasks</h1>
-        {todos.length > 0 ? (
-          <ul className={css.todoList}>
+    <section className="TodoListSection">
+      <Container>
+        <h1 className="TodoList-title">Tasks</h1>
+        {todos.length ? (
+          <ul className="TodoList">
             {todos.map(todo => (
               <TodoItem key={todo.id} item={todo} />
             ))}
           </ul>
         ) : (
-          <p className={css.notification}>
+          <p className="TodoList__notification">
             You do not have any task to do. Add the first one!
           </p>
         )}
-      </div>
+      </Container>
     </section>
   );
 };

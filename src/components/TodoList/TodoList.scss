@@ -1,14 +1,10 @@
-.section {
+@import '../../styles/shared.scss';
+
+.TodoListSection {
   padding: 48px 0;
 }
 
-.container {
-  margin: 0 auto;
-  padding: 0 20px;
-  width: 1280px;
-}
-
-.todosTitle {
+.TodoList-title {
   margin-bottom: 20px;
 
   font-size: 30px;
@@ -16,7 +12,7 @@
   text-align: center;
 }
 
-.todoList {
+.TodoList {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -26,6 +22,6 @@
   margin: 0 auto;
 }
 
-.notification {
+.TodoList__notification {
   text-align: center;
 }

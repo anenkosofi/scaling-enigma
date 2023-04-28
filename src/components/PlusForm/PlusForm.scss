@@ -1,0 +1,73 @@
+@import '../../styles/shared.scss';
+
+.Form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.FormField {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.FormInput {
+  @extend %input;
+}
+
+.ButtonWrapper {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.SaveButton {
+  @extend %button;
+  width: 200px;
+  height: 50px;
+
+  font-size: 16px;
+
+  color: $primary-light-white;
+  background-color: $light-green;
+
+  border-radius: 6px;
+
+  transition: background-color 250ms $timing-function;
+
+  &:hover,
+  &:focus {
+    background-color: $dark-accent;
+  }
+}
+
+.CancelButton {
+  @extend %button;
+  width: 200px;
+  height: 50px;
+
+  font-size: 16px;
+
+  color: $tertiary-black;
+  background-color: $secondary-grey;
+
+  border: 1px solid transparent;
+  border-radius: 6px;
+
+  transition: border-color 250ms $timing-function;
+
+  &:hover,
+  &:focus {
+    background-color: transparent;
+
+    border-color: $tertiary-black;
+  }
+}
+
+.ErrorMessage {
+  @extend %error;
+  font-size: 12px;
+}

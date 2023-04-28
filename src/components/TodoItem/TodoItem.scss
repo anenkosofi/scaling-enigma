@@ -1,4 +1,6 @@
-.todoCard {
+@import '../../styles/shared.scss';
+
+.TodoCard {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -8,19 +10,19 @@
   width: 60%;
 
   border-radius: 16px;
-  border: 1px solid rgb(200, 200, 200);
+  border: 1px solid $primary-grey;
 }
 
-.text {
+.TodoCard-text {
   word-break: break-word;
 }
 
-.date {
+.TodoCard-date {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.dateDescr {
+.TodoCard-date__descr {
   font-size: 16px;
 }

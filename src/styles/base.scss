@@ -1,3 +1,5 @@
+@import './shared.scss';
+
 *,
 ::after,
 ::before {
@@ -11,11 +13,12 @@ html {
 body {
   margin: 0;
 
-  font-family: 'Roboto', sans-serif;
+  font-family: $primary-font-stack;
   font-size: 20px;
+  line-height: 1.5;
 
-  color: rgba(0, 0, 0, 0.87);
-  background-color: #ffffff;
+  color: $primary-black;
+  background-color: $dark-white;
 }
 
 img {
@@ -35,7 +38,10 @@ h2,
 h3,
 h4,
 h5,
-h6,
+h6 {
+  margin: 0;
+}
+
 p {
   margin: 0;
 }

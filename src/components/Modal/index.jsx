@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
+import PropTypes from 'prop-types';
 
-import css from './Modal.module.css';
+import './Modal.scss';
 
 export function Modal({ stateFn, children }) {
   useEffect(() => {
@@ -18,9 +19,14 @@ export function Modal({ stateFn, children }) {
   }, [stateFn]);
 
   return createPortal(
-    <div className={css.overlay}>
-      <div className={css.modalWindow}>{children}</div>
+    <div className="Overlay">
+      <div className="ModalWindow">{children}</div>
     </div>,
     document.querySelector('#modal-root')
   );
 }
+
+Modal.propTypes = {
+  stateFn: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
+};
