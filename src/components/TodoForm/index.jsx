@@ -34,22 +34,25 @@ export const TodoForm = () => {
   const submitHandler = e => {
     e.preventDefault();
 
-    const error = validateTextLength(text);
-    setError(error);
+    const lengthError = validateTextLength(text);
+    setError(lengthError);
+    if (lengthError) return;
 
-    if (!error) {
-      const [start, end] = getInitialDates();
+    const symbolsError = validateSymbols(text);
+    setError(symbolsError);
+    if (symbolsError) return;
 
-      dispatch(
-        addTodo({
-          text: text,
-          start: getFormattedDate(start),
-          end: getFormattedDate(end),
-        })
-      );
+    const [start, end] = getInitialDates();
 
-      setText('');
-    }
+    dispatch(
+      addTodo({
+        text: text,
+        start: getFormattedDate(start),
+        end: getFormattedDate(end),
+      })
+    );
+
+    setText('');
   };
 
   const changeHandler = e => {

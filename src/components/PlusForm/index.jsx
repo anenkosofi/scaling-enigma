@@ -41,21 +41,28 @@ export const PlusForm = ({ stateFn, clearFn, text }) => {
 
     const textError = validateTextLength(form.text);
     setError(prevState => ({ ...prevState, text: textError }));
+    if (textError) return;
 
-    if (Object.values(error).every(value => !value)) {
-      dispatch(
-        addTodo({
-          text: form.text,
-          start: getFormattedDate(new Date(form.start)),
-          end: getFormattedDate(new Date(form.end)),
-        })
-      );
+    const errors = validateValues({
+      text: form.text,
+      start: form.start,
+      end: form.end,
+    });
+    setError(errors);
+    if (Object.values(errors).some(value => value)) return;
 
-      setForm({ text: '', start: '', end: '' });
+    dispatch(
+      addTodo({
+        text: form.text,
+        start: getFormattedDate(new Date(form.start)),
+        end: getFormattedDate(new Date(form.end)),
+      })
+    );
 
-      stateFn();
-      clearFn();
-    }
+    setForm({ text: '', start: '', end: '' });
+
+    stateFn();
+    clearFn();
   };
 
   return (
