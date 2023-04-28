@@ -2,8 +2,12 @@ import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { getInputDate, getFormattedDate } from '../../helpers/dateFormatter';
-import { validateValues } from '../../helpers/inputValidator';
+import { getInputDate, getFormattedDate } from '../../helpers/formatDate';
+import {
+  validateValues,
+  validateTextLength,
+} from '../../helpers/validateInputs';
+import { getInitialDates } from '../../helpers/getInitialDates';
 import { addTodo } from '../../redux/todos/actions';
 
 import './PlusForm.scss';
@@ -11,23 +15,11 @@ import './PlusForm.scss';
 export const PlusForm = ({ stateFn, clearFn, text }) => {
   const [form, setForm] = useState({
     text: text,
-    start: '',
-    end: '',
+    start: getInputDate(getInitialDates()[0]),
+    end: getInputDate(getInitialDates()[1]),
   });
   const [error, setError] = useState({ text: null, start: null, end: null });
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    const start = new Date();
-    const end = new Date(start);
-    end.setDate(end.getDate() + 1);
-
-    setForm(prevState => ({
-      ...prevState,
-      start: getInputDate(start),
-      end: getInputDate(end),
-    }));
-  }, []);
 
   useEffect(() => {
     const errors = validateValues({
@@ -46,6 +38,9 @@ export const PlusForm = ({ stateFn, clearFn, text }) => {
 
   const submitHandler = e => {
     e.preventDefault();
+
+    const error = validateTextLength(form.text);
+    setError(prevState => ({ ...prevState, text: error }));
 
     if (Object.values(error).every(value => !value)) {
       dispatch(

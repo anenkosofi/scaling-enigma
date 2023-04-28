@@ -3,7 +3,12 @@ import { useDispatch } from 'react-redux';
 import { HiPlus } from 'react-icons/hi';
 
 import { addTodo } from '../../redux/todos/actions';
-import { getFormattedDate } from '../../helpers/dateFormatter';
+import { getFormattedDate } from '../../helpers/formatDate';
+import { getInitialDates } from '../../helpers/getInitialDates';
+import {
+  validateSymbols,
+  validateTextLength,
+} from '../../helpers/validateInputs';
 import { Container } from '../Container';
 import { Modal } from '../Modal';
 import { PlusForm } from '../PlusForm';
@@ -23,23 +28,17 @@ export const TodoForm = () => {
   }, [modal]);
 
   useEffect(() => {
-    const regex = /^[a-zA-Z0-9\s\u0400-\u04FF']*$/;
-    if (!regex.test(text)) {
-      return setError('Special symbols like !@#$%^&*()_+= are not allowed.');
-    }
-    return setError(null);
+    setError(validateSymbols(text));
   }, [text]);
 
   const submitHandler = e => {
     e.preventDefault();
 
-    if (!text.trim().length) {
-      return setError('This field can not be empty.');
-    }
+    const error = validateTextLength(text);
+    setError(error);
+
     if (!error) {
-      const start = new Date();
-      const end = new Date(start);
-      end.setDate(end.getDate() + 1);
+      const [start, end] = getInitialDates();
 
       dispatch(
         addTodo({
