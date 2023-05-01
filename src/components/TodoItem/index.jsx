@@ -1,8 +1,8 @@
 import { useDispatch } from 'react-redux';
-import { TbClock, TbCalendarTime, TbCheck } from 'react-icons/tb';
+import { TbClock, TbCalendarTime, TbCheck, TbTrash } from 'react-icons/tb';
 import PropTypes from 'prop-types';
 
-import { toggleCompleted } from '../../redux/todos/actions';
+import { toggleCompleted, deleteTodo } from '../../redux/todos/actions';
 
 import './TodoItem.scss';
 
@@ -49,6 +49,12 @@ export const TodoItem = ({
           </span>
         </p>
       </div>
+      <button
+        className="delete-button"
+        onClick={() => dispatch(deleteTodo(id))}
+      >
+        <TbTrash size={24} />
+      </button>
     </li>
   );
 };
