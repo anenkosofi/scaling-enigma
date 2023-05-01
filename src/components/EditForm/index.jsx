@@ -2,21 +2,33 @@ import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { getInputDate, getFormattedDate } from '../../helpers/formatDate';
+import {
+  getInputDate,
+  getFormattedDate,
+  getOriginalDate,
+} from '../../helpers/formatDate';
 import {
   validateValues,
   validateTextLength,
 } from '../../helpers/validateInputs';
 import { getInitialDates } from '../../helpers/getInitialDates';
-import { addTodo } from '../../redux/todos/actions';
+import { addTodo, editTodo } from '../../redux/todos/actions';
 
-import './PlusForm.scss';
+import './EditForm.scss';
 
-export const PlusForm = ({ stateFn, clearFn, text }) => {
+export const EditForm = ({
+  closeModal,
+  clearInput,
+  todo: { id, text, time },
+}) => {
   const [form, setForm] = useState({
     text: text,
-    start: getInputDate(getInitialDates()[0]),
-    end: getInputDate(getInitialDates()[1]),
+    start: time?.start
+      ? getInputDate(getOriginalDate(time.start))
+      : getInputDate(getInitialDates()[0]),
+    end: time?.end
+      ? getInputDate(getOriginalDate(time.end))
+      : getInputDate(getInitialDates()[1]),
   });
   const [error, setError] = useState({ text: null, start: null, end: null });
   const dispatch = useDispatch();
@@ -51,18 +63,23 @@ export const PlusForm = ({ stateFn, clearFn, text }) => {
     setError(errors);
     if (Object.values(errors).some(value => value)) return;
 
-    dispatch(
-      addTodo({
-        text: form.text,
-        start: getFormattedDate(new Date(form.start)),
-        end: getFormattedDate(new Date(form.end)),
-      })
-    );
+    const newTodo = {
+      text: form.text,
+      start: getFormattedDate(new Date(form.start)),
+      end: getFormattedDate(new Date(form.end)),
+    };
+
+    if (!id) {
+      dispatch(addTodo(newTodo));
+
+      clearInput();
+    } else {
+      dispatch(editTodo(id, newTodo));
+    }
 
     setForm({ text: '', start: '', end: '' });
 
-    stateFn();
-    clearFn();
+    closeModal();
   };
 
   return (
@@ -109,7 +126,7 @@ export const PlusForm = ({ stateFn, clearFn, text }) => {
         <button type="submit" className="save-button">
           Save
         </button>
-        <button type="button" onClick={stateFn} className="cancel-button">
+        <button type="button" onClick={closeModal} className="cancel-button">
           Cancel
         </button>
       </div>
@@ -117,8 +134,15 @@ export const PlusForm = ({ stateFn, clearFn, text }) => {
   );
 };
 
-PlusForm.propTypes = {
-  stateFn: PropTypes.func.isRequired,
-  clearFn: PropTypes.func.isRequired,
-  text: PropTypes.string.isRequired,
+EditForm.propTypes = {
+  closeModal: PropTypes.func.isRequired,
+  clearInput: PropTypes.func,
+  todo: PropTypes.shape({
+    id: PropTypes.string,
+    text: PropTypes.string.isRequired,
+    time: PropTypes.exact({
+      start: PropTypes.string.isRequired,
+      end: PropTypes.string.isRequired,
+    }),
+  }).isRequired,
 };

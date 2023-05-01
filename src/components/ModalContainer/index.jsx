@@ -2,13 +2,13 @@ import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
 
-import './Modal.scss';
+import './ModalContainer.scss';
 
-export function Modal({ stateFn, children }) {
+export function ModalContainer({ closeModal, children }) {
   useEffect(() => {
     const handleKeydown = e => {
       if (e.code === 'Escape') {
-        stateFn();
+        closeModal();
       }
     };
     window.addEventListener('keydown', handleKeydown);
@@ -16,7 +16,7 @@ export function Modal({ stateFn, children }) {
     return () => {
       window.removeEventListener('keydown', handleKeydown);
     };
-  }, [stateFn]);
+  }, [closeModal]);
 
   return createPortal(
     <div className="overlay">
@@ -26,7 +26,7 @@ export function Modal({ stateFn, children }) {
   );
 }
 
-Modal.propTypes = {
-  stateFn: PropTypes.func.isRequired,
+ModalContainer.propTypes = {
+  closeModal: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
 };

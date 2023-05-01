@@ -10,8 +10,7 @@ import {
   validateTextLength,
 } from '../../helpers/validateInputs';
 import { Container } from '../Container';
-import { Modal } from '../Modal';
-import { PlusForm } from '../PlusForm';
+import { TodoModal } from '../TodoModal';
 
 import './TodoForm.scss';
 
@@ -52,7 +51,7 @@ export const TodoForm = () => {
       })
     );
 
-    setText('');
+    clearInputHandler();
   };
 
   const changeHandler = e => {
@@ -106,13 +105,11 @@ export const TodoForm = () => {
         </div>
       </Container>
       {modal && (
-        <Modal stateFn={closeModalHandler}>
-          <PlusForm
-            text={text}
-            stateFn={closeModalHandler}
-            clearFn={clearInputHandler}
-          />
-        </Modal>
+        <TodoModal
+          closeModal={closeModalHandler}
+          clearInput={clearInputHandler}
+          todo={{ text: text }}
+        />
       )}
     </section>
   );

@@ -28,3 +28,19 @@ export const deleteTodo = todoId => {
     payload: todoId,
   };
 };
+
+export const editTodo = (todoId, { text, start, end }) => {
+  return {
+    type: 'todos/editTodo',
+    payload: {
+      id: todoId,
+      todo: {
+        text,
+        time: {
+          start,
+          end,
+        },
+      },
+    },
+  };
+};

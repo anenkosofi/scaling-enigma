@@ -24,3 +24,16 @@ export const getInputDate = date => {
     .toString()
     .padStart(2, '0')}`;
 };
+
+export const getOriginalDate = date => {
+  const [dateTime, time] = date.split(' ');
+  const [day, month, year] = dateTime.split('.');
+  const [hours, minutes] = time.split(':');
+  return new Date(
+    parseInt(year),
+    parseInt(month) - 1,
+    parseInt(day),
+    parseInt(hours),
+    parseInt(minutes)
+  );
+};
