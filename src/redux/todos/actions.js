@@ -14,3 +14,10 @@ export const addTodo = ({ text, start, end }) => {
     },
   };
 };
+
+export const toggleCompleted = todoId => {
+  return {
+    type: 'todos/toggleCompleted',
+    payload: todoId,
+  };
+};

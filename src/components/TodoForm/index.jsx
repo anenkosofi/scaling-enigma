@@ -68,16 +68,16 @@ export const TodoForm = () => {
   };
 
   return (
-    <section className="todoFormSection">
+    <section className="todo-form__section">
       <Container>
-        <div className="todoForm-container">
+        <div className="todo-form__container">
           <form
-            className="todoForm"
+            className="todo-form"
             onSubmit={submitHandler}
             autoComplete="off"
           >
-            <div className="todoFormField">
-              <label htmlFor="text" className="todoFormLabel">
+            <div className="todo-form__field">
+              <label htmlFor="text" className="todo-form__label">
                 Add a task
               </label>
               <input
@@ -87,18 +87,18 @@ export const TodoForm = () => {
                 value={text}
                 placeholder="Add a task"
                 onChange={changeHandler}
-                className="todoFormInput"
+                className="todo-form__input"
                 title="Description may contain only letters, numbers and spaces."
               />
-              {error !== null && <p className="errorMessage">{error}</p>}
+              {error !== null && <p className="error-message">{error}</p>}
             </div>
-            <button type="submit" className="todoFormButton">
+            <button type="submit" className="todo-form__button">
               Add
             </button>
           </form>
           <button
             type="button"
-            className="addButton"
+            className="add-button"
             onClick={closeModalHandler}
           >
             <HiPlus size={24} />

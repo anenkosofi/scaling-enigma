@@ -20,7 +20,7 @@ export function Modal({ stateFn, children }) {
 
   return createPortal(
     <div className="overlay">
-      <div className="modalWindow">{children}</div>
+      <div className="modal">{children}</div>
     </div>,
     document.querySelector('#modal-root')
   );

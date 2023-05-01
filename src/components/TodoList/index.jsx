@@ -10,17 +10,17 @@ export const TodoList = () => {
   const todos = useSelector(getTodos);
 
   return (
-    <section className="todoListSection">
+    <section className="todo-list__section">
       <Container>
-        <h1 className="todoList-title">Tasks</h1>
+        <h1 className="todo-list__title">Tasks</h1>
         {todos.length ? (
-          <ul className="todoList">
+          <ul className="todo-list">
             {todos.map(todo => (
               <TodoItem key={todo.id} item={todo} />
             ))}
           </ul>
         ) : (
-          <p className="todoList__notification">
+          <p className="todo-list__notification">
             You do not have any task to do. Add the first one!
           </p>
         )}
