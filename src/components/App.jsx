@@ -1,11 +1,13 @@
 import { TodoForm } from './TodoForm';
+import { StatusFilter } from './StatusFilter';
 import { TodoList } from './TodoList';
 
 export const App = () => {
   return (
-    <div>
+    <>
       <TodoForm />
+      <StatusFilter />
       <TodoList />
-    </div>
+    </>
   );
 };

@@ -44,3 +44,9 @@ export const editTodo = (todoId, { text, start, end }) => {
     },
   };
 };
+
+export const clearCompleted = () => {
+  return {
+    type: 'todos/clearCompleted',
+  };
+};

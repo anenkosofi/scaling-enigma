@@ -57,7 +57,8 @@
   border: 1px solid transparent;
   border-radius: 6px;
 
-  transition: border-color 250ms $timing-function;
+  transition: background-color 250ms $timing-function,
+    border-color 250ms $timing-function;
 
   &:hover,
   &:focus {
