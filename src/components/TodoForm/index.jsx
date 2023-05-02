@@ -3,6 +3,8 @@ import { useDispatch } from 'react-redux';
 import { HiPlus } from 'react-icons/hi';
 
 import { addTodo } from '../../redux/todos/actions';
+import { setStatusFilter } from '../../redux/filters/actions';
+import { statusFilters } from '../../redux/filters/constants';
 import { getFormattedDate } from '../../helpers/formatDate';
 import { getInitialDates } from '../../helpers/getInitialDates';
 import {
@@ -50,7 +52,7 @@ export const TodoForm = () => {
         end: getFormattedDate(end),
       })
     );
-
+    dispatch(setStatusFilter(statusFilters.all));
     clearInputHandler();
   };
 
