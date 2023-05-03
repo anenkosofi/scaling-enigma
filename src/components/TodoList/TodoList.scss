@@ -10,7 +10,7 @@
   margin: 0 auto;
 
   &__section {
-    padding: 48px 0;
+    padding: 32px 0;
   }
 
   &__title {
@@ -21,7 +21,50 @@
     text-align: center;
   }
 
+  &__button-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 64px;
+
+    margin-bottom: 24px;
+  }
+
   &__notification {
     text-align: center;
+  }
+}
+
+.clear-button {
+  @extend %button;
+  min-width: 150px;
+  min-height: 50px;
+
+  font-family: inherit;
+  font-size: 16px;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+
+  color: $tertiary-black;
+  background-color: $secondary-grey;
+
+  border: 1px solid transparent;
+  border-radius: 6px;
+
+  transition: background-color 250ms $timing-function,
+    border-color 250ms $timing-function;
+
+  &:hover:not(:disabled) {
+    background-color: transparent;
+
+    border-color: $tertiary-black;
+  }
+
+  &:disabled {
+    color: $secondary-grey;
+    background-color: transparent;
+
+    border-color: $secondary-grey;
+
+    cursor: default;
   }
 }

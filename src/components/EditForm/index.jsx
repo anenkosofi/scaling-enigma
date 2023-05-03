@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import { setStatusFilter } from '../../redux/filters/actions';
+import { statusFilters } from '../../redux/filters/constants';
 import {
   getInputDate,
   getFormattedDate,
@@ -72,6 +74,7 @@ export const EditForm = ({
     if (!id) {
       dispatch(addTodo(newTodo));
 
+      dispatch(setStatusFilter(statusFilters.all));
       clearInput();
     } else {
       dispatch(editTodo(id, newTodo));

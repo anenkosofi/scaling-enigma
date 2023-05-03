@@ -19,6 +19,9 @@ export const todosReducer = (state = todosInitialState, { type, payload }) => {
         return todo.id === id ? { ...todo, ...updatedTodo } : todo;
       });
 
+    case 'todos/clearCompleted':
+      return state.filter(todo => !todo.completed);
+
     default:
       return state;
   }
