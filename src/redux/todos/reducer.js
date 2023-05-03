@@ -1,26 +1,37 @@
-const todosInitialState = [];
+const todosInitialState = {
+  items: [],
+};
 
 export const todosReducer = (state = todosInitialState, { type, payload }) => {
   switch (type) {
     case 'todos/addTodo':
-      return [payload, ...state];
+      return { ...state, items: [payload, ...state.items] };
 
     case 'todos/toggleCompleted':
-      return state.map(todo =>
-        todo.id === payload ? { ...todo, completed: !todo.completed } : todo
-      );
+      return {
+        ...state,
+        items: state.items.map(todo =>
+          todo.id === payload ? { ...todo, completed: !todo.completed } : todo
+        ),
+      };
 
     case 'todos/deleteTodo':
-      return state.filter(({ id }) => id !== payload);
+      return {
+        ...state,
+        items: state.items.filter(({ id }) => id !== payload),
+      };
 
     case 'todos/editTodo':
-      return state.map(todo => {
-        const { id, todo: updatedTodo } = payload;
-        return todo.id === id ? { ...todo, ...updatedTodo } : todo;
-      });
+      return {
+        ...state,
+        items: state.items.map(todo => {
+          const { id, todo: updatedTodo } = payload;
+          return todo.id === id ? { ...todo, ...updatedTodo } : todo;
+        }),
+      };
 
     case 'todos/clearCompleted':
-      return state.filter(todo => !todo.completed);
+      return { ...state, items: state.items.filter(todo => !todo.completed) };
 
     default:
       return state;
