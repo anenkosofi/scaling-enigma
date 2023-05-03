@@ -6,24 +6,12 @@ import { getTodos } from '../../redux/todos/selectors';
 import { getStatusFilter } from '../../redux/filters/selectors';
 import { statusFilters } from '../../redux/filters/constants';
 import { clearCompleted } from '../../redux/todos/actions';
+import { getVisibleTodos } from '../../helpers/getVisibleTodos';
 import { Container } from '../Container';
 import { StatusFilter } from '../StatusFilter';
 import { TodoItem } from '../TodoItem';
 
 import './TodoList.scss';
-
-const getVisibleTodos = (todos, statusFilter) => {
-  switch (statusFilter) {
-    case statusFilters.active:
-      return todos.filter(todo => !todo.completed);
-
-    case statusFilters.completed:
-      return todos.filter(todo => todo.completed);
-
-    default:
-      return todos;
-  }
-};
 
 export const TodoList = () => {
   const [message, setMessage] = useState(
