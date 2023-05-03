@@ -1,20 +1,8 @@
-import { createStore, combineReducers } from 'redux';
-import { persistStore, persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
+import { createStore } from 'redux';
+import { persistStore } from 'redux-persist';
 import { devToolsEnhancer } from '@redux-devtools/extension';
 
-import { todosReducer } from './todos/reducer';
-import { filtersReducer } from './filters/reducer';
-
-const todosPersistConfig = {
-  key: 'todos',
-  storage,
-};
-
-const rootReducer = combineReducers({
-  todos: persistReducer(todosPersistConfig, todosReducer),
-  filters: filtersReducer,
-});
+import { rootReducer } from './reducers';
 
 const enhancer = devToolsEnhancer();
 
