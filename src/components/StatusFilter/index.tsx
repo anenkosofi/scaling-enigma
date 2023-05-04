@@ -1,18 +1,21 @@
-import { useSelector, useDispatch } from 'react-redux';
+import { FC } from 'react';
 
-import { statusFilters } from '../../redux/filters/constants';
-import { setStatusFilter } from '../../redux/filters/actions';
-import { getStatusFilter } from '../../redux/filters/selectors';
+import { FilterStatuses } from '../../store/types/filters';
+import { setStatusFilter } from '../../store/actions/filtersActions';
+import { getStatusFilter } from '../../store/selectors/filtersSelector';
+import { useTypedSelector } from '../../hooks/useTypedSelector';
+import { useTypedDispatch } from '../../hooks/useTypedDispatch';
 import { Button } from '../Button';
 
 import './StatusFilter.scss';
 
-export const StatusFilter = () => {
-  const filter = useSelector(getStatusFilter);
-  const dispatch = useDispatch();
-  const buttons = Object.values(statusFilters);
+export const StatusFilter: FC = () => {
+  const dispatch = useTypedDispatch();
+  const filter = useTypedSelector(getStatusFilter);
+  const buttons = Object.values(FilterStatuses);
 
-  const filterChangeHandler = filter => dispatch(setStatusFilter(filter));
+  const filterChangeHandler = (filter: FilterStatuses) =>
+    dispatch(setStatusFilter(filter));
 
   return (
     <div className="filters-wrapper">

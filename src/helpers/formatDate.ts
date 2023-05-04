@@ -1,4 +1,4 @@
-export const getFormattedDate = date => {
+export const getFormattedDate = (date: Date): string => {
   const year = date.getFullYear();
   const month = ('0' + (date.getMonth() + 1)).slice(-2);
   const day = ('0' + date.getDate()).slice(-2);
@@ -11,7 +11,7 @@ export const getFormattedDate = date => {
     .padStart(2, '0')}`;
 };
 
-export const getInputDate = date => {
+export const getInputDate = (date: Date): string => {
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
   const day = date.getDate();
@@ -25,7 +25,7 @@ export const getInputDate = date => {
     .padStart(2, '0')}`;
 };
 
-export const getOriginalDate = date => {
+export const getOriginalDate = (date: string): Date => {
   const [dateTime, time] = date.split(' ');
   const [day, month, year] = dateTime.split('.');
   const [hours, minutes] = time.split(':');

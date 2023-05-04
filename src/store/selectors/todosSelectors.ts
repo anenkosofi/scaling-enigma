@@ -1,3 +1,3 @@
-import { RootState } from '../reducers';
+import { RootState } from '../store';
 
 export const getTodos = (state: RootState) => state.todos.items;

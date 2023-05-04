@@ -1,9 +1,9 @@
-export const SET_STATUS_FILTER = 'SET_STATUS_FILTER';
+export const SET_STATUS_FILTER = 'filters/setStatusFilter';
 
 export enum FilterStatuses {
-  ALL = 'ALL',
-  ACTIVE = 'ACTIVE',
-  COMPLETED = 'COMPLETED',
+  ALL = 'all',
+  ACTIVE = 'active',
+  COMPLETED = 'completed',
 }
 
 export interface FilterState {

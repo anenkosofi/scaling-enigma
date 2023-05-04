@@ -1,11 +1,11 @@
-import PropTypes from 'prop-types';
+import { FC } from 'react';
 
 import './Container.scss';
 
-export const Container = ({ children }) => {
-  return <div className="container">{children}</div>;
+type ContainerProps = {
+  children: React.ReactNode;
 };
 
-Container.propTypes = {
-  children: PropTypes.node.isRequired,
+export const Container: FC<ContainerProps> = ({ children }) => {
+  return <div className="container">{children}</div>;
 };

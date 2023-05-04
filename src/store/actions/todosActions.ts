@@ -1,13 +1,12 @@
 import { nanoid } from 'nanoid';
 
-import {
-  AddedTodo,
-  UpdatedTodo,
-  TodosActionTypes,
-  TodosAction,
-} from '../types/todos';
+import { Todo } from '../../types/todo';
+import { TodosActionTypes, TodosAction } from '../types/todos';
 
-export const addTodo = ({ text, start, end }: AddedTodo): TodosAction => {
+export const addTodo = ({
+  text,
+  time: { start, end },
+}: Omit<Todo, 'id' | 'completed'>): TodosAction => {
   return {
     type: TodosActionTypes.ADD_TODO,
     payload: {
@@ -36,22 +35,10 @@ export const deleteTodo = (todoId: string) => {
   };
 };
 
-export const editTodo = (
-  todoId: string,
-  { text, start, end }: UpdatedTodo
-): TodosAction => {
+export const editTodo = (todo: Omit<Todo, 'completed'>): TodosAction => {
   return {
     type: TodosActionTypes.EDIT_TODO,
-    payload: {
-      id: todoId,
-      todo: {
-        text,
-        time: {
-          start,
-          end,
-        },
-      },
-    },
+    payload: todo,
   };
 };
 

@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { FC, useState, useEffect } from 'react';
 import { HiPlus } from 'react-icons/hi';
 
-import { addTodo } from '../../redux/todos/actions';
-import { setStatusFilter } from '../../redux/filters/actions';
-import { statusFilters } from '../../redux/filters/constants';
+import { useTypedDispatch } from '../../hooks/useTypedDispatch';
+import { addTodo } from '../../store/actions/todosActions';
+import { setStatusFilter } from '../../store/actions/filtersActions';
+import { FilterStatuses } from '../../store/types/filters';
 import { getFormattedDate } from '../../helpers/formatDate';
 import { getInitialDates } from '../../helpers/getInitialDates';
 import {
@@ -16,14 +16,14 @@ import { TodoModal } from '../TodoModal';
 
 import './TodoForm.scss';
 
-export const TodoForm = () => {
+export const TodoForm: FC = () => {
   const [modal, setModal] = useState(false);
   const [text, setText] = useState('');
-  const [error, setError] = useState(null);
-  const dispatch = useDispatch();
+  const [error, setError] = useState<string | null>(null);
+  const dispatch = useTypedDispatch();
 
   useEffect(() => {
-    const bodyEl = document.getElementById('body');
+    const bodyEl = document.getElementById('body') as HTMLElement;
 
     bodyEl.style.overflow = modal ? 'hidden' : 'visible';
   }, [modal]);
@@ -32,7 +32,7 @@ export const TodoForm = () => {
     setError(validateSymbols(text));
   }, [text]);
 
-  const submitHandler = e => {
+  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const lengthError = validateTextLength(text);
@@ -48,15 +48,17 @@ export const TodoForm = () => {
     dispatch(
       addTodo({
         text: text,
-        start: getFormattedDate(start),
-        end: getFormattedDate(end),
+        time: {
+          start: getFormattedDate(start),
+          end: getFormattedDate(end),
+        },
       })
     );
-    dispatch(setStatusFilter(statusFilters.all));
+    dispatch(setStatusFilter(FilterStatuses.ALL));
     clearInputHandler();
   };
 
-  const changeHandler = e => {
+  const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value);
   };
 

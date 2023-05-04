@@ -5,55 +5,14 @@ export interface TodosState {
 }
 
 export enum TodosActionTypes {
-  ADD_TODO = 'ADD_TODO',
-  TOGGLE_COMPLETED = 'TOGGLE_COMPLETED',
-  DELETE_TODO = 'DELETE_TODO',
-  EDIT_TODO = 'EDIT_TODO',
-  CLEAR_COMPLETED = 'CLEAR_COMPLETED',
+  ADD_TODO = 'todos/addTodo',
+  TOGGLE_COMPLETED = 'todos/toggleCompleted',
+  DELETE_TODO = 'todos/deleteTodo',
+  EDIT_TODO = 'todos/editTodo',
+  CLEAR_COMPLETED = 'todos/clearCompleted',
 }
 
-export type AddedTodo = {
-  text: string;
-  start: string;
-  end: string;
-};
-
-export type UpdatedTodo = {
-  text?: string;
-  start?: string;
-  end?: string;
-};
-
-interface AddTodoAction {
-  type: TodosActionTypes.ADD_TODO;
-  payload: Todo;
+export interface TodosAction {
+  type: TodosActionTypes;
+  payload?: Todo | Omit<Todo, 'completed'> | string;
 }
-
-interface ToggleCompletedAction {
-  type: TodosActionTypes.TOGGLE_COMPLETED;
-  payload: string;
-}
-
-interface DeleteTodoAction {
-  type: TodosActionTypes.DELETE_TODO;
-  payload: string;
-}
-
-interface EditTodoAction {
-  type: TodosActionTypes.EDIT_TODO;
-  payload: {
-    id: string;
-    todo: Partial<Todo>;
-  };
-}
-
-interface ClearCompletedAction {
-  type: TodosActionTypes.CLEAR_COMPLETED;
-}
-
-export type TodosAction =
-  | AddTodoAction
-  | ToggleCompletedAction
-  | DeleteTodoAction
-  | EditTodoAction
-  | ClearCompletedAction;

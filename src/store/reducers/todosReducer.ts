@@ -1,3 +1,4 @@
+import { Todo } from '../../types/todo';
 import { TodosState, TodosActionTypes, TodosAction } from '../types/todos';
 
 const todosInitialState: TodosState = {
@@ -10,7 +11,7 @@ export const todosReducer = (
 ): TodosState => {
   switch (type) {
     case TodosActionTypes.ADD_TODO:
-      return { ...state, items: [payload, ...state.items] };
+      return { ...state, items: [payload as Todo, ...state.items] };
 
     case TodosActionTypes.TOGGLE_COMPLETED:
       return {
@@ -30,8 +31,8 @@ export const todosReducer = (
       return {
         ...state,
         items: state.items.map(todo => {
-          const { id, todo: updatedTodo } = payload;
-          return todo.id === id ? { ...todo, ...updatedTodo } : todo;
+          const { id, ...rest } = payload as Todo;
+          return todo.id === id ? { ...todo, ...rest } : todo;
         }),
       };
 
