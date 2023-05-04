@@ -5,10 +5,11 @@ import toast, { Toaster } from 'react-hot-toast';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { getTodos } from '../../redux/todos/selectors';
 import { getStatusFilter } from '../../redux/filters/selectors';
-import { statusFilters } from '../../redux/filters/constants';
 import { clearCompleted } from '../../redux/todos/actions';
 import { getVisibleTodos } from '../../helpers/getVisibleTodos';
+import { getMessage } from '../../helpers/setMessage';
 import { Container } from '../Container';
+import { SearchForm } from '../SearchForm';
 import { StatusFilter } from '../StatusFilter';
 import { TodoItem } from '../TodoItem';
 
@@ -18,10 +19,11 @@ export const TodoList = () => {
   const [message, setMessage] = useState(
     'You do not have any task to do. Add the first!'
   );
+  const [query, setQuery] = useState('');
   const dispatch = useDispatch();
   const todos = useTypedSelector(getTodos);
   const statusFilter = useTypedSelector(getStatusFilter);
-  const visibleTodos = getVisibleTodos(todos, statusFilter);
+  const visibleTodos = getVisibleTodos({ todos, statusFilter, query });
   const areAnyTasksCompleted = todos.some(todo => todo.completed);
 
   const clearCompletedHandler = () => {
@@ -39,26 +41,18 @@ export const TodoList = () => {
   };
 
   useEffect(() => {
-    const setNotification = () => {
-      switch (statusFilter) {
-        case statusFilters.active:
-          return setMessage('You do not have active tasks at the moment.');
+    const message = getMessage(statusFilter, query);
+    setMessage(message);
+  }, [statusFilter, query]);
 
-        case statusFilters.completed:
-          return setMessage('You do not have completed tasks at the moment.');
-
-        default:
-          return setMessage('You do not have any task to do. Add the first!');
-      }
-    };
-    setNotification();
-  }, [statusFilter]);
+  const getQuery = query => setQuery(query);
 
   return (
     <section className="todo-list__section">
       <Toaster />
       <Container>
         <h1 className="todo-list__title">Tasks</h1>
+        <SearchForm onGetQuery={getQuery} />
         <div className="todo-list__button-wrapper">
           <StatusFilter />
           <button
