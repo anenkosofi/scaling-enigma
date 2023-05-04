@@ -1,0 +1,80 @@
+@import '../../styles/shared.scss';
+
+.search-form {
+  display: flex;
+  justify-content: center;
+
+  &__field {
+    position: relative;
+
+    display: flex;
+    justify-content: center;
+
+    width: 60%;
+    margin-bottom: 24px;
+
+    background-color: $dark-white;
+
+    border-radius: 15px;
+  }
+
+  &__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    border: 0;
+    padding: 0;
+
+    white-space: nowrap;
+    clip-path: inset(100%);
+    clip: rect(0 0 0 0);
+    overflow: hidden;
+  }
+
+  &__input {
+    @extend %input;
+
+    padding-right: 166px;
+  }
+
+  &__button {
+    @extend %button;
+
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    min-width: 150px;
+    min-height: 50px;
+
+    font-family: inherit;
+    font-size: 16px;
+    line-height: 1.2;
+    letter-spacing: 0.03em;
+
+    color: $primary-light-white;
+    background-color: $tertiary-black;
+
+    border: 2px solid $tertiary-black;
+    border-radius: 10px;
+
+    transition: color 250ms $timing-function,
+      background-color 250ms $timing-function,
+      border-color 250ms $timing-function;
+
+    &:hover:not(:disabled) {
+      background-color: $light-green;
+
+      border-color: $light-green;
+    }
+
+    &:disabled {
+      color: $primary-grey;
+
+      border-color: $secondary-grey;
+
+      cursor: default;
+    }
+  }
+}
