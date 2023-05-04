@@ -1,13 +1,18 @@
-const todosInitialState = {
+import { TodosState, TodosActionTypes, TodosAction } from '../types/todos';
+
+const todosInitialState: TodosState = {
   items: [],
 };
 
-export const todosReducer = (state = todosInitialState, { type, payload }) => {
+export const todosReducer = (
+  state = todosInitialState,
+  { type, payload }: TodosAction
+): TodosState => {
   switch (type) {
-    case 'todos/addTodo':
+    case TodosActionTypes.ADD_TODO:
       return { ...state, items: [payload, ...state.items] };
 
-    case 'todos/toggleCompleted':
+    case TodosActionTypes.TOGGLE_COMPLETED:
       return {
         ...state,
         items: state.items.map(todo =>
@@ -15,13 +20,13 @@ export const todosReducer = (state = todosInitialState, { type, payload }) => {
         ),
       };
 
-    case 'todos/deleteTodo':
+    case TodosActionTypes.DELETE_TODO:
       return {
         ...state,
         items: state.items.filter(({ id }) => id !== payload),
       };
 
-    case 'todos/editTodo':
+    case TodosActionTypes.EDIT_TODO:
       return {
         ...state,
         items: state.items.map(todo => {
@@ -30,7 +35,7 @@ export const todosReducer = (state = todosInitialState, { type, payload }) => {
         }),
       };
 
-    case 'todos/clearCompleted':
+    case TodosActionTypes.CLEAR_COMPLETED:
       return { ...state, items: state.items.filter(todo => !todo.completed) };
 
     default:

@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import toast, { Toaster } from 'react-hot-toast';
 
+import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { getTodos } from '../../redux/todos/selectors';
 import { getStatusFilter } from '../../redux/filters/selectors';
 import { statusFilters } from '../../redux/filters/constants';
@@ -18,8 +19,8 @@ export const TodoList = () => {
     'You do not have any task to do. Add the first!'
   );
   const dispatch = useDispatch();
-  const todos = useSelector(getTodos);
-  const statusFilter = useSelector(getStatusFilter);
+  const todos = useTypedSelector(getTodos);
+  const statusFilter = useTypedSelector(getStatusFilter);
   const visibleTodos = getVisibleTodos(todos, statusFilter);
   const areAnyTasksCompleted = todos.some(todo => todo.completed);
 
