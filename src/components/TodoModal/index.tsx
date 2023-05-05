@@ -5,7 +5,6 @@ import { EditForm } from '../EditForm';
 
 type TodoModalProps = {
   closeModal: () => void;
-  clearInput?: () => void;
   todo: {
     id?: string;
     text: string;
@@ -14,6 +13,7 @@ type TodoModalProps = {
       end?: string;
     };
   };
+  clearInput?: () => void;
 };
 
 export const TodoModal: FC<TodoModalProps> = ({

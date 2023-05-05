@@ -1,7 +1,7 @@
-import { FC, useState, useEffect } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 
 import { setStatusFilter } from '../../store/actions/filtersActions';
-import { FilterStatuses } from '../../store/types/filters';
+import { FilterStatuses } from '../../types/filters';
 import {
   getInputDate,
   getFormattedDate,
@@ -19,7 +19,6 @@ import './EditForm.scss';
 
 type EditFormProps = {
   closeModal: () => void;
-  clearInput?: () => void;
   todo: {
     id?: string;
     text: string;
@@ -28,6 +27,7 @@ type EditFormProps = {
       end?: string;
     };
   };
+  clearInput?: () => void;
 };
 
 type ErrorState = {

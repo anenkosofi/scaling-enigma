@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { FilterStatuses } from '../../store/types/filters';
+import { FilterStatuses } from '../../types/filters';
 import { setStatusFilter } from '../../store/actions/filtersActions';
 import { getStatusFilter } from '../../store/selectors/filtersSelector';
 import { useTypedSelector } from '../../hooks/useTypedSelector';

@@ -1,4 +1,4 @@
-import { FilterStatuses } from '../store/types/filters';
+import { FilterStatuses } from '../types/filters';
 
 export const getMessage = (filter: string, query: string) => {
   const messages = {

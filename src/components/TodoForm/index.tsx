@@ -1,10 +1,10 @@
-import { FC, useState, useEffect } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { HiPlus } from 'react-icons/hi';
 
 import { useTypedDispatch } from '../../hooks/useTypedDispatch';
 import { addTodo } from '../../store/actions/todosActions';
 import { setStatusFilter } from '../../store/actions/filtersActions';
-import { FilterStatuses } from '../../store/types/filters';
+import { FilterStatuses } from '../../types/filters';
 import { getFormattedDate } from '../../helpers/formatDate';
 import { getInitialDates } from '../../helpers/getInitialDates';
 import {

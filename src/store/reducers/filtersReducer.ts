@@ -1,9 +1,9 @@
 import {
   SET_STATUS_FILTER,
   FilterState,
-  FilterStatuses,
   FiltersAction,
 } from '../types/filters';
+import { FilterStatuses } from '../../types/filters';
 
 const filterInitialState: FilterState = {
   status: FilterStatuses.ALL,

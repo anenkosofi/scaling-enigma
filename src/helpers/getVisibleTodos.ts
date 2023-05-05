@@ -1,4 +1,4 @@
-import { FilterStatuses } from '../store/types/filters';
+import { FilterStatuses } from '../types/filters';
 import { Todo } from '../types/todo';
 
 export const getVisibleTodos = ({
