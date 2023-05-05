@@ -58,9 +58,9 @@
 
   @include themify($themes) {
     color: themed('primary-light-white');
-    background-color: themed('light-green');
+    background-color: themed('secondary-dark-accent');
 
-    border: 1px solid themed('light-green');
+    border: 1px solid themed('secondary-dark-accent');
   }
   border-radius: 100px;
 
@@ -70,9 +70,9 @@
   &:focus,
   &:hover {
     @include themify($themes) {
-      background-color: themed('dark-accent');
+      background-color: themed('light-green');
 
-      border-color: themed('dark-accent');
+      border-color: themed('light-green');
     }
   }
 }

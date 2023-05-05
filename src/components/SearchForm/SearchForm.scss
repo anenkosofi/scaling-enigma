@@ -54,9 +54,9 @@
 
     @include themify($themes) {
       color: themed('primary-light-white');
-      background-color: themed('tertiary-black');
+      background-color: themed('secondary-dark-accent');
 
-      border: 2px solid themed('tertiary-black');
+      border: 2px solid themed('secondary-dark-accent');
     }
     border-radius: 10px;
 
