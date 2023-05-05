@@ -32,8 +32,8 @@
   font-size: 16px;
 
   @include themify($themes) {
-    color: themed('primary-light-white');
-    background-color: themed('light-green');
+    color: theme('primary-light-white');
+    background-color: theme('light-green');
   }
 
   border-radius: 6px;
@@ -43,7 +43,7 @@
   &:hover,
   &:focus {
     @include themify($themes) {
-      background-color: themed('dark-accent');
+      background-color: theme('dark-accent');
     }
   }
 }

@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { RiCalendarTodoLine } from 'react-icons/ri';
 
+import { Theme } from '../../types/theme';
 import { Container } from '../Container';
 import { ThemeContext } from '../ThemeProvider';
 
@@ -19,7 +20,7 @@ export const ThemeToggler = () => {
           <button type="button" className="switch-body" onClick={toggleTheme}>
             <span
               className={
-                theme === 'dark'
+                theme === Theme.DARK
                   ? 'switch-body__circle switch-body__circle--dark'
                   : 'switch-body__circle'
               }
