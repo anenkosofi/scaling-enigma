@@ -23,7 +23,9 @@
 
   letter-spacing: 0.03em;
 
-  color: $red;
+  @include themify($themes) {
+    color: themed('red');
+  }
 }
 
 %input {
@@ -33,16 +35,22 @@
 
   font-size: 16px;
 
-  color: $primary-black;
+  @include themify($themes) {
+    color: themed('tertiary-black');
+  }
   background-color: transparent;
 
-  border: 1px solid $primary-grey;
+  @include themify($themes) {
+    border: 1px solid themed('primary-grey');
+  }
   border-radius: 10px;
   outline: none;
 
   transition: border-color 250ms $timing-function;
 
   &:focus {
-    border-color: $primary-black;
+    @include themify($themes) {
+      border-color: themed('primary-black');
+    }
   }
 }

@@ -11,29 +11,39 @@
   text-transform: capitalize;
   letter-spacing: 0.01em;
 
-  color: $dark-accent;
+  @include themify($themes) {
+    color: themed('dark-accent');
+  }
   background-color: transparent;
 
-  border: 2px solid $light-green;
+  @include themify($themes) {
+    border: 2px solid themed('light-green');
+  }
   border-radius: 6px;
 
   transition: color 240ms $timing-function,
     background-color 250ms $timing-function, border-color 250ms $timing-function;
 
   &:hover {
-    color: $primary-light-white;
-    background-color: $light-green;
+    @include themify($themes) {
+      color: themed('primary-light-white');
+      background-color: themed('light-green');
+    }
   }
 
   &:active {
-    color: $dark-accent;
-    background-color: $light-green;
+    @include themify($themes) {
+      color: themed('secondary-dark-accent');
+      background-color: themed('light-green');
 
-    border-color: $light-green;
+      border-color: themed('light-green');
+    }
   }
 
   &--selected {
-    color: $primary-light-white;
-    background-color: $light-green;
+    @include themify($themes) {
+      color: themed('primary-light-white');
+      background-color: themed('light-green');
+    }
   }
 }

@@ -3,12 +3,12 @@
 .todo-form {
   width: 90%;
 
-  background-color: $dark-white;
+  background-color: transparent;
 
   border-radius: 15px;
 
   &__section {
-    padding: 40px 0 16px;
+    padding: 24px 0;
   }
 
   &__container {
@@ -56,10 +56,12 @@
   width: 50px;
   height: 50px;
 
-  color: $primary-light-white;
-  background-color: $light-green;
+  @include themify($themes) {
+    color: themed('primary-light-white');
+    background-color: themed('light-green');
 
-  border: 1px solid $light-green;
+    border: 1px solid themed('light-green');
+  }
   border-radius: 100px;
 
   transition: color 250ms $timing-function,
@@ -67,7 +69,10 @@
 
   &:focus,
   &:hover {
-    background-color: $dark-accent;
-    border-color: $dark-accent;
+    @include themify($themes) {
+      background-color: themed('dark-accent');
+
+      border-color: themed('dark-accent');
+    }
   }
 }

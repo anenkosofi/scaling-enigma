@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 
 import { useTypedDispatch } from '../../hooks/useTypedDispatch';

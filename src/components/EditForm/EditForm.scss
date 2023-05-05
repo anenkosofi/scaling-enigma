@@ -31,8 +31,10 @@
 
   font-size: 16px;
 
-  color: $primary-light-white;
-  background-color: $light-green;
+  @include themify($themes) {
+    color: themed('primary-light-white');
+    background-color: themed('light-green');
+  }
 
   border-radius: 6px;
 
@@ -40,7 +42,9 @@
 
   &:hover,
   &:focus {
-    background-color: $dark-accent;
+    @include themify($themes) {
+      background-color: themed('dark-accent');
+    }
   }
 }
 
@@ -51,8 +55,10 @@
 
   font-size: 16px;
 
-  color: $tertiary-black;
-  background-color: $secondary-grey;
+  @include themify($themes) {
+    color: themed('tertiary-black');
+    background-color: themed('secondary-grey');
+  }
 
   border: 1px solid transparent;
   border-radius: 6px;
@@ -64,7 +70,9 @@
   &:focus {
     background-color: transparent;
 
-    border-color: $tertiary-black;
+    @include themify($themes) {
+      border-color: themed('tertiary-black');
+    }
   }
 }
 
