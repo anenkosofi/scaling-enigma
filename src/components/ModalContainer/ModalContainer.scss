@@ -16,7 +16,7 @@
   top: 50%;
   left: 50%;
 
-  width: 460px;
+  width: 100%;
   padding: 24px;
 
   background-color: $secondary-light-white;
@@ -26,4 +26,8 @@
   border-radius: 10px;
 
   transform: translate(-50%, -50%) scale(1);
+
+  @media screen and (min-width: 460px) {
+    width: 460px;
+  }
 }

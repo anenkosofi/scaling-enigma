@@ -1,6 +1,6 @@
-import { statusFilters } from '../redux/filters/constants';
+import { FilterStatuses } from '../types/filters';
 
-export const getMessage = (filter, query) => {
+export const getMessage = (filter: string, query: string) => {
   const messages = {
     all: 'You do not have any task to do. Add the first!',
     active: 'You do not have active tasks at the moment.',
@@ -12,10 +12,10 @@ export const getMessage = (filter, query) => {
   }
 
   switch (filter) {
-    case statusFilters.active:
+    case FilterStatuses.ACTIVE:
       return messages.active;
 
-    case statusFilters.completed:
+    case FilterStatuses.COMPLETED:
       return messages.completed;
 
     default:

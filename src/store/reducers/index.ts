@@ -2,8 +2,8 @@ import { combineReducers } from 'redux';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-import { todosReducer } from './todos/reducer';
-import { filtersReducer } from './filters/reducer';
+import { todosReducer } from './todosReducer';
+import { filtersReducer } from './filtersReducer';
 
 const todosPersistConfig = {
   key: 'todos',

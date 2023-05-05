@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { FC, useState } from 'react';
 import {
   TbClock,
   TbCalendarTime,
@@ -7,14 +6,21 @@ import {
   TbEdit,
   TbTrash,
 } from 'react-icons/tb';
-import PropTypes from 'prop-types';
 
-import { toggleCompleted, deleteTodo } from '../../redux/todos/actions';
-import { getTodos } from '../../redux/todos/selectors';
+import { Todo } from '../../types/todo';
+import { useTypedSelector } from '../../hooks/useTypedSelector';
+import { useTypedDispatch } from '../../hooks/useTypedDispatch';
+import { toggleCompleted, deleteTodo } from '../../store/actions/todosActions';
+import { getTodos } from '../../store/selectors/todosSelectors';
 import { TodoModal } from '../TodoModal';
+
 import './TodoItem.scss';
 
-export const TodoItem = ({
+type TodoItemProps = {
+  item: Todo;
+};
+
+export const TodoItem: FC<TodoItemProps> = ({
   item: {
     id,
     text,
@@ -23,17 +29,17 @@ export const TodoItem = ({
   },
 }) => {
   const [modal, setModal] = useState(false);
-  const [todo, setTodo] = useState(null);
-  const dispatch = useDispatch();
-  const todos = useSelector(getTodos);
+  const [todo, setTodo] = useState<Todo | null>(null);
+  const dispatch = useTypedDispatch();
+  const todos = useTypedSelector(getTodos);
 
-  const toggleCompletedHandler = id => dispatch(toggleCompleted(id));
+  const toggleCompletedHandler = (id: string) => dispatch(toggleCompleted(id));
 
-  const deleteTodoHandler = id => dispatch(deleteTodo(id));
+  const deleteTodoHandler = (id: string) => dispatch(deleteTodo(id));
 
-  const editTodoHandler = id => {
-    const item = todos.find(({ id: todoId }) => todoId === id);
-    setTodo(item);
+  const editTodoHandler = (id: string) => {
+    const item = todos.find(({ id: todoId }: { id: string }) => todoId === id);
+    if (item) setTodo(item);
     closeModalHandler();
   };
 
@@ -73,7 +79,7 @@ export const TodoItem = ({
             </span>
           </p>
         </div>
-        <div className="button-wrapper">
+        <div className="todo__button-wrapper">
           <button
             type="button"
             disabled={completed}
@@ -91,19 +97,9 @@ export const TodoItem = ({
           </button>
         </div>
       </li>
-      {modal && <TodoModal closeModal={closeModalHandler} todo={todo} />}
+      {modal && todo && (
+        <TodoModal closeModal={closeModalHandler} todo={todo} />
+      )}
     </>
   );
-};
-
-TodoItem.propTypes = {
-  item: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    text: PropTypes.string.isRequired,
-    completed: PropTypes.bool.isRequired,
-    time: PropTypes.exact({
-      start: PropTypes.string.isRequired,
-      end: PropTypes.string.isRequired,
-    }).isRequired,
-  }).isRequired,
 };

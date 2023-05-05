@@ -1,9 +1,7 @@
-import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import PropTypes from 'prop-types';
+import React, { FC, useState, useEffect } from 'react';
 
-import { setStatusFilter } from '../../redux/filters/actions';
-import { statusFilters } from '../../redux/filters/constants';
+import { setStatusFilter } from '../../store/actions/filtersActions';
+import { FilterStatuses } from '../../types/filters';
 import {
   getInputDate,
   getFormattedDate,
@@ -14,11 +12,31 @@ import {
   validateTextLength,
 } from '../../helpers/validateInputs';
 import { getInitialDates } from '../../helpers/getInitialDates';
-import { addTodo, editTodo } from '../../redux/todos/actions';
+import { addTodo, editTodo } from '../../store/actions/todosActions';
+import { useTypedDispatch } from '../../hooks/useTypedDispatch';
 
 import './EditForm.scss';
 
-export const EditForm = ({
+type EditFormProps = {
+  closeModal: () => void;
+  todo: {
+    id?: string;
+    text: string;
+    time?: {
+      start?: string;
+      end?: string;
+    };
+  };
+  clearInput?: () => void;
+};
+
+type ErrorState = {
+  text: string | null;
+  start: string | null;
+  end: string | null;
+};
+
+export const EditForm: FC<EditFormProps> = ({
   closeModal,
   clearInput,
   todo: { id, text, time },
@@ -32,8 +50,12 @@ export const EditForm = ({
       ? getInputDate(getOriginalDate(time.end))
       : getInputDate(getInitialDates()[1]),
   });
-  const [error, setError] = useState({ text: null, start: null, end: null });
-  const dispatch = useDispatch();
+  const [error, setError] = useState<ErrorState>({
+    text: null,
+    start: null,
+    end: null,
+  });
+  const dispatch = useTypedDispatch();
 
   useEffect(() => {
     const errors = validateValues({
@@ -45,12 +67,12 @@ export const EditForm = ({
     setError(errors);
   }, [form.text, form.start, form.end]);
 
-  const changeHandler = e => {
+  const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.currentTarget;
     setForm(prevForm => ({ ...prevForm, [name]: value }));
   };
 
-  const submitHandler = e => {
+  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const textError = validateTextLength(form.text);
@@ -67,17 +89,27 @@ export const EditForm = ({
 
     const newTodo = {
       text: form.text,
-      start: getFormattedDate(new Date(form.start)),
-      end: getFormattedDate(new Date(form.end)),
+      time: {
+        start: getFormattedDate(new Date(form.start)),
+        end: getFormattedDate(new Date(form.end)),
+      },
     };
 
     if (!id) {
       dispatch(addTodo(newTodo));
 
-      dispatch(setStatusFilter(statusFilters.all));
-      clearInput();
+      dispatch(setStatusFilter(FilterStatuses.ALL));
+      clearInput?.();
     } else {
-      dispatch(editTodo(id, newTodo));
+      const updatedTodo = {
+        id,
+        text: form.text,
+        time: {
+          start: getFormattedDate(new Date(form.start)),
+          end: getFormattedDate(new Date(form.end)),
+        },
+      };
+      dispatch(editTodo(updatedTodo));
     }
 
     setForm({ text: '', start: '', end: '' });
@@ -135,17 +167,4 @@ export const EditForm = ({
       </div>
     </form>
   );
-};
-
-EditForm.propTypes = {
-  closeModal: PropTypes.func.isRequired,
-  clearInput: PropTypes.func,
-  todo: PropTypes.shape({
-    id: PropTypes.string,
-    text: PropTypes.string.isRequired,
-    time: PropTypes.exact({
-      start: PropTypes.string.isRequired,
-      end: PropTypes.string.isRequired,
-    }),
-  }).isRequired,
 };

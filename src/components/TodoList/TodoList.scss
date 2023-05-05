@@ -23,9 +23,12 @@
 
   &__button-wrapper {
     display: flex;
-    justify-content: center;
-    gap: 116px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px;
 
+    max-width: 744px;
+    margin: 0 auto;
     margin-bottom: 24px;
   }
 

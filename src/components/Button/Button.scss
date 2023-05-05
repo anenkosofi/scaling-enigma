@@ -3,8 +3,7 @@
 .filter-button {
   @extend %button;
 
-  min-width: 150px;
-  min-height: 50px;
+  padding: 0.75rem 2rem;
 
   font-family: inherit;
   font-size: 16px;

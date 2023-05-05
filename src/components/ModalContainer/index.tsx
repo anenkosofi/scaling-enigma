@@ -1,12 +1,19 @@
-import { useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import PropTypes from 'prop-types';
 
 import './ModalContainer.scss';
 
-export function ModalContainer({ closeModal, children }) {
+type ModalContainerProps = {
+  closeModal: () => void;
+  children: React.ReactNode;
+};
+
+export const ModalContainer: FC<ModalContainerProps> = ({
+  closeModal,
+  children,
+}) => {
   useEffect(() => {
-    const handleKeydown = e => {
+    const handleKeydown = (e: KeyboardEvent) => {
       if (e.code === 'Escape') {
         closeModal();
       }
@@ -22,11 +29,6 @@ export function ModalContainer({ closeModal, children }) {
     <div className="overlay">
       <div className="modal">{children}</div>
     </div>,
-    document.querySelector('#modal-root')
+    document.querySelector('#modal-root') as HTMLElement
   );
-}
-
-ModalContainer.propTypes = {
-  closeModal: PropTypes.func.isRequired,
-  children: PropTypes.node.isRequired,
 };

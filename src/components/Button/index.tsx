@@ -1,8 +1,14 @@
-import PropTypes from 'prop-types';
+import { FC } from 'react';
 
 import './Button.scss';
 
-export const Button = ({
+type ButtonProps = {
+  selected: boolean;
+  type?: 'button';
+  children: React.ReactNode;
+} & React.HTMLProps<HTMLButtonElement>;
+
+export const Button: FC<ButtonProps> = ({
   selected = false,
   type = 'button',
   children,
@@ -19,10 +25,4 @@ export const Button = ({
       {children}
     </button>
   );
-};
-
-Button.propTypes = {
-  selected: PropTypes.bool,
-  type: PropTypes.string,
-  children: PropTypes.node.isRequired,
 };

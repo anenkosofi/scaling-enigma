@@ -1,21 +1,25 @@
-import { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { FC, useState, useEffect } from 'react';
 
 import './SearchForm.scss';
 
-export const SearchForm = ({ onGetQuery }) => {
+type SearchFormProps = {
+  onGetQuery: (query: string) => void;
+};
+
+export const SearchForm: FC<SearchFormProps> = ({ onGetQuery }) => {
   const [query, setQuery] = useState('');
 
   useEffect(() => {
     onGetQuery(query);
   }, [onGetQuery, query]);
 
-  const getQueryHandler = e => {
+  const getQueryHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.currentTarget;
     setQuery(value);
   };
 
-  const resetHandler = () => setQuery('');
+  const resetHandler: React.MouseEventHandler<HTMLButtonElement> = () =>
+    setQuery('');
 
   return (
     <div className="search-form">
@@ -43,8 +47,4 @@ export const SearchForm = ({ onGetQuery }) => {
       </div>
     </div>
   );
-};
-
-SearchForm.propTypes = {
-  onGetQuery: PropTypes.func.isRequired,
 };

@@ -10,7 +10,7 @@
     display: flex;
     justify-content: center;
 
-    width: 60%;
+    width: 100%;
     margin-bottom: 24px;
 
     background-color: $dark-white;
@@ -35,7 +35,7 @@
   &__input {
     @extend %input;
 
-    padding-right: 166px;
+    padding-right: 124px;
   }
 
   &__button {
@@ -45,8 +45,7 @@
     top: 0;
     right: 0;
 
-    min-width: 150px;
-    min-height: 50px;
+    padding: 0.84rem 2rem;
 
     font-family: inherit;
     font-size: 16px;
