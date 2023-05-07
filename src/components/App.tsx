@@ -1,5 +1,5 @@
-import { TodoForm } from './TodoForm';
-import { TodoList } from './TodoList';
+import { TodoForm } from 'components/TodoForm';
+import { TodoList } from 'components/TodoList';
 
 export const App = () => {
   return (
