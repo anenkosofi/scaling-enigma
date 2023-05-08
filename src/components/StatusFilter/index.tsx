@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import React, { FC } from 'react';
 
 import { FilterStatuses } from '../../types/filters';
 import { setStatusFilter } from '../../store/actions/filtersActions';

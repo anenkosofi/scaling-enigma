@@ -9,7 +9,11 @@
   width: 100%;
 
   border-radius: 16px;
-  border: 1px solid $primary-grey;
+
+  @include themify($themes) {
+    background-color: themed('secondary-light-white');
+    border: 1px solid themed('primary-grey');
+  }
 
   &__input {
     position: absolute;
@@ -38,13 +42,18 @@
     height: 28px;
 
     border-radius: 4px;
-    border: 1px solid $secondary-black;
+
+    @include themify($themes) {
+      border: 1px solid themed('secondary-black');
+    }
 
     cursor: pointer;
   }
 
   &__icon {
-    stroke: $light-green;
+    @include themify($themes) {
+      stroke: themed('light-green');
+    }
 
     opacity: 0;
 
@@ -70,7 +79,9 @@
     text-decoration: line-through;
     word-break: break-word;
 
-    color: $secondary-black;
+    @include themify($themes) {
+      color: themed('secondary-black');
+    }
   }
 
   &__date {
@@ -82,6 +93,7 @@
   .date__descr {
     display: flex;
     flex-direction: column;
+    gap: 8px;
 
     font-size: 1rem;
 
@@ -115,25 +127,33 @@
   width: 44px;
   height: 44px;
 
-  color: $tertiary-black;
+  @include themify($themes) {
+    color: themed('dark-accent');
+
+    border: 2px solid themed('light-green');
+  }
   background-color: transparent;
 
   border-radius: 4px;
-  border: 2px solid $light-green;
 
   transition: color 250ms $timing-function,
     background-color 250ms $timing-function;
 
   &:hover:not(:disabled),
   &:focus:not(:disabled) {
-    color: $primary-light-white;
-    background-color: $light-green;
+    @include themify($themes) {
+      color: themed('primary-light-white');
+
+      background-color: themed('light-green');
+    }
   }
 
   &:disabled {
-    color: $primary-grey;
+    @include themify($themes) {
+      color: themed('primary-grey');
 
-    border-color: $secondary-grey;
+      border-color: themed('secondary-grey');
+    }
 
     cursor: default;
   }

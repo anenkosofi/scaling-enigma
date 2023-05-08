@@ -10,7 +10,7 @@
   margin: 0 auto;
 
   &__section {
-    padding: 32px 0;
+    padding: 24px 0;
   }
 
   &__title {
@@ -47,8 +47,11 @@
   line-height: 1.2;
   letter-spacing: 0.01em;
 
-  color: $tertiary-black;
-  background-color: $secondary-grey;
+  @include themify($themes) {
+    color: themed('tertiary-black');
+
+    background-color: themed('secondary-grey');
+  }
 
   border: 1px solid transparent;
   border-radius: 6px;
@@ -59,14 +62,18 @@
   &:hover:not(:disabled) {
     background-color: transparent;
 
-    border-color: $tertiary-black;
+    @include themify($themes) {
+      border-color: themed('tertiary-black');
+    }
   }
 
   &:disabled {
-    color: $secondary-grey;
-    background-color: transparent;
+    @include themify($themes) {
+      color: themed('secondary-grey');
 
-    border-color: $secondary-grey;
+      border-color: themed('secondary-grey');
+    }
+    background-color: transparent;
 
     cursor: default;
   }
