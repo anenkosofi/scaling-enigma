@@ -7,10 +7,10 @@ import {
   TbTrash,
 } from 'react-icons/tb';
 
-import { Todo } from 'types/todo';
-import { useTypedSelector, useTypedDispatch } from 'hooks';
 import { toggleCompleted, deleteTodo } from 'store/actions/todosActions';
 import { getTodos } from 'store/selectors/todosSelectors';
+import { Todo } from 'types/todo';
+import { useTypedSelector, useTypedDispatch } from 'hooks';
 import { TodoModal } from 'components/TodoModal';
 
 import './TodoItem.scss';

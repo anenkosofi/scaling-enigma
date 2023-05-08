@@ -1,10 +1,10 @@
 import React, { FC, useState, useEffect } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 
-import { useTypedSelector, useTypedDispatch } from 'hooks';
+import { clearCompleted } from 'store/actions/todosActions';
 import { getTodos } from 'store/selectors/todosSelectors';
 import { getStatusFilter } from 'store/selectors/filtersSelector';
-import { clearCompleted } from 'store/actions/todosActions';
+import { useTypedSelector, useTypedDispatch } from 'hooks';
 import { getVisibleTodos, getMessage } from 'helpers';
 import { Container } from 'components/Container';
 import { SearchForm } from 'components/SearchForm';

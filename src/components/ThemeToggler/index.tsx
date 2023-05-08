@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import { RiCalendarTodoLine } from 'react-icons/ri';
 
-import { Theme } from '../../types/theme';
-import { Container } from '../Container';
-import { ThemeContext } from '../ThemeProvider';
+import { Theme } from 'types/theme';
+import { Container } from 'components/Container';
+import { ThemeContext } from 'components/ThemeProvider';
 
 import './ThemeToggler.scss';
 

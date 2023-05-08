@@ -4,7 +4,7 @@ import { HiPlus } from 'react-icons/hi';
 import { FilterStatuses } from 'types/filters';
 import { setStatusFilter } from 'store/actions/filtersActions';
 import { addTodo } from 'store/actions/todosActions';
-import { useTypedDispatch } from 'hooks/useTypedDispatch';
+import { useTypedDispatch } from 'hooks';
 import {
   getFormattedDate,
   getInitialDates,
