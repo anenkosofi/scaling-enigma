@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 
-import { ModalContainer } from '../ModalContainer';
-import { EditForm } from '../EditForm';
+import { ModalContainer } from 'components/ModalContainer';
+import { EditForm } from 'components/EditForm';
 
 type TodoModalProps = {
   closeModal: () => void;

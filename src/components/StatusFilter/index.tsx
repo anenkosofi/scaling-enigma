@@ -1,11 +1,10 @@
 import React, { FC } from 'react';
 
-import { FilterStatuses } from '../../types/filters';
-import { setStatusFilter } from '../../store/actions/filtersActions';
-import { getStatusFilter } from '../../store/selectors/filtersSelector';
-import { useTypedSelector } from '../../hooks/useTypedSelector';
-import { useTypedDispatch } from '../../hooks/useTypedDispatch';
-import { Button } from '../Button';
+import { setStatusFilter } from 'store/actions/filtersActions';
+import { getStatusFilter } from 'store/selectors/filtersSelector';
+import { FilterStatuses } from 'types/filters';
+import { useTypedSelector, useTypedDispatch } from 'hooks';
+import { Button } from 'components/Button';
 
 import './StatusFilter.scss';
 

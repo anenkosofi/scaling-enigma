@@ -1,19 +1,17 @@
 import React, { FC, useState, useEffect } from 'react';
 
-import { setStatusFilter } from '../../store/actions/filtersActions';
-import { FilterStatuses } from '../../types/filters';
+import { setStatusFilter } from 'store/actions/filtersActions';
+import { addTodo, editTodo } from 'store/actions/todosActions';
+import { FilterStatuses } from 'types/filters';
 import {
   getInputDate,
   getFormattedDate,
   getOriginalDate,
-} from '../../helpers/formatDate';
-import {
   validateValues,
   validateTextLength,
-} from '../../helpers/validateInputs';
-import { getInitialDates } from '../../helpers/getInitialDates';
-import { addTodo, editTodo } from '../../store/actions/todosActions';
-import { useTypedDispatch } from '../../hooks/useTypedDispatch';
+  getInitialDates,
+} from 'helpers';
+import { useTypedDispatch } from 'hooks';
 
 import './EditForm.scss';
 
@@ -87,11 +85,15 @@ export const EditForm: FC<EditFormProps> = ({
     setError(errors);
     if (Object.values(errors).some(value => value)) return;
 
+    const text = form.text;
+    const start = getFormattedDate(new Date(form.start));
+    const end = getFormattedDate(new Date(form.end));
+
     const newTodo = {
-      text: form.text,
+      text,
       time: {
-        start: getFormattedDate(new Date(form.start)),
-        end: getFormattedDate(new Date(form.end)),
+        start,
+        end,
       },
     };
 
@@ -103,10 +105,10 @@ export const EditForm: FC<EditFormProps> = ({
     } else {
       const updatedTodo = {
         id,
-        text: form.text,
+        text,
         time: {
-          start: getFormattedDate(new Date(form.start)),
-          end: getFormattedDate(new Date(form.end)),
+          start,
+          end,
         },
       };
       dispatch(editTodo(updatedTodo));

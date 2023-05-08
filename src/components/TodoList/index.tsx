@@ -1,17 +1,15 @@
 import React, { FC, useState, useEffect } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 
-import { useTypedDispatch } from '../../hooks/useTypedDispatch';
-import { useTypedSelector } from '../../hooks/useTypedSelector';
-import { getTodos } from '../../store/selectors/todosSelectors';
-import { getStatusFilter } from '../../store/selectors/filtersSelector';
-import { clearCompleted } from '../../store/actions/todosActions';
-import { getVisibleTodos } from '../../helpers/getVisibleTodos';
-import { getMessage } from '../../helpers/setMessage';
-import { Container } from '../Container';
-import { SearchForm } from '../SearchForm';
-import { StatusFilter } from '../StatusFilter';
-import { TodoItem } from '../TodoItem';
+import { clearCompleted } from 'store/actions/todosActions';
+import { getTodos } from 'store/selectors/todosSelectors';
+import { getStatusFilter } from 'store/selectors/filtersSelector';
+import { useTypedSelector, useTypedDispatch } from 'hooks';
+import { getVisibleTodos, getMessage } from 'helpers';
+import { Container } from 'components/Container';
+import { SearchForm } from 'components/SearchForm';
+import { StatusFilter } from 'components/StatusFilter';
+import { TodoItem } from 'components/TodoItem';
 
 import './TodoList.scss';
 

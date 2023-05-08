@@ -1,18 +1,18 @@
 import React, { FC, useState, useEffect } from 'react';
 import { HiPlus } from 'react-icons/hi';
 
-import { useTypedDispatch } from '../../hooks/useTypedDispatch';
-import { addTodo } from '../../store/actions/todosActions';
-import { setStatusFilter } from '../../store/actions/filtersActions';
-import { FilterStatuses } from '../../types/filters';
-import { getFormattedDate } from '../../helpers/formatDate';
-import { getInitialDates } from '../../helpers/getInitialDates';
+import { FilterStatuses } from 'types/filters';
+import { setStatusFilter } from 'store/actions/filtersActions';
+import { addTodo } from 'store/actions/todosActions';
+import { useTypedDispatch } from 'hooks';
 import {
+  getFormattedDate,
+  getInitialDates,
   validateSymbols,
   validateTextLength,
-} from '../../helpers/validateInputs';
-import { Container } from '../Container';
-import { TodoModal } from '../TodoModal';
+} from 'helpers';
+import { Container } from 'components/Container';
+import { TodoModal } from 'components/TodoModal';
 
 import './TodoForm.scss';
 

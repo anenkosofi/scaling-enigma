@@ -1,6 +1,6 @@
 import React, { FC, createContext, useState, useEffect } from 'react';
 
-import { Theme } from '../../types/theme';
+import { Theme } from 'types/theme';
 
 type ThemeContext = { theme: Theme; toggleTheme: () => void };
 type ThemeProviderProps = {
