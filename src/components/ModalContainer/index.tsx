@@ -1,5 +1,7 @@
-import { FC, useEffect } from 'react';
+import React, { FC, useEffect, useContext } from 'react';
 import { createPortal } from 'react-dom';
+
+import { ThemeContext } from '../ThemeProvider';
 
 import './ModalContainer.scss';
 
@@ -12,6 +14,8 @@ export const ModalContainer: FC<ModalContainerProps> = ({
   closeModal,
   children,
 }) => {
+  const { theme } = useContext(ThemeContext);
+
   useEffect(() => {
     const handleKeydown = (e: KeyboardEvent) => {
       if (e.code === 'Escape') {
@@ -26,7 +30,7 @@ export const ModalContainer: FC<ModalContainerProps> = ({
   }, [closeModal]);
 
   return createPortal(
-    <div className="overlay">
+    <div className={`theme-${theme} overlay`}>
       <div className="modal">{children}</div>
     </div>,
     document.querySelector('#modal-root') as HTMLElement

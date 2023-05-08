@@ -17,8 +17,10 @@ body {
   font-size: 1.25rem;
   line-height: 1.5;
 
-  color: $primary-black;
-  background-color: $dark-white;
+  @include themify($themes) {
+    color: themed('primary-black');
+    background-color: themed('primary-light-white');
+  }
 }
 
 img {
