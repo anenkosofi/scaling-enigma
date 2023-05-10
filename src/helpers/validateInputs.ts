@@ -15,6 +15,7 @@ const validateDateLength = (date: string): string | null => {
 
 const validateDateValue = (date: string): string | null => {
   const [year] = date.split('-');
+  console.log(year);
   return parseInt(year) < 10000 ? null : 'Invalid date value.';
 };
 
@@ -60,13 +61,21 @@ export const validateValues = ({
 
   errors.text = validateSymbols(text);
 
-  errors.start = validateDateLength(start);
-  errors.end = validateDateLength(end);
+  if (!validateDateLength(start)) {
+    if (!validateSameDates(start, end)) {
+      errors.start = validateDateValue(start);
+    } else {
+      errors.start = validateSameDates(start, end);
+    }
+  } else {
+    errors.start = validateDateLength(start);
+  }
 
-  errors.start = validateDateValue(start);
-  errors.end = validateDateValue(end);
-
-  errors.start = validateSameDates(start, end);
+  if (!validateDateLength(end)) {
+    errors.end = validateDateValue(end);
+  } else {
+    errors.end = validateDateLength(end);
+  }
 
   return errors;
 };
