@@ -17,15 +17,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-
     width: 44px;
     height: 44px;
-
     @include themify($themes) {
       color: themed('primary-light-white');
       background-color: themed('light-green');
     }
-
     border-radius: 12px;
   }
 }
@@ -33,18 +30,14 @@
 .switch-body {
   width: 61px;
   height: 27px;
-
   padding: 3px 3.05px;
-
   @include themify($themes) {
     background-color: themed('secondary-dark-white');
   }
-
   box-shadow: inset 0px 6px 8px 3px rgba(0, 0, 0, 0.1);
   border-radius: 50px;
   border: none;
   outline: none;
-
   cursor: pointer;
 
   &__circle {
@@ -52,15 +45,11 @@
     width: 21.35px;
     height: 21px;
     margin: 0;
-
     background: linear-gradient(180deg, #ffffff 0%, #e8eaea 100%);
     border-radius: 50%;
-
     transform: translateX(0);
-
     transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
-
-    &--dark {
+    &_dark {
       transform: translateX(160%);
     }
   }

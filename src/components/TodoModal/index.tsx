@@ -1,13 +1,13 @@
 import React, { FC } from 'react';
 
-import { ModalContainer } from 'components/ModalContainer';
-import { EditForm } from 'components/EditForm';
+import { EditForm } from '@components/EditForm';
+import { ModalContainer } from '@components/ModalContainer';
 
 type TodoModalProps = {
   closeModal: () => void;
   todo: {
-    id?: string;
     text: string;
+    id?: string;
     time?: {
       start?: string;
       end?: string;

@@ -1,8 +1,6 @@
 import React, { FC, useState, useEffect } from 'react';
 
-import { setStatusFilter } from 'store/actions/filtersActions';
-import { addTodo, editTodo } from 'store/actions/todosActions';
-import { FilterStatuses } from 'types/filters';
+import { FilterStatus } from '@types';
 import {
   getInputDate,
   getFormattedDate,
@@ -10,16 +8,18 @@ import {
   validateValues,
   validateTextLength,
   getInitialDates,
-} from 'helpers';
-import { useTypedDispatch } from 'hooks';
+} from '@utils';
+import { useAppDispatch } from 'hooks';
+import { setStatusFilter } from 'store/filters/actions';
+import { addTodo, editTodo } from 'store/todos/actions';
 
 import './EditForm.scss';
 
 type EditFormProps = {
   closeModal: () => void;
   todo: {
-    id?: string;
     text: string;
+    id?: string;
     time?: {
       start?: string;
       end?: string;
@@ -39,6 +39,8 @@ export const EditForm: FC<EditFormProps> = ({
   clearInput,
   todo: { id, text, time },
 }) => {
+  const dispatch = useAppDispatch();
+
   const [form, setForm] = useState({
     text: text,
     start: time?.start
@@ -53,7 +55,6 @@ export const EditForm: FC<EditFormProps> = ({
     start: null,
     end: null,
   });
-  const dispatch = useTypedDispatch();
 
   useEffect(() => {
     const errors = validateValues({
@@ -100,7 +101,7 @@ export const EditForm: FC<EditFormProps> = ({
     if (!id) {
       dispatch(addTodo(newTodo));
 
-      dispatch(setStatusFilter(FilterStatuses.ALL));
+      dispatch(setStatusFilter(FilterStatus.ALL));
       clearInput?.();
     } else {
       const updatedTodo = {

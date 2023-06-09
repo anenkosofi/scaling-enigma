@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useContext } from 'react';
 import { createPortal } from 'react-dom';
 
-import { ThemeContext } from 'components/ThemeProvider';
+import { ThemeContext } from '@components/ThemeProvider';
 
 import './ModalContainer.scss';
 

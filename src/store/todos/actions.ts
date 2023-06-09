@@ -1,7 +1,8 @@
 import { nanoid } from 'nanoid';
 
-import { Todo } from '../../types/todo';
-import { TodosActionTypes, TodosAction } from '../types/todos';
+import { Todo } from '@types';
+
+import { TodosActionTypes, TodosAction } from '../types/todo';
 
 export const addTodo = ({
   text,

@@ -1,26 +1,21 @@
-@import '../../styles/shared.scss';
+@import '@styles/shared.scss';
 
 .filter-button {
   @extend %button;
-
   padding: 0.75rem 2rem;
-
   font-family: inherit;
   font-size: 16px;
   line-height: 1.2;
   text-transform: capitalize;
   letter-spacing: 0.01em;
-
   @include themify($themes) {
     color: themed('dark-accent');
   }
   background-color: transparent;
-
   @include themify($themes) {
     border: 2px solid themed('light-green');
   }
   border-radius: 6px;
-
   transition: color 240ms $timing-function,
     background-color 250ms $timing-function, border-color 250ms $timing-function;
 
@@ -40,7 +35,7 @@
     }
   }
 
-  &--selected {
+  &_selected {
     @include themify($themes) {
       color: themed('primary-light-white');
       background-color: themed('light-green');

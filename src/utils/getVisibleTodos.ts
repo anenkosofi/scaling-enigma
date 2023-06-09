@@ -1,5 +1,4 @@
-import { FilterStatuses } from '../types/filters';
-import { Todo } from '../types/todo';
+import { Todo, FilterStatus } from '@types';
 
 export const getVisibleTodos = ({
   todos,
@@ -12,12 +11,12 @@ export const getVisibleTodos = ({
 }) => {
   const searchQuery = query.trim().toLowerCase();
   switch (statusFilter) {
-    case FilterStatuses.ACTIVE:
+    case FilterStatus.ACTIVE:
       return todos
         .filter(todo => todo.text.trim().toLowerCase().includes(searchQuery))
         .filter(todo => !todo.completed);
 
-    case FilterStatuses.COMPLETED:
+    case FilterStatus.COMPLETED:
       return todos
         .filter(todo => todo.text.trim().toLowerCase().includes(searchQuery))
         .filter(todo => todo.completed);

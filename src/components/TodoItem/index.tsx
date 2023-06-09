@@ -7,11 +7,11 @@ import {
   TbTrash,
 } from 'react-icons/tb';
 
-import { toggleCompleted, deleteTodo } from 'store/actions/todosActions';
-import { getTodos } from 'store/selectors/todosSelectors';
-import { Todo } from 'types/todo';
-import { useTypedSelector, useTypedDispatch } from 'hooks';
-import { TodoModal } from 'components/TodoModal';
+import { TodoModal } from '@components/TodoModal';
+import { useAppSelector, useAppDispatch } from '@hooks';
+import { toggleCompleted, deleteTodo } from '@store/todos/actions';
+import { selectTodos } from '@store/todos/selectors';
+import { Todo } from '@types';
 
 import './TodoItem.scss';
 
@@ -27,10 +27,11 @@ export const TodoItem: FC<TodoItemProps> = ({
     time: { start, end },
   },
 }) => {
+  const dispatch = useAppDispatch();
+  const todos = useAppSelector(selectTodos);
+
   const [modal, setModal] = useState(false);
   const [todo, setTodo] = useState<Todo | null>(null);
-  const dispatch = useTypedDispatch();
-  const todos = useTypedSelector(getTodos);
 
   const toggleCompletedHandler = (id: string) => dispatch(toggleCompleted(id));
 

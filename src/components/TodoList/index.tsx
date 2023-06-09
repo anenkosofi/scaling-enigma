@@ -1,28 +1,31 @@
 import React, { FC, useState, useEffect } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 
-import { clearCompleted } from 'store/actions/todosActions';
-import { getTodos } from 'store/selectors/todosSelectors';
-import { getStatusFilter } from 'store/selectors/filtersSelector';
-import { useTypedSelector, useTypedDispatch } from 'hooks';
-import { getVisibleTodos, getMessage } from 'helpers';
-import { Container } from 'components/Container';
-import { SearchForm } from 'components/SearchForm';
-import { StatusFilter } from 'components/StatusFilter';
-import { TodoItem } from 'components/TodoItem';
+import { Container } from '@components/Container';
+import { SearchForm } from '@components/SearchForm';
+import { StatusFilter } from '@components/StatusFilter';
+import { TodoItem } from '@components/TodoItem';
+import { useAppSelector, useAppDispatch } from '@hooks';
+import { selectStatusFilter } from '@store/filters/selectors';
+import { clearCompleted } from '@store/todos/actions';
+import { selectTodos } from '@store/todos/selectors';
+import { getVisibleTodos, getMessage } from '@utils';
 
 import './TodoList.scss';
 
 export const TodoList: FC = () => {
+  const dispatch = useAppDispatch();
+  const todos = useAppSelector(selectTodos);
+  const statusFilter = useAppSelector(selectStatusFilter);
+
+  const areAnyTasksCompleted = todos.some(todo => todo.completed);
+
   const [message, setMessage] = useState(
     'You do not have any task to do. Add the first!'
   );
   const [query, setQuery] = useState('');
-  const dispatch = useTypedDispatch();
-  const todos = useTypedSelector(getTodos);
-  const statusFilter = useTypedSelector(getStatusFilter);
+
   const visibleTodos = getVisibleTodos({ todos, statusFilter, query });
-  const areAnyTasksCompleted = todos.some(todo => todo.completed);
 
   const clearCompletedHandler = () => {
     dispatch(clearCompleted());

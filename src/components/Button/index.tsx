@@ -18,7 +18,7 @@ export const Button: FC<ButtonProps> = ({
     <button
       type={type}
       className={
-        selected ? 'filter-button filter-button--selected' : 'filter-button'
+        selected ? 'filter-button filter-button_selected' : 'filter-button'
       }
       {...otherProps}
     >

@@ -7,10 +7,6 @@
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:react/jsx-runtime",
-    "plugin:react-hooks/recommended",
-    "plugin:jsx-a11y/recommended",
-    "plugin:import/recommended",
     "prettier"
   ],
   "overrides": [],
@@ -19,21 +15,30 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["react", "@typescript-eslint"],
+  "plugins": ["@typescript-eslint", "react", "react-hooks", "import"],
   "rules": {
+    "import/first": "error",
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          ["parent", "sibling", "index"]
+        ],
+        "newlines-between": "always",
+        "alphabetize": { "order": "asc", "caseInsensitive": true }
+      }
+    ],
     "react/prop-types": "off"
   },
   "settings": {
-    "import/parsers": {
-      "@typescript-eslint/parser": [".ts", ".tsx"]
+    "react": {
+      "version": "detect"
     },
     "import/resolver": {
-      "typescript": {
-        "alwaysTryTypes": true,
-        "node": {
-          "extensions": [".js", ".jsx", ".ts", ".tsx"]
-        }
-      }
+      "typescript": {}
     }
   }
 }

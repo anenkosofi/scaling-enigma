@@ -7,7 +7,6 @@
 
   &__field {
     position: relative;
-
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -28,16 +27,12 @@
   @extend %button;
   width: 200px;
   height: 50px;
-
   font-size: 16px;
-
   @include themify($themes) {
     color: themed('primary-light-white');
     background-color: themed('light-green');
   }
-
   border-radius: 6px;
-
   transition: background-color 250ms $timing-function;
 
   &:hover,
@@ -52,24 +47,19 @@
   @extend %button;
   width: 200px;
   height: 50px;
-
   font-size: 16px;
-
   @include themify($themes) {
     color: themed('tertiary-black');
     background-color: themed('secondary-grey');
   }
-
   border: 1px solid transparent;
   border-radius: 6px;
-
   transition: background-color 250ms $timing-function,
     border-color 250ms $timing-function;
 
   &:hover,
   &:focus {
     background-color: transparent;
-
     @include themify($themes) {
       border-color: themed('tertiary-black');
     }

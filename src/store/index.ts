@@ -1,6 +1,6 @@
+import { devToolsEnhancer } from '@redux-devtools/extension';
 import { createStore } from 'redux';
 import { persistStore } from 'redux-persist';
-import { devToolsEnhancer } from '@redux-devtools/extension';
 
 import { rootReducer } from './reducers';
 

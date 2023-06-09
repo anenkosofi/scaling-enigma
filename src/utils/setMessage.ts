@@ -1,4 +1,4 @@
-import { FilterStatuses } from '../types/filters';
+import { FilterStatus } from '@types';
 
 export const getMessage = (filter: string, query: string) => {
   const messages = {
@@ -12,10 +12,10 @@ export const getMessage = (filter: string, query: string) => {
   }
 
   switch (filter) {
-    case FilterStatuses.ACTIVE:
+    case FilterStatus.ACTIVE:
       return messages.active;
 
-    case FilterStatuses.COMPLETED:
+    case FilterStatus.COMPLETED:
       return messages.completed;
 
     default:
