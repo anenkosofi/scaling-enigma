@@ -15,7 +15,6 @@ const validateDateLength = (date: string): string | null => {
 
 const validateDateValue = (date: string): string | null => {
   const [year] = date.split('-');
-  console.log(year);
   return parseInt(year) < 10000 ? null : 'Invalid date value.';
 };
 

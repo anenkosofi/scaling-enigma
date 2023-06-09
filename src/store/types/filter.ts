@@ -1,14 +1,14 @@
-import { FilterStatuses } from '../../types/filters';
+import { FilterStatus } from '@types';
 
 export const SET_STATUS_FILTER = 'filters/setStatusFilter';
 
 export interface FilterState {
-  status: FilterStatuses;
+  status: FilterStatus;
 }
 
 interface SetStatusFilterAction {
   type: typeof SET_STATUS_FILTER;
-  payload: FilterStatuses;
+  payload: FilterStatus;
 }
 
 export type FiltersAction = SetStatusFilterAction;

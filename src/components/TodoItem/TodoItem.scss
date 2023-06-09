@@ -4,12 +4,9 @@
   display: flex;
   align-items: center;
   gap: 16px;
-
   padding: 16px;
   width: 100%;
-
   border-radius: 16px;
-
   @include themify($themes) {
     background-color: themed('secondary-light-white');
     border: 1px solid themed('primary-grey');
@@ -22,12 +19,10 @@
     margin: -1px;
     border: 0;
     padding: 0;
-
     white-space: nowrap;
     clip-path: inset(100%);
     clip: rect(0 0 0 0);
     overflow: hidden;
-
     &:checked + .todo__checkbox > .todo__icon {
       opacity: 1;
     }
@@ -37,16 +32,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-
     width: 28px;
     height: 28px;
-
     border-radius: 4px;
-
     @include themify($themes) {
       border: 1px solid themed('secondary-black');
     }
-
     cursor: pointer;
   }
 
@@ -54,9 +45,7 @@
     @include themify($themes) {
       stroke: themed('light-green');
     }
-
     opacity: 0;
-
     transition: opacity 250ms $timing-function;
   }
 
@@ -69,7 +58,6 @@
   &__text {
     font-size: 1rem;
     word-break: break-word;
-
     @media screen and (min-width: 768px) {
       font-size: 1.25rem;
     }
@@ -78,7 +66,6 @@
   &__crossed-text {
     text-decoration: line-through;
     word-break: break-word;
-
     @include themify($themes) {
       color: themed('secondary-black');
     }
@@ -94,7 +81,6 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
-
     font-size: 1rem;
 
     @media screen and (min-width: 425px) {
@@ -111,9 +97,7 @@
     flex-direction: column;
     align-items: center;
     gap: 12px;
-
     margin-left: auto;
-
     @media screen and (min-width: 768px) {
       flex-direction: row;
     }
@@ -123,19 +107,14 @@
 .delete-button,
 .edit-button {
   @extend %button;
-
   width: 44px;
   height: 44px;
-
   @include themify($themes) {
     color: themed('dark-accent');
-
     border: 2px solid themed('light-green');
   }
   background-color: transparent;
-
   border-radius: 4px;
-
   transition: color 250ms $timing-function,
     background-color 250ms $timing-function;
 
@@ -143,7 +122,6 @@
   &:focus:not(:disabled) {
     @include themify($themes) {
       color: themed('primary-light-white');
-
       background-color: themed('light-green');
     }
   }
@@ -151,10 +129,8 @@
   &:disabled {
     @include themify($themes) {
       color: themed('primary-grey');
-
       border-color: themed('secondary-grey');
     }
-
     cursor: default;
   }
 }

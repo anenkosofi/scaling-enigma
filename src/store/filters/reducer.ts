@@ -1,12 +1,9 @@
-import {
-  SET_STATUS_FILTER,
-  FilterState,
-  FiltersAction,
-} from '../types/filters';
-import { FilterStatuses } from '../../types/filters';
+import { FilterStatus } from '@types';
+
+import { SET_STATUS_FILTER, FilterState, FiltersAction } from '../types/filter';
 
 const filterInitialState: FilterState = {
-  status: FilterStatuses.ALL,
+  status: FilterStatus.ALL,
 };
 
 export const filtersReducer = (

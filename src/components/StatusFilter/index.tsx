@@ -1,19 +1,19 @@
 import React, { FC } from 'react';
 
-import { setStatusFilter } from 'store/actions/filtersActions';
-import { getStatusFilter } from 'store/selectors/filtersSelector';
-import { FilterStatuses } from 'types/filters';
-import { useTypedSelector, useTypedDispatch } from 'hooks';
-import { Button } from 'components/Button';
+import { Button } from '@components/Button';
+import { useAppSelector, useAppDispatch } from '@hooks';
+import { setStatusFilter } from '@store/filters/actions';
+import { selectStatusFilter } from '@store/filters/selectors';
+import { FilterStatus } from '@types';
 
 import './StatusFilter.scss';
 
 export const StatusFilter: FC = () => {
-  const dispatch = useTypedDispatch();
-  const filter = useTypedSelector(getStatusFilter);
-  const buttons = Object.values(FilterStatuses);
+  const dispatch = useAppDispatch();
+  const filter = useAppSelector(selectStatusFilter);
+  const buttons = Object.values(FilterStatus);
 
-  const filterChangeHandler = (filter: FilterStatuses) =>
+  const filterChangeHandler = (filter: FilterStatus) =>
     dispatch(setStatusFilter(filter));
 
   return (

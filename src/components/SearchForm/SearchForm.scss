@@ -6,15 +6,11 @@
 
   &__field {
     position: relative;
-
     display: flex;
     justify-content: center;
-
     width: 100%;
     margin-bottom: 24px;
-
     background-color: transparent;
-
     border-radius: 15px;
   }
 
@@ -25,7 +21,6 @@
     margin: -1px;
     border: 0;
     padding: 0;
-
     white-space: nowrap;
     clip-path: inset(100%);
     clip: rect(0 0 0 0);
@@ -34,19 +29,15 @@
 
   &__input {
     @extend %input;
-
     padding-right: 124px;
   }
 
   &__button {
     @extend %button;
-
     position: absolute;
     top: 0;
     right: 0;
-
     padding: 0.84rem 2rem;
-
     font-family: inherit;
     font-size: 16px;
     line-height: 1.2;
@@ -55,11 +46,9 @@
     @include themify($themes) {
       color: themed('primary-light-white');
       background-color: themed('secondary-dark-accent');
-
       border: 2px solid themed('secondary-dark-accent');
     }
     border-radius: 10px;
-
     transition: color 250ms $timing-function,
       background-color 250ms $timing-function,
       border-color 250ms $timing-function;
@@ -67,7 +56,6 @@
     &:hover:not(:disabled) {
       @include themify($themes) {
         background-color: themed('light-green');
-
         border-color: themed('light-green');
       }
     }
@@ -75,10 +63,8 @@
     &:disabled {
       @include themify($themes) {
         color: themed('primary-grey');
-
         border-color: themed('secondary-grey');
       }
-
       cursor: default;
     }
   }

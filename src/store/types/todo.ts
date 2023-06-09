@@ -1,4 +1,4 @@
-import { Todo } from '../../types/todo';
+import { Todo } from '@types';
 
 export interface TodosState {
   items: Todo[];

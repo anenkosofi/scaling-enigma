@@ -1,26 +1,27 @@
 import React, { FC, useState, useEffect } from 'react';
 import { HiPlus } from 'react-icons/hi';
 
-import { FilterStatuses } from 'types/filters';
-import { setStatusFilter } from 'store/actions/filtersActions';
-import { addTodo } from 'store/actions/todosActions';
-import { useTypedDispatch } from 'hooks';
+import { Container } from '@components/Container';
+import { TodoModal } from '@components/TodoModal';
+import { useAppDispatch } from '@hooks';
+import { setStatusFilter } from '@store/filters/actions';
+import { addTodo } from '@store/todos/actions';
+import { FilterStatus } from '@types';
 import {
   getFormattedDate,
   getInitialDates,
   validateSymbols,
   validateTextLength,
-} from 'helpers';
-import { Container } from 'components/Container';
-import { TodoModal } from 'components/TodoModal';
+} from '@utils';
 
 import './TodoForm.scss';
 
 export const TodoForm: FC = () => {
+  const dispatch = useAppDispatch();
+
   const [modal, setModal] = useState(false);
   const [text, setText] = useState('');
   const [error, setError] = useState<string | null>(null);
-  const dispatch = useTypedDispatch();
 
   useEffect(() => {
     const bodyEl = document.getElementById('body') as HTMLElement;
@@ -54,7 +55,7 @@ export const TodoForm: FC = () => {
         },
       })
     );
-    dispatch(setStatusFilter(FilterStatuses.ALL));
+    dispatch(setStatusFilter(FilterStatus.ALL));
     clearInputHandler();
   };
 

@@ -1,4 +1,4 @@
-@import '../../styles/shared.scss';
+@import '@styles/shared.scss';
 
 .todo-list {
   display: flex;
@@ -6,7 +6,6 @@
   justify-content: center;
   align-items: center;
   gap: 24px;
-
   margin: 0 auto;
 
   &__section {
@@ -15,7 +14,6 @@
 
   &__title {
     margin-bottom: 20px;
-
     font-size: 30px;
     line-height: calc(38 / 30);
     text-align: center;
@@ -26,7 +24,6 @@
     flex-wrap: wrap;
     justify-content: space-between;
     gap: 12px;
-
     max-width: 744px;
     margin: 0 auto;
     margin-bottom: 24px;
@@ -41,7 +38,6 @@
   @extend %button;
   min-width: 150px;
   min-height: 50px;
-
   font-family: inherit;
   font-size: 16px;
   line-height: 1.2;
@@ -49,19 +45,15 @@
 
   @include themify($themes) {
     color: themed('tertiary-black');
-
     background-color: themed('secondary-grey');
   }
-
   border: 1px solid transparent;
   border-radius: 6px;
-
   transition: background-color 250ms $timing-function,
     border-color 250ms $timing-function;
 
   &:hover:not(:disabled) {
     background-color: transparent;
-
     @include themify($themes) {
       border-color: themed('tertiary-black');
     }
@@ -70,11 +62,9 @@
   &:disabled {
     @include themify($themes) {
       color: themed('secondary-grey');
-
       border-color: themed('secondary-grey');
     }
     background-color: transparent;
-
     cursor: default;
   }
 }
