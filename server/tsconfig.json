@@ -5,7 +5,14 @@
     "baseUrl": "src",
     "sourceMap": true,
     "outDir": "build",
-    "noImplicitAny": true
+    "noImplicitAny": true,
+    "typeRoots": ["./src/types", "./node_modules/@types"],
+    "paths": {
+      "@routes/api/*": ["routes/api/*"],
+      "@controllers/*": ["controllers/*"],
+      "@middlewares": ["middlewares"],
+      "@models": ["models"]
+    }
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules"]
