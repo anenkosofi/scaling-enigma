@@ -1,7 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
-
 import { LoggedUser } from '@types';
+import axios from 'axios';
 
 axios.defaults.baseURL = 'https://todo-app-backend-igep.onrender.com/api';
 
