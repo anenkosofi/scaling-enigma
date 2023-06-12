@@ -7,7 +7,6 @@ interface IUser {
   email: string;
   password: string;
   token: string;
-  verify: boolean;
 }
 
 interface IUserMethods {
@@ -34,10 +33,6 @@ const userSchema = new Schema<IUser, UserModel, IUserMethods>(
     token: {
       type: String,
     },
-    verify: {
-      type: Boolean,
-      default: false,
-    },
   },
   {
     versionKey: false,
@@ -61,4 +56,4 @@ export const userSchemas = {
   userJoiSchema,
 };
 
-export const User = model<IUser, UserModel>('User', userSchema);
+export const User = model<IUser, UserModel>('user', userSchema);
