@@ -1,8 +1,7 @@
-@import '../../styles/shared.scss';
+@import '@styles/shared.scss';
 
 .header {
   padding: 16px 0;
-
   @include themify($themes) {
     background-color: themed('secondary-light-green');
   }

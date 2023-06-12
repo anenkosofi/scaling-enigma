@@ -1,3 +1,4 @@
+import { nanoid } from 'nanoid';
 import React, { FC, useState, useEffect } from 'react';
 
 import { FilterStatus } from '@types';
@@ -10,8 +11,8 @@ import {
   getInitialDates,
 } from '@utils';
 import { useAppDispatch } from 'hooks';
-import { setStatusFilter } from 'store/filters/actions';
-import { addTodo, editTodo } from 'store/todos/actions';
+import { setFilterStatus } from 'store/filters/slice';
+import { addTodo, editTodo } from 'store/todos/slice';
 
 import './EditForm.scss';
 
@@ -91,7 +92,9 @@ export const EditForm: FC<EditFormProps> = ({
     const end = getFormattedDate(new Date(form.end));
 
     const newTodo = {
+      id: nanoid(),
       text,
+      completed: false,
       time: {
         start,
         end,
@@ -101,7 +104,7 @@ export const EditForm: FC<EditFormProps> = ({
     if (!id) {
       dispatch(addTodo(newTodo));
 
-      dispatch(setStatusFilter(FilterStatus.ALL));
+      dispatch(setFilterStatus(FilterStatus.ALL));
       clearInput?.();
     } else {
       const updatedTodo = {

@@ -7,8 +7,8 @@ import { StatusFilter } from '@components/StatusFilter';
 import { TodoItem } from '@components/TodoItem';
 import { useAppSelector, useAppDispatch } from '@hooks';
 import { selectStatusFilter } from '@store/filters/selectors';
-import { clearCompleted } from '@store/todos/actions';
 import { selectTodos } from '@store/todos/selectors';
+import { clearCompleted } from '@store/todos/slice';
 import { getVisibleTodos, getMessage } from '@utils';
 
 import './TodoList.scss';

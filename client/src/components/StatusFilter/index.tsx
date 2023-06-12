@@ -2,8 +2,8 @@ import React, { FC } from 'react';
 
 import { Button } from '@components/Button';
 import { useAppSelector, useAppDispatch } from '@hooks';
-import { setStatusFilter } from '@store/filters/actions';
 import { selectStatusFilter } from '@store/filters/selectors';
+import { setFilterStatus } from '@store/filters/slice';
 import { FilterStatus } from '@types';
 
 import './StatusFilter.scss';
@@ -14,7 +14,7 @@ export const StatusFilter: FC = () => {
   const buttons = Object.values(FilterStatus);
 
   const filterChangeHandler = (filter: FilterStatus) =>
-    dispatch(setStatusFilter(filter));
+    dispatch(setFilterStatus(filter));
 
   return (
     <div className="filters-wrapper">

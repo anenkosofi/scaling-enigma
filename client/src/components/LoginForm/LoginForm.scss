@@ -1,0 +1,115 @@
+@import '../../styles/shared.scss';
+
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    width: 500px;
+    padding: 44px 50px;
+    @include themify($themes) {
+      background-color: themed('secondary-dark-accent');
+    }
+    box-shadow: 0px 4px 48px rgba(0, 0, 0, 0.1);
+    border-radius: 30px;
+  }
+
+  &__title {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 28px;
+    line-height: 1.07;
+    letter-spacing: -0.02em;
+    @include themify($themes) {
+      color: themed('primary-light-white');
+    }
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  &__field {
+    position: relative;
+    width: 100%;
+  }
+
+  &__label {
+    position: absolute;
+    top: 50%;
+    left: 16px;
+    transform: translateY(-50%);
+    padding: 4px;
+    font-size: 16px;
+    pointer-events: none;
+    @include themify($themes) {
+      color: themed('primary-light-white');
+      background-color: themed('secondary-dark-accent');
+    }
+    transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1),
+      color 250ms cubic-bezier(0.4, 0, 0.2, 1),
+      background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  &__input {
+    width: 100%;
+    padding: 16px 18px;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.5;
+    @include themify($themes) {
+      color: themed('primary-light-white');
+    }
+    background-color: transparent;
+    border: 1px solid #fafafa;
+    outline: none;
+    border-radius: 6px;
+    transition: border-color 250ms $timing-function;
+
+    &::placeholder {
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 1.5;
+      @include themify($themes) {
+        color: themed('primary-light-white');
+      }
+    }
+
+    &:focus ~ .login__label,
+    &:not(:placeholder-shown) ~ .login__label {
+      transform: translateY(-46px) scale(0.8);
+    }
+
+    transition: border-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    &:focus,
+    &:not(:placeholder-shown) {
+      @include themify($themes) {
+        border-color: themed('light-green');
+      }
+    }
+    &:not(:focus) {
+      border-color: #fafafa;
+    }
+  }
+
+  &__button {
+    @extend %button;
+    width: 100%;
+    height: 59px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.12;
+    @include themify($themes) {
+      color: themed('primary-light-white');
+      background-color: themed('light-green');
+    }
+    border-radius: 6px;
+  }
+}
