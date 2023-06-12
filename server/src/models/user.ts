@@ -11,6 +11,7 @@ interface IUser {
 
 interface IUserMethods {
   comparePassword(password: string): Promise<boolean>;
+  setPassword(password: string): void;
 }
 
 type UserModel = Model<IUser, {}, IUserMethods>;
@@ -40,6 +41,10 @@ const userSchema = new Schema<IUser, UserModel, IUserMethods>(
   }
 );
 
+userSchema.method('setPassword', function setPassword(password) {
+  this.password = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
+});
+
 userSchema.method(
   'comparePassword',
   function comparePassword(password: string) {
@@ -47,13 +52,20 @@ userSchema.method(
   }
 );
 
-const userJoiSchema = Joi.object({
+const userLoginJoiSchema = Joi.object({
+  password: Joi.string().required(),
+  email: Joi.string().required(),
+});
+
+const userRegisterJoiSchema = Joi.object({
+  username: Joi.string().required(),
   password: Joi.string().required(),
   email: Joi.string().required(),
 });
 
 export const userSchemas = {
-  userJoiSchema,
+  userLoginJoiSchema,
+  userRegisterJoiSchema,
 };
 
 export const User = model<IUser, UserModel>('user', userSchema);

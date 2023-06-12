@@ -8,7 +8,7 @@
     "noImplicitAny": true,
     "typeRoots": ["./src/types", "./node_modules/@types"],
     "paths": {
-      "@routes/api/*": ["routes/api/*"],
+      "@routes/*": ["routes/*"],
       "@controllers/*": ["controllers/*"],
       "@middlewares": ["middlewares"],
       "@models": ["models"]
