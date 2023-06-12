@@ -12,12 +12,7 @@ interface IError extends Error {
   message: string;
 }
 
-const corsOptions = {
-  origin: 'https://todo-app-frontend-9gwb.onrender.com',
-  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-};
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
 
