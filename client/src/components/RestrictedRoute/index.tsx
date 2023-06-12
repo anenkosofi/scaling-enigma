@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 
-import { useAppSelector, useAuth } from '@hooks';
+import { useAuth } from '@hooks';
 
 type RestrictedRouteProps = {
   component: JSX.Element;
