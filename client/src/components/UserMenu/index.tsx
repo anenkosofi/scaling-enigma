@@ -4,7 +4,7 @@ import { RxCross2 } from 'react-icons/rx';
 import user from '@assets/user.jpg';
 import { ModalContainer } from '@components/ModalContainer';
 import { useAuth, useAppDispatch } from '@hooks';
-import { logout } from '@store/auth/operations';
+import { logout } from '@store/auth/slice';
 
 import './UserMenu.scss';
 

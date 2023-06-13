@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { User } from '@types';
 
-import { login, logout, refreshUser } from './operations';
+import { login, refreshUser } from './operations';
 
 export interface AuthState {
   user: User | null;
@@ -25,7 +25,16 @@ const authInitialState: AuthState = {
 const authSlice = createSlice({
   name: 'auth',
   initialState: authInitialState,
-  reducers: {},
+  reducers: {
+    logout(state) {
+      return {
+        ...state,
+        user: null,
+        token: null,
+        authenticated: false,
+      };
+    },
+  },
   extraReducers: builder =>
     builder
       .addCase(login.pending, state => {
@@ -51,14 +60,6 @@ const authSlice = createSlice({
           isLoading: false,
         };
       })
-      .addCase(logout.fulfilled, state => {
-        return {
-          ...state,
-          user: null,
-          token: null,
-          authenticated: false,
-        };
-      })
       .addCase(refreshUser.pending, state => {
         return { ...state, isRefreshing: true };
       })
@@ -78,4 +79,5 @@ const authSlice = createSlice({
       }),
 });
 
+export const { logout } = authSlice.actions;
 export const authReducer = authSlice.reducer;

@@ -10,10 +10,6 @@ const setAuthHeader = (token: string) => {
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 };
 
-const clearAuthHeader = () => {
-  axios.defaults.headers.common.Authorization = '';
-};
-
 export const login = createAsyncThunk<
   LoggedUser,
   { email: string; password: string },
@@ -26,18 +22,6 @@ export const login = createAsyncThunk<
     });
     setAuthHeader(response.data.token);
     return response.data;
-  } catch (e: unknown) {
-    if (e instanceof Error) {
-      return thunkAPI.rejectWithValue(e.message);
-    }
-    return thunkAPI.rejectWithValue('An unknown error occurred.');
-  }
-});
-
-export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
-  try {
-    await axios.post('/users/logout');
-    clearAuthHeader();
   } catch (e: unknown) {
     if (e instanceof Error) {
       return thunkAPI.rejectWithValue(e.message);

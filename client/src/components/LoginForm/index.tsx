@@ -9,6 +9,8 @@ import { validateTextLength, validateEmail } from '@utils';
 
 import './LoginForm.scss';
 
+const GREEN_COLOR = '#6a983c';
+
 export const LoginForm: FC = () => {
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector(selectIsLoading);
@@ -162,12 +164,10 @@ export const LoginForm: FC = () => {
               <Oval
                 height={24}
                 width={24}
-                color="#8baa36"
-                wrapperStyle={{}}
-                wrapperClass=""
+                color={GREEN_COLOR}
                 visible={true}
                 ariaLabel="oval-loading"
-                secondaryColor="#8baa36"
+                secondaryColor={GREEN_COLOR}
                 strokeWidth={8}
                 strokeWidthSecondary={2}
               />
