@@ -1,7 +1,7 @@
 import React, { FC, useContext, useEffect } from 'react';
 
+import { Header } from '@components/Header';
 import { ThemeContext } from '@components/ThemeProvider';
-import { ThemeToggler } from '@components/ThemeToggler';
 import { TodoForm } from '@components/TodoForm';
 import { TodoList } from '@components/TodoList';
 import { useAppDispatch } from '@hooks';
@@ -17,7 +17,7 @@ const TodosPage: FC = () => {
 
   return (
     <div className={`theme-${theme}`}>
-      <ThemeToggler />
+      <Header />
       <TodoForm />
       <TodoList />
     </div>

@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { User } from '@types';
 
-import { login } from './operations';
+import { login, logout, refreshUser } from './operations';
 
 export interface AuthState {
   user: User | null;
@@ -35,7 +35,7 @@ const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         return {
           ...state,
-          user: { ...action.payload.user },
+          user: action.payload.user,
           token: action.payload.token,
           authenticated: true,
           isLoading: false,
@@ -46,6 +46,31 @@ const authSlice = createSlice({
         return {
           ...state,
           error: action.payload ? action.payload : 'An unknown error occured',
+          isLoading: false,
+        };
+      })
+      .addCase(logout.fulfilled, state => {
+        return {
+          ...state,
+          user: null,
+          token: null,
+          authenticated: false,
+        };
+      })
+      .addCase(refreshUser.pending, state => {
+        return { ...state, isLoading: true };
+      })
+      .addCase(refreshUser.fulfilled, (state, action) => {
+        return {
+          ...state,
+          user: action.payload.user,
+          authenticated: true,
+          isLoading: false,
+        };
+      })
+      .addCase(refreshUser.rejected, state => {
+        return {
+          ...state,
           isLoading: false,
         };
       }),

@@ -24,6 +24,12 @@
     }
     border-radius: 12px;
   }
+
+  &__controls {
+    display: flex;
+    align-items: center;
+    gap: 44px;
+  }
 }
 
 .switch-body {
