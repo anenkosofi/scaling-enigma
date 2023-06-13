@@ -1,8 +1,7 @@
-@import '../../styles/shared.scss';
+@import '@styles/shared.scss';
 
 .header {
   padding: 16px 0;
-
   @include themify($themes) {
     background-color: themed('secondary-light-green');
   }
@@ -24,6 +23,12 @@
       background-color: themed('light-green');
     }
     border-radius: 12px;
+  }
+
+  &__controls {
+    display: flex;
+    align-items: center;
+    gap: 44px;
   }
 }
 

@@ -1,14 +1,46 @@
-import { devToolsEnhancer } from '@redux-devtools/extension';
-import { createStore } from 'redux';
-import { persistStore } from 'redux-persist';
+import { configureStore } from '@reduxjs/toolkit';
+import {
+  persistStore,
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
-import { rootReducer } from './reducers';
+import { authReducer } from './auth/slice';
+import { AuthState } from './auth/slice';
+import { filtersReducer } from './filters/slice';
+import { todosReducer } from './todos/slice';
+import { TodosState } from './todos/slice';
 
-const enhancer = devToolsEnhancer();
+const todosPersistConfig = {
+  key: 'todos',
+  storage,
+};
 
-export const store = createStore(rootReducer, enhancer);
+const authPersistConfig = {
+  key: 'auth',
+  storage,
+};
 
-export const persistor = persistStore(store);
+export const store = configureStore({
+  reducer: {
+    todos: persistReducer<TodosState>(todosPersistConfig, todosReducer),
+    filters: filtersReducer,
+    auth: persistReducer<AuthState>(authPersistConfig, authReducer),
+  },
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
+});
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+export const persistor = persistStore(store);

@@ -1,3 +1,4 @@
+import { nanoid } from 'nanoid';
 import React, { FC, useState, useEffect } from 'react';
 
 import { FilterStatus } from '@types';
@@ -10,8 +11,8 @@ import {
   getInitialDates,
 } from '@utils';
 import { useAppDispatch } from 'hooks';
-import { setStatusFilter } from 'store/filters/actions';
-import { addTodo, editTodo } from 'store/todos/actions';
+import { setFilterStatus } from 'store/filters/slice';
+import { addTodo, editTodo } from 'store/todos/slice';
 
 import './EditForm.scss';
 
@@ -19,7 +20,7 @@ type EditFormProps = {
   closeModal: () => void;
   todo: {
     text: string;
-    id?: string;
+    _id?: string;
     time?: {
       start?: string;
       end?: string;
@@ -37,7 +38,7 @@ type ErrorState = {
 export const EditForm: FC<EditFormProps> = ({
   closeModal,
   clearInput,
-  todo: { id, text, time },
+  todo: { _id, text, time },
 }) => {
   const dispatch = useAppDispatch();
 
@@ -91,21 +92,23 @@ export const EditForm: FC<EditFormProps> = ({
     const end = getFormattedDate(new Date(form.end));
 
     const newTodo = {
+      _id: nanoid(),
       text,
+      completed: false,
       time: {
         start,
         end,
       },
     };
 
-    if (!id) {
+    if (!_id) {
       dispatch(addTodo(newTodo));
 
-      dispatch(setStatusFilter(FilterStatus.ALL));
+      dispatch(setFilterStatus(FilterStatus.ALL));
       clearInput?.();
     } else {
       const updatedTodo = {
-        id,
+        _id,
         text,
         time: {
           start,

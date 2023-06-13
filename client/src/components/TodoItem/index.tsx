@@ -9,8 +9,8 @@ import {
 
 import { TodoModal } from '@components/TodoModal';
 import { useAppSelector, useAppDispatch } from '@hooks';
-import { toggleCompleted, deleteTodo } from '@store/todos/actions';
 import { selectTodos } from '@store/todos/selectors';
+import { toggleCompleted, removeTodo } from '@store/todos/slice';
 import { Todo } from '@types';
 
 import './TodoItem.scss';
@@ -21,7 +21,7 @@ type TodoItemProps = {
 
 export const TodoItem: FC<TodoItemProps> = ({
   item: {
-    id,
+    _id,
     text,
     completed,
     time: { start, end },
@@ -33,12 +33,13 @@ export const TodoItem: FC<TodoItemProps> = ({
   const [modal, setModal] = useState(false);
   const [todo, setTodo] = useState<Todo | null>(null);
 
-  const toggleCompletedHandler = (id: string) => dispatch(toggleCompleted(id));
+  const toggleCompletedHandler = (_id: string) =>
+    dispatch(toggleCompleted(_id));
 
-  const deleteTodoHandler = (id: string) => dispatch(deleteTodo(id));
+  const deleteTodoHandler = (id: string) => dispatch(removeTodo(id));
 
   const editTodoHandler = (id: string) => {
-    const item = todos.find(({ id: todoId }: { id: string }) => todoId === id);
+    const item = todos.find(({ _id }) => _id === id);
     if (item) setTodo(item);
     closeModalHandler();
   };
@@ -48,13 +49,13 @@ export const TodoItem: FC<TodoItemProps> = ({
   return (
     <>
       <li className="todo">
-        <label htmlFor={id}>
+        <label htmlFor={_id}>
           <input
-            id={id}
+            id={_id}
             type="checkbox"
             className="todo__input"
             checked={completed}
-            onChange={() => toggleCompletedHandler(id)}
+            onChange={() => toggleCompletedHandler(_id)}
           />
           <span className="todo__checkbox">
             <TbCheck size={24} className="todo__icon" />
@@ -84,14 +85,14 @@ export const TodoItem: FC<TodoItemProps> = ({
             type="button"
             disabled={completed}
             className="edit-button"
-            onClick={() => editTodoHandler(id)}
+            onClick={() => editTodoHandler(_id)}
           >
             <TbEdit size={24} />
           </button>
           <button
             type="button"
             className="delete-button"
-            onClick={() => deleteTodoHandler(id)}
+            onClick={() => deleteTodoHandler(_id)}
           >
             <TbTrash size={24} />
           </button>

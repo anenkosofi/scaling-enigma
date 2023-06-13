@@ -7,8 +7,8 @@ import { StatusFilter } from '@components/StatusFilter';
 import { TodoItem } from '@components/TodoItem';
 import { useAppSelector, useAppDispatch } from '@hooks';
 import { selectStatusFilter } from '@store/filters/selectors';
-import { clearCompleted } from '@store/todos/actions';
 import { selectTodos } from '@store/todos/selectors';
+import { clearCompleted } from '@store/todos/slice';
 import { getVisibleTodos, getMessage } from '@utils';
 
 import './TodoList.scss';
@@ -68,7 +68,7 @@ export const TodoList: FC = () => {
         {visibleTodos.length ? (
           <ul className="todo-list">
             {visibleTodos.map(todo => (
-              <TodoItem key={todo.id} item={todo} />
+              <TodoItem key={todo._id} item={todo} />
             ))}
           </ul>
         ) : (

@@ -1,6 +1,7 @@
 export { getFormattedDate, getInputDate, getOriginalDate } from './formatDate';
 export { getInitialDates } from './getInitialDates';
 export {
+  validateEmail,
   validateSymbols,
   validateTextLength,
   validateValues,

@@ -1,0 +1,114 @@
+@import '@styles/shared.scss';
+
+.menu {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  &__thumb {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &__name {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  &__wrapper {
+    position: absolute;
+    bottom: -220%;
+    right: 0;
+    width: 177px;
+    padding: 18px;
+    @include themify($themes) {
+      background-color: themed('primary-light-white');
+      border: 1px solid themed('light-green');
+    }
+    border-radius: 8px;
+    z-index: 1;
+  }
+
+  &__button {
+    @extend %button;
+    width: 141px;
+    height: 43px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.12;
+    @include themify($themes) {
+      color: themed('primary-light-white');
+      background-color: themed('light-green');
+    }
+    border-radius: 6px;
+    transition: background-color 250ms $timing-function;
+
+    &:hover {
+      @include themify($themes) {
+        background-color: themed('dark-accent');
+      }
+    }
+
+    &_primary,
+    &_secondary {
+      width: 192px;
+      height: 59px;
+    }
+
+    &_secondary {
+      @include themify($themes) {
+        color: themed('tertiary-black');
+        background-color: themed('secondary-grey');
+      }
+      border: 1px solid transparent;
+      border-radius: 6px;
+      transition: background-color 250ms $timing-function,
+        border-color 250ms $timing-function;
+
+      &:hover,
+      &:focus {
+        @include themify($themes) {
+          background-color: transparent;
+          border-color: themed('tertiary-black');
+        }
+      }
+    }
+  }
+
+  &__modal-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    @extend %button;
+    width: 36px;
+    height: 36px;
+    background-color: transparent;
+  }
+
+  &__modal-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  &__modal-question {
+    text-align: center;
+  }
+
+  &__button-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+}
