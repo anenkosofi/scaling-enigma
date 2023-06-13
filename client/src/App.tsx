@@ -7,14 +7,14 @@ import { PrivateRoute } from '@components/PrivateRoute';
 import { RestrictedRoute } from '@components/RestrictedRoute';
 import { useAppDispatch, useAppSelector } from '@hooks';
 import { refreshUser } from '@store/auth/operations';
-import { selectIsLoading } from '@store/auth/selectors';
+import { selectIsRefreshing } from '@store/auth/selectors';
 import { Pathname } from '@types';
 const TodosPage = lazy(() => import('@pages/Todos'));
 const AuthPage = lazy(() => import('@pages/Auth'));
 
 export const App = () => {
   const dispatch = useAppDispatch();
-  const isLoading = useAppSelector(selectIsLoading);
+  const isLoading = useAppSelector(selectIsRefreshing);
 
   useEffect(() => {
     dispatch(refreshUser());

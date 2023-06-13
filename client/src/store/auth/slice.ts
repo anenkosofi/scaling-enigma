@@ -9,6 +9,7 @@ export interface AuthState {
   token: string | null;
   authenticated: boolean;
   isLoading: boolean;
+  isRefreshing: boolean;
   error: string | null;
 }
 
@@ -17,6 +18,7 @@ const authInitialState: AuthState = {
   token: null,
   authenticated: false,
   isLoading: false,
+  isRefreshing: false,
   error: null,
 };
 
@@ -58,20 +60,20 @@ const authSlice = createSlice({
         };
       })
       .addCase(refreshUser.pending, state => {
-        return { ...state, isLoading: true };
+        return { ...state, isRefreshing: true };
       })
       .addCase(refreshUser.fulfilled, (state, action) => {
         return {
           ...state,
           user: action.payload.user,
           authenticated: true,
-          isLoading: false,
+          isRefreshing: false,
         };
       })
       .addCase(refreshUser.rejected, state => {
         return {
           ...state,
-          isLoading: false,
+          isRefreshing: false,
         };
       }),
 });

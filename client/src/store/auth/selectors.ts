@@ -8,3 +8,5 @@ export const selectIsAuthorized = (state: RootState) =>
 export const selectIsLoading = (state: RootState) => state.auth.isLoading;
 
 export const selectError = (state: RootState) => state.auth.error;
+
+export const selectIsRefreshing = (state: RootState) => state.auth.isRefreshing;
