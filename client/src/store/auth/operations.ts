@@ -10,6 +10,10 @@ const setAuthHeader = (token: string) => {
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 };
 
+export const clearAuthHeader = () => {
+  axios.defaults.headers.common.Authorization = '';
+};
+
 export const login = createAsyncThunk<
   LoggedUser,
   { email: string; password: string },

@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { User } from '@types';
 
-import { login, refreshUser } from './operations';
+import { login, refreshUser, clearAuthHeader } from './operations';
 
 export interface AuthState {
   user: User | null;
@@ -27,6 +27,7 @@ const authSlice = createSlice({
   initialState: authInitialState,
   reducers: {
     logout(state) {
+      clearAuthHeader();
       return {
         ...state,
         user: null,
