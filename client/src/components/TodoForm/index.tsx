@@ -1,4 +1,3 @@
-import { nanoid } from 'nanoid';
 import React, { FC, useState, useEffect } from 'react';
 import { HiPlus } from 'react-icons/hi';
 
@@ -6,7 +5,7 @@ import { Container } from '@components/Container';
 import { TodoModal } from '@components/TodoModal';
 import { useAppDispatch } from '@hooks';
 import { setFilterStatus } from '@store/filters/slice';
-import { addTodo } from '@store/todos/slice';
+import { addTodo } from '@store/todos/operations';
 import { FilterStatus } from '@types';
 import {
   getFormattedDate,
@@ -49,7 +48,6 @@ export const TodoForm: FC = () => {
 
     dispatch(
       addTodo({
-        _id: nanoid(),
         text: text,
         completed: false,
         time: {

@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { Todo } from '@types';
 
-import { getTodos } from './operations';
+import { getTodos, addTodo } from './operations';
 
 export interface TodosState {
   items: Todo[];
@@ -71,14 +71,27 @@ const todosSlice = createSlice({
           error: action.payload ? action.payload : 'An unknown error occured',
           isLoading: false,
         };
+      })
+      .addCase(addTodo.pending, state => {
+        return { ...state, isLoading: true };
+      })
+      .addCase(addTodo.fulfilled, (state, action) => {
+        return {
+          ...state,
+          items: [action.payload, ...state.items],
+          isLoading: false,
+          error: null,
+        };
+      })
+      .addCase(addTodo.rejected, (state, action) => {
+        return {
+          ...state,
+          isLoading: false,
+          error: action.payload ? action.payload : 'An unknown error occured',
+        };
       }),
 });
 
-export const {
-  addTodo,
-  removeTodo,
-  editTodo,
-  toggleCompleted,
-  clearCompleted,
-} = todosSlice.actions;
+export const { removeTodo, editTodo, toggleCompleted, clearCompleted } =
+  todosSlice.actions;
 export const todosReducer = todosSlice.reducer;
