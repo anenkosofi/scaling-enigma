@@ -68,7 +68,7 @@ export const TodoList: FC = () => {
         {visibleTodos.length ? (
           <ul className="todo-list">
             {visibleTodos.map(todo => (
-              <TodoItem key={todo.id} item={todo} />
+              <TodoItem key={todo._id} item={todo} />
             ))}
           </ul>
         ) : (

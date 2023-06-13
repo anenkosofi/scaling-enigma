@@ -20,7 +20,7 @@ type EditFormProps = {
   closeModal: () => void;
   todo: {
     text: string;
-    id?: string;
+    _id?: string;
     time?: {
       start?: string;
       end?: string;
@@ -38,7 +38,7 @@ type ErrorState = {
 export const EditForm: FC<EditFormProps> = ({
   closeModal,
   clearInput,
-  todo: { id, text, time },
+  todo: { _id, text, time },
 }) => {
   const dispatch = useAppDispatch();
 
@@ -92,7 +92,7 @@ export const EditForm: FC<EditFormProps> = ({
     const end = getFormattedDate(new Date(form.end));
 
     const newTodo = {
-      id: nanoid(),
+      _id: nanoid(),
       text,
       completed: false,
       time: {
@@ -101,14 +101,14 @@ export const EditForm: FC<EditFormProps> = ({
       },
     };
 
-    if (!id) {
+    if (!_id) {
       dispatch(addTodo(newTodo));
 
       dispatch(setFilterStatus(FilterStatus.ALL));
       clearInput?.();
     } else {
       const updatedTodo = {
-        id,
+        _id,
         text,
         time: {
           start,

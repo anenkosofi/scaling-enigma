@@ -49,7 +49,7 @@ export const TodoForm: FC = () => {
 
     dispatch(
       addTodo({
-        id: nanoid(),
+        _id: nanoid(),
         text: text,
         completed: false,
         time: {

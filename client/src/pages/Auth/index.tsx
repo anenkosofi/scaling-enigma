@@ -4,10 +4,12 @@ import { Container } from '@components/Container';
 import { LoginForm } from '@components/LoginForm';
 import { ThemeContext } from '@components/ThemeProvider';
 
+import './Auth.scss';
+
 const AuthPage: FC = () => {
   const { theme } = useContext(ThemeContext);
   return (
-    <div className={`theme-${theme}`}>
+    <div className={`auth theme-${theme}`}>
       <Container>
         <LoginForm />
       </Container>

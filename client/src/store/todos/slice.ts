@@ -26,15 +26,15 @@ const todosSlice = createSlice({
     removeTodo(state, { payload }: PayloadAction<string>) {
       return {
         ...state,
-        items: state.items.filter(({ id }) => id !== payload),
+        items: state.items.filter(({ _id }) => _id !== payload),
       };
     },
     editTodo(state, { payload }: PayloadAction<Partial<Todo>>) {
       return {
         ...state,
         items: state.items.map(todo => {
-          const { id, ...rest } = payload as Todo;
-          return todo.id === id ? { ...todo, ...rest } : todo;
+          const { _id, ...rest } = payload as Todo;
+          return todo._id === _id ? { ...todo, ...rest } : todo;
         }),
       };
     },
@@ -42,7 +42,7 @@ const todosSlice = createSlice({
       return {
         ...state,
         items: state.items.map(todo =>
-          todo.id === payload ? { ...todo, completed: !todo.completed } : todo
+          todo._id === payload ? { ...todo, completed: !todo.completed } : todo
         ),
       };
     },

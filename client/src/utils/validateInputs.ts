@@ -1,3 +1,11 @@
+export const validateEmail = (email: string) => {
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailPattern.test(email)) {
+    return 'Invalid email format';
+  }
+  return null;
+};
+
 export const validateSymbols = (text: string): string | null => {
   const regex = /^[a-zA-Z0-9\s\u0400-\u04FF']*$/;
   return regex.test(text)
