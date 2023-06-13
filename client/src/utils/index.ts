@@ -7,4 +7,3 @@ export {
   validateValues,
 } from './validateInputs';
 export { getMessage } from './setMessage';
-export { getVisibleTodos } from './getVisibleTodos';

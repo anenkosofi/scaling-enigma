@@ -26,7 +26,7 @@ export const addTodo = createAsyncThunk<
 >('todos/addTodo', async (todo, thunkAPI) => {
   try {
     const response = await axios.post('/todos', todo);
-    return response.data;
+    return response.data.todo;
   } catch (e: unknown) {
     if (e instanceof Error) {
       return thunkAPI.rejectWithValue(e.message);

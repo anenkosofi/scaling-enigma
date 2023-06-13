@@ -8,12 +8,14 @@ export interface TodosState {
   items: Todo[];
   isLoading: boolean;
   error: string | null;
+  query: string;
 }
 
 const todosInitialState: TodosState = {
   items: [],
   isLoading: false,
   error: null,
+  query: '',
 };
 
 const todosSlice = createSlice({
@@ -49,6 +51,9 @@ const todosSlice = createSlice({
     clearCompleted(state) {
       return { ...state, items: state.items.filter(todo => !todo.completed) };
     },
+    setQuery(state, action: PayloadAction<string>) {
+      return { ...state, query: action.payload };
+    },
   },
   extraReducers: builder =>
     builder
@@ -61,7 +66,7 @@ const todosSlice = createSlice({
       .addCase(getTodos.fulfilled, (state, action) => {
         return {
           ...state,
-          items: action.payload,
+          items: action.payload.reverse(),
           isLoading: false,
         };
       })
@@ -92,6 +97,11 @@ const todosSlice = createSlice({
       }),
 });
 
-export const { removeTodo, editTodo, toggleCompleted, clearCompleted } =
-  todosSlice.actions;
+export const {
+  removeTodo,
+  editTodo,
+  toggleCompleted,
+  clearCompleted,
+  setQuery,
+} = todosSlice.actions;
 export const todosReducer = todosSlice.reducer;
