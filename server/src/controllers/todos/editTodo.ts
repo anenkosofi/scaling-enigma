@@ -13,7 +13,7 @@ export const editTodo = async (req: Request, res: Response) => {
     },
     req.body,
     { new: true }
-  );
+  ).select('-owner');
   if (!updatedTodo) {
     throw new NotFound(`Contact with id=${todoId} is not found`);
   }
