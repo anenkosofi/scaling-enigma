@@ -16,21 +16,21 @@ export const selectVisibleTodos = createSelector(
   [selectTodos, selectStatusFilter, selectQuery],
   (todos, filter, query) => {
     const searchQuery = query.trim().toLowerCase();
-    switch (filter) {
-      case FilterStatus.ACTIVE:
-        return todos
-          .filter(todo => todo.text.trim().toLowerCase().includes(searchQuery))
-          .filter(todo => !todo.completed);
 
-      case FilterStatus.COMPLETED:
-        return todos
-          .filter(todo => todo.text.trim().toLowerCase().includes(searchQuery))
-          .filter(todo => todo.completed);
+    return todos.filter(todo => {
+      const todoText = todo.text.trim().toLowerCase();
+      const isMatch = todoText.includes(searchQuery);
 
-      default:
-        return todos.filter(todo =>
-          todo.text.trim().toLowerCase().includes(searchQuery)
-        );
-    }
+      switch (filter) {
+        case FilterStatus.ACTIVE:
+          return isMatch && !todo.completed;
+
+        case FilterStatus.COMPLETED:
+          return isMatch && todo.completed;
+
+        default:
+          return isMatch;
+      }
+    });
   }
 );
