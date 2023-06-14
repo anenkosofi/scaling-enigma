@@ -11,7 +11,11 @@ export const Loader: FC = () => {
       radius="9"
       color={GREEN_COLOR}
       ariaLabel="three-dots-loading"
-      wrapperStyle={{ justifyContent: 'center' }}
+      wrapperStyle={{
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh',
+      }}
       visible={true}
     />
   );

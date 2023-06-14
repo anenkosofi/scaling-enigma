@@ -2,7 +2,6 @@ import React, { FC, useState, useEffect } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 
 import { Container } from '@components/Container';
-import { Loader } from '@components/Loader';
 import { SearchForm } from '@components/SearchForm';
 import { StatusFilter } from '@components/StatusFilter';
 import { TodoItem } from '@components/TodoItem';
@@ -12,7 +11,6 @@ import {
   selectTodos,
   selectVisibleTodos,
   selectQuery,
-  selectIsLoading,
 } from '@store/todos/selectors';
 import { clearCompleted, setQuery } from '@store/todos/slice';
 import { getMessage } from '@utils';
@@ -25,7 +23,6 @@ export const TodoList: FC = () => {
   const query = useAppSelector(selectQuery);
   const statusFilter = useAppSelector(selectStatusFilter);
   const visibleTodos = useAppSelector(selectVisibleTodos);
-  const isLoading = useAppSelector(selectIsLoading);
 
   const areAnyTasksCompleted = todos.some(todo => todo.completed);
 
@@ -71,9 +68,7 @@ export const TodoList: FC = () => {
             Clear completed
           </button>
         </div>
-        {isLoading ? (
-          <Loader />
-        ) : visibleTodos.length ? (
+        {visibleTodos.length ? (
           <ul className="todo-list">
             {visibleTodos.map(todo => (
               <TodoItem key={todo._id} item={todo} />
