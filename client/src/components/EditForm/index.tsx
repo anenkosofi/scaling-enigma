@@ -1,6 +1,6 @@
-import { nanoid } from 'nanoid';
 import React, { FC, useState, useEffect } from 'react';
 
+import { addTodo } from '@store/todos/operations';
 import { FilterStatus } from '@types';
 import {
   getInputDate,
@@ -12,7 +12,7 @@ import {
 } from '@utils';
 import { useAppDispatch } from 'hooks';
 import { setFilterStatus } from 'store/filters/slice';
-import { addTodo, editTodo } from 'store/todos/slice';
+import { editTodo } from 'store/todos/slice';
 
 import './EditForm.scss';
 
@@ -92,7 +92,6 @@ export const EditForm: FC<EditFormProps> = ({
     const end = getFormattedDate(new Date(form.end));
 
     const newTodo = {
-      _id: nanoid(),
       text,
       completed: false,
       time: {

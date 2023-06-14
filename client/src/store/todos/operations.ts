@@ -18,3 +18,19 @@ export const getTodos = createAsyncThunk<
     return thunkAPI.rejectWithValue('An unknown error occurred.');
   }
 });
+
+export const addTodo = createAsyncThunk<
+  Todo,
+  Omit<Todo, '_id'>,
+  { rejectValue: string }
+>('todos/addTodo', async (todo, thunkAPI) => {
+  try {
+    const response = await axios.post('/todos', todo);
+    return response.data.todo;
+  } catch (e: unknown) {
+    if (e instanceof Error) {
+      return thunkAPI.rejectWithValue(e.message);
+    }
+    return thunkAPI.rejectWithValue('An unknown error occurred.');
+  }
+});

@@ -2,30 +2,36 @@ import React, { FC, useState, useEffect } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 
 import { Container } from '@components/Container';
+import { Loader } from '@components/Loader';
 import { SearchForm } from '@components/SearchForm';
 import { StatusFilter } from '@components/StatusFilter';
 import { TodoItem } from '@components/TodoItem';
 import { useAppSelector, useAppDispatch } from '@hooks';
 import { selectStatusFilter } from '@store/filters/selectors';
-import { selectTodos } from '@store/todos/selectors';
-import { clearCompleted } from '@store/todos/slice';
-import { getVisibleTodos, getMessage } from '@utils';
+import {
+  selectTodos,
+  selectVisibleTodos,
+  selectQuery,
+  selectIsLoading,
+} from '@store/todos/selectors';
+import { clearCompleted, setQuery } from '@store/todos/slice';
+import { getMessage } from '@utils';
 
 import './TodoList.scss';
 
 export const TodoList: FC = () => {
   const dispatch = useAppDispatch();
   const todos = useAppSelector(selectTodos);
+  const query = useAppSelector(selectQuery);
   const statusFilter = useAppSelector(selectStatusFilter);
+  const visibleTodos = useAppSelector(selectVisibleTodos);
+  const isLoading = useAppSelector(selectIsLoading);
 
   const areAnyTasksCompleted = todos.some(todo => todo.completed);
 
   const [message, setMessage] = useState(
     'You do not have any task to do. Add the first!'
   );
-  const [query, setQuery] = useState('');
-
-  const visibleTodos = getVisibleTodos({ todos, statusFilter, query });
 
   const clearCompletedHandler = () => {
     dispatch(clearCompleted());
@@ -46,7 +52,7 @@ export const TodoList: FC = () => {
     setMessage(message);
   }, [statusFilter, query]);
 
-  const getQuery = (query: string) => setQuery(query);
+  const getQuery = (query: string) => dispatch(setQuery(query));
 
   return (
     <section className="todo-list__section">
@@ -65,7 +71,9 @@ export const TodoList: FC = () => {
             Clear completed
           </button>
         </div>
-        {visibleTodos.length ? (
+        {isLoading ? (
+          <Loader />
+        ) : visibleTodos.length ? (
           <ul className="todo-list">
             {visibleTodos.map(todo => (
               <TodoItem key={todo._id} item={todo} />
