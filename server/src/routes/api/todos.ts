@@ -15,7 +15,7 @@ todosRouter.post(
   addTodo
 );
 
-todosRouter.put(
+todosRouter.patch(
   '/:todoId',
   auth,
   validateId,
