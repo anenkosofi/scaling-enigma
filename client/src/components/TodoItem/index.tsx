@@ -9,8 +9,9 @@ import {
 
 import { TodoModal } from '@components/TodoModal';
 import { useAppSelector, useAppDispatch } from '@hooks';
+import { editTodo } from '@store/todos/operations';
 import { selectTodos } from '@store/todos/selectors';
-import { toggleCompleted, removeTodo } from '@store/todos/slice';
+import { removeTodo } from '@store/todos/slice';
 import { Todo } from '@types';
 
 import './TodoItem.scss';
@@ -34,7 +35,7 @@ export const TodoItem: FC<TodoItemProps> = ({
   const [todo, setTodo] = useState<Todo | null>(null);
 
   const toggleCompletedHandler = (_id: string) =>
-    dispatch(toggleCompleted(_id));
+    dispatch(editTodo({ id: _id, todo: { completed: !completed } }));
 
   const deleteTodoHandler = (id: string) => dispatch(removeTodo(id));
 

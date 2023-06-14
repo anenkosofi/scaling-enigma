@@ -12,7 +12,7 @@ import {
 } from '@utils';
 import { useAppDispatch } from 'hooks';
 import { setFilterStatus } from 'store/filters/slice';
-import { editTodo } from 'store/todos/slice';
+import { editTodo } from 'store/todos/operations';
 
 import './EditForm.scss';
 
@@ -107,14 +107,13 @@ export const EditForm: FC<EditFormProps> = ({
       clearInput?.();
     } else {
       const updatedTodo = {
-        _id,
         text,
         time: {
           start,
           end,
         },
       };
-      dispatch(editTodo(updatedTodo));
+      dispatch(editTodo({ id: _id, todo: updatedTodo }));
     }
 
     setForm({ text: '', start: '', end: '' });
