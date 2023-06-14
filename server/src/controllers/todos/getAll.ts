@@ -13,6 +13,6 @@ export const getAll = async (req: UserRequest, res: Response) => {
   const query = {
     owner: _id,
   };
-  const todos = await Todo.find(query, '', {}).populate('owner', '_id email');
+  const todos = await Todo.find(query, '', {});
   res.json(todos);
 };
