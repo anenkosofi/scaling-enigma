@@ -44,7 +44,7 @@ export const editTodo = createAsyncThunk<
   { rejectValue: string }
 >('todos/editTodo', async ({ id, todo }, thunkAPI) => {
   try {
-    const response = await axios.put(`/todos/${id}`, todo);
+    const response = await axios.patch(`/todos/${id}`, todo);
     return response.data.todo;
   } catch (e: unknown) {
     if (e instanceof Error) {
