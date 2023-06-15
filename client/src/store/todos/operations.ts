@@ -37,14 +37,11 @@ export const addTodo = createAsyncThunk<
 
 export const editTodo = createAsyncThunk<
   Todo,
-  {
-    id: string;
-    todo: Omit<Todo, '_id' | 'completed'> | Pick<Todo, 'completed'>;
-  },
+  Omit<Todo, 'completed'> | Pick<Todo, 'completed' | '_id'>,
   { rejectValue: string }
->('todos/editTodo', async ({ id, todo }, thunkAPI) => {
+>('todos/editTodo', async ({ _id, ...rest }, thunkAPI) => {
   try {
-    const response = await axios.patch(`/todos/${id}`, todo);
+    const response = await axios.patch(`/todos/${_id}`, rest);
     return response.data.todo;
   } catch (e: unknown) {
     if (e instanceof Error) {

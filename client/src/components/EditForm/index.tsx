@@ -108,13 +108,14 @@ export const EditForm: FC<EditFormProps> = ({
       clearInput?.();
     } else {
       const updatedTodo = {
+        _id,
         text,
         time: {
           start,
           end,
         },
       };
-      dispatch(editTodo({ id: _id, todo: updatedTodo }));
+      dispatch(editTodo(updatedTodo));
       toast.success('Todo updated successfully!');
     }
 

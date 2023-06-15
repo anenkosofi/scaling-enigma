@@ -35,7 +35,7 @@ export const TodoItem: FC<TodoItemProps> = ({
   const [todo, setTodo] = useState<Todo | null>(null);
 
   const toggleCompletedHandler = (_id: string) =>
-    dispatch(editTodo({ id: _id, todo: { completed: !completed } }));
+    dispatch(editTodo({ _id, completed: !completed }));
 
   const deleteTodoHandler = (id: string) => dispatch(removeTodo(id));
 
