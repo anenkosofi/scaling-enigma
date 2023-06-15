@@ -13,7 +13,9 @@ export const auth = async (req: Request, res: Response, next: NextFunction) => {
     if (bearer !== 'Bearer') {
       throw new Unauthorized('Not authorized');
     }
-    const { id } = jwt.verify(token, ACCESS_SECRET_KEY) as JwtPayload;
+    const { id } = jwt.verify(token, ACCESS_SECRET_KEY, {
+      expiresIn: '1m',
+    }) as JwtPayload;
     const user = await User.findById(id);
     if (!user || !user.accessToken) {
       throw new Unauthorized('Not authorized');
