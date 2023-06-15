@@ -1,6 +1,12 @@
 import express from 'express';
 
-import { getAll, addTodo, editTodo } from '@controllers/todos';
+import {
+  getAll,
+  addTodo,
+  editTodo,
+  deleteTodo,
+  deleteCompleted,
+} from '@controllers/todos';
 import { auth, validateBody, validateId } from '@middlewares';
 import { todoSchemas } from '@models';
 
@@ -22,3 +28,7 @@ todosRouter.patch(
   validateBody(todoSchemas.editedTodoJoiSchema),
   editTodo
 );
+
+todosRouter.delete('/:todoId', auth, validateId, deleteTodo);
+
+todosRouter.delete('/todos/completed', auth, deleteCompleted);
