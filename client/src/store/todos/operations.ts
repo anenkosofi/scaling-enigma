@@ -34,3 +34,19 @@ export const addTodo = createAsyncThunk<
     return thunkAPI.rejectWithValue('An unknown error occurred.');
   }
 });
+
+export const editTodo = createAsyncThunk<
+  Todo,
+  Omit<Todo, 'completed'> | Pick<Todo, 'completed' | '_id'>,
+  { rejectValue: string }
+>('todos/editTodo', async ({ _id, ...rest }, thunkAPI) => {
+  try {
+    const response = await axios.patch(`/todos/${_id}`, rest);
+    return response.data.todo;
+  } catch (e: unknown) {
+    if (e instanceof Error) {
+      return thunkAPI.rejectWithValue(e.message);
+    }
+    return thunkAPI.rejectWithValue('An unknown error occurred.');
+  }
+});

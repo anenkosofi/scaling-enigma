@@ -7,7 +7,7 @@ type TodoModalProps = {
   closeModal: () => void;
   todo: {
     text: string;
-    id?: string;
+    _id?: string;
     time?: {
       start?: string;
       end?: string;

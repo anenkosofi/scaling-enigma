@@ -1,4 +1,5 @@
 import React, { lazy, useEffect } from 'react';
+import { Toaster } from 'react-hot-toast';
 import { Routes, Route } from 'react-router-dom';
 
 import Layout from '@components/Layout';
@@ -25,27 +26,30 @@ export const App = () => {
   }
 
   return (
-    <Routes>
-      <Route path={Pathname.TODOS} element={<Layout />}>
-        <Route
-          path={Pathname.LOGIN}
-          element={
-            <RestrictedRoute
-              redirectTo={Pathname.TODOS}
-              component={<AuthPage />}
-            />
-          }
-        />
-        <Route
-          path={Pathname.TODOS}
-          element={
-            <PrivateRoute
-              redirectTo={Pathname.LOGIN}
-              component={<TodosPage />}
-            />
-          }
-        />
-      </Route>
-    </Routes>
+    <>
+      <Toaster />
+      <Routes>
+        <Route path={Pathname.TODOS} element={<Layout />}>
+          <Route
+            path={Pathname.LOGIN}
+            element={
+              <RestrictedRoute
+                redirectTo={Pathname.TODOS}
+                component={<AuthPage />}
+              />
+            }
+          />
+          <Route
+            path={Pathname.TODOS}
+            element={
+              <PrivateRoute
+                redirectTo={Pathname.LOGIN}
+                component={<TodosPage />}
+              />
+            }
+          />
+        </Route>
+      </Routes>
+    </>
   );
 };

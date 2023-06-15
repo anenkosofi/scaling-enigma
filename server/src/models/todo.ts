@@ -41,8 +41,18 @@ const addedTodoJoiSchema = Joi.object({
   }),
 });
 
+const editedTodoJoiSchema = Joi.object({
+  text: Joi.string(),
+  completed: Joi.boolean(),
+  time: Joi.object({
+    start: Joi.string(),
+    end: Joi.string(),
+  }),
+});
+
 export const todoSchemas = {
   addedTodoJoiSchema,
+  editedTodoJoiSchema,
 };
 
 export const Todo = model('todo', todoSchema);

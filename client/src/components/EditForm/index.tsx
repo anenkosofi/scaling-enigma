@@ -1,4 +1,5 @@
 import React, { FC, useState, useEffect } from 'react';
+import toast from 'react-hot-toast';
 
 import { addTodo } from '@store/todos/operations';
 import { FilterStatus } from '@types';
@@ -12,7 +13,7 @@ import {
 } from '@utils';
 import { useAppDispatch } from 'hooks';
 import { setFilterStatus } from 'store/filters/slice';
-import { editTodo } from 'store/todos/slice';
+import { editTodo } from 'store/todos/operations';
 
 import './EditForm.scss';
 
@@ -115,6 +116,7 @@ export const EditForm: FC<EditFormProps> = ({
         },
       };
       dispatch(editTodo(updatedTodo));
+      toast.success('Todo updated successfully!');
     }
 
     setForm({ text: '', start: '', end: '' });
