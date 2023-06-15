@@ -2,11 +2,13 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { User } from '@types';
 
-import { login, refreshUser, clearAuthHeader } from './operations';
+import { login, refreshUser, setAuthHeader } from './operations';
 
 export interface AuthState {
   user: User | null;
-  token: string | null;
+  token: {
+    access: string | null;
+  };
   authenticated: boolean;
   isLoading: boolean;
   isRefreshing: boolean;
@@ -15,7 +17,9 @@ export interface AuthState {
 
 const authInitialState: AuthState = {
   user: null,
-  token: null,
+  token: {
+    access: null,
+  },
   authenticated: false,
   isLoading: false,
   isRefreshing: false,
@@ -27,11 +31,13 @@ const authSlice = createSlice({
   initialState: authInitialState,
   reducers: {
     logout(state) {
-      clearAuthHeader();
+      setAuthHeader();
       return {
         ...state,
         user: null,
-        token: null,
+        token: {
+          access: null,
+        },
         authenticated: false,
       };
     },
@@ -45,6 +51,7 @@ const authSlice = createSlice({
         };
       })
       .addCase(login.fulfilled, (state, action) => {
+        console.log(action);
         return {
           ...state,
           user: action.payload.user,

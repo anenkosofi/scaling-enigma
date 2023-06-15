@@ -1,18 +1,33 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
 import { RootState } from '@store';
+import { store } from '@store';
 import { LoggedUser } from '@types';
 
-axios.defaults.baseURL = 'https://todo-app-backend-igep.onrender.com/api';
+import { logout } from './slice';
 
-const setAuthHeader = (token: string) => {
-  axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+export const instance = axios.create({
+  baseURL: 'https://todo-app-backend-igep.onrender.com/api',
+});
+
+export const setAuthHeader = (token?: string) => {
+  if (token) {
+    instance.defaults.headers.common.Authorization = `Bearer ${token}`;
+  } else {
+    delete instance.defaults.headers.common.Authorization;
+  }
 };
 
-export const clearAuthHeader = () => {
-  axios.defaults.headers.common.Authorization = '';
-};
+instance.interceptors.response.use(
+  response => response,
+  (error: AxiosError) => {
+    if (error.response && error.response.status === 401) {
+      store.dispatch(logout());
+    }
+    return Promise.reject(error);
+  }
+);
 
 export const login = createAsyncThunk<
   LoggedUser,
@@ -20,11 +35,11 @@ export const login = createAsyncThunk<
   { rejectValue: string }
 >('auth/login', async ({ email, password }, thunkAPI) => {
   try {
-    const response = await axios.post<LoggedUser>('/users/login', {
+    const response = await instance.post<LoggedUser>('/users/login', {
       email,
       password,
     });
-    setAuthHeader(response.data.token);
+    setAuthHeader(response.data.token.access);
     return response.data;
   } catch (e: unknown) {
     if (e instanceof Error) {
@@ -38,14 +53,14 @@ export const refreshUser = createAsyncThunk(
   'auth/refresh',
   async (_, thunkAPI) => {
     const state = thunkAPI.getState() as RootState;
-    const persistedToken = state.auth.token;
+    const persistedToken = state.auth.token.access;
 
     if (persistedToken === null) {
       return thunkAPI.rejectWithValue('Unable to get user!');
     }
     try {
       setAuthHeader(persistedToken);
-      const response = await axios.get('/users/current');
+      const response = await instance.get('/users/current');
       return response.data;
     } catch (e: unknown) {
       if (e instanceof Error) {

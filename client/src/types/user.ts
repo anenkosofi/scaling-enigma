@@ -5,5 +5,7 @@ export type User = {
 
 export type LoggedUser = {
   user: User;
-  token: string;
+  token: {
+    access: string;
+  };
 };
