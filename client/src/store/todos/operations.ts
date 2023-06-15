@@ -50,3 +50,35 @@ export const editTodo = createAsyncThunk<
     return thunkAPI.rejectWithValue('An unknown error occurred.');
   }
 });
+
+export const deleteTodo = createAsyncThunk<
+  Todo,
+  string,
+  { rejectValue: string }
+>('todo/deleteTodo', async (_id, thunkAPI) => {
+  try {
+    const response = await axios.delete(`/todos/${_id}`);
+    return response.data.todo;
+  } catch (e: unknown) {
+    if (e instanceof Error) {
+      return thunkAPI.rejectWithValue(e.message);
+    }
+    return thunkAPI.rejectWithValue('An unknown error occurred.');
+  }
+});
+
+export const deleteCompleted = createAsyncThunk<
+  string,
+  undefined,
+  { rejectValue: string }
+>('todo/deleteCompleted', async (_, thunkAPI) => {
+  try {
+    const response = await axios.delete('todos/completed');
+    return response.data.message;
+  } catch (e: unknown) {
+    if (e instanceof Error) {
+      return thunkAPI.rejectWithValue(e.message);
+    }
+    return thunkAPI.rejectWithValue('An unknown error occurred.');
+  }
+});

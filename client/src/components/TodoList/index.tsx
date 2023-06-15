@@ -7,12 +7,15 @@ import { StatusFilter } from '@components/StatusFilter';
 import { TodoItem } from '@components/TodoItem';
 import { useAppSelector, useAppDispatch } from '@hooks';
 import { selectStatusFilter } from '@store/filters/selectors';
+import { deleteCompleted } from '@store/todos/operations';
 import {
+  selectError,
+  selectIsLoading,
   selectTodos,
   selectVisibleTodos,
   selectQuery,
 } from '@store/todos/selectors';
-import { clearCompleted, setQuery } from '@store/todos/slice';
+import { setQuery } from '@store/todos/slice';
 import { getMessage } from '@utils';
 
 import './TodoList.scss';
@@ -23,6 +26,8 @@ export const TodoList: FC = () => {
   const query = useAppSelector(selectQuery);
   const statusFilter = useAppSelector(selectStatusFilter);
   const visibleTodos = useAppSelector(selectVisibleTodos);
+  const error = useAppSelector(selectError);
+  const isLoading = useAppSelector(selectIsLoading);
 
   const areAnyTasksCompleted = todos.some(todo => todo.completed);
 
@@ -31,17 +36,19 @@ export const TodoList: FC = () => {
   );
 
   const clearCompletedHandler = () => {
-    dispatch(clearCompleted());
-    toast.success('All completed tasks have been deleted!', {
-      style: {
-        fontSize: 16,
-        color: '#23262a',
-      },
-      iconTheme: {
-        primary: '#8baa36',
-        secondary: '#fafafa',
-      },
-    });
+    dispatch(deleteCompleted());
+    if (!isLoading && !error) {
+      toast.success('All completed tasks have been deleted!', {
+        style: {
+          fontSize: 16,
+          color: '#23262a',
+        },
+        iconTheme: {
+          primary: '#8baa36',
+          secondary: '#fafafa',
+        },
+      });
+    }
   };
 
   useEffect(() => {
