@@ -1,5 +1,5 @@
 import React, { FC, useState, useEffect } from 'react';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 
 import { Container } from '@components/Container';
 import { SearchForm } from '@components/SearchForm';
@@ -53,7 +53,6 @@ export const TodoList: FC = () => {
 
   return (
     <section className="todo-list__section">
-      <Toaster />
       <Container>
         <h1 className="todo-list__title">Tasks</h1>
         <SearchForm onGetQuery={getQuery} />
