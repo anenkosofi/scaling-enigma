@@ -2,7 +2,13 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { Todo } from '@types';
 
-import { getTodos, addTodo, editTodo } from './operations';
+import {
+  getTodos,
+  addTodo,
+  editTodo,
+  deleteTodo,
+  deleteCompleted,
+} from './operations';
 
 export interface TodosState {
   items: Todo[];
@@ -22,15 +28,6 @@ const todosSlice = createSlice({
   name: 'todos',
   initialState: todosInitialState,
   reducers: {
-    removeTodo(state, { payload }: PayloadAction<string>) {
-      return {
-        ...state,
-        items: state.items.filter(({ _id }) => _id !== payload),
-      };
-    },
-    clearCompleted(state) {
-      return { ...state, items: state.items.filter(todo => !todo.completed) };
-    },
     setQuery(state, action: PayloadAction<string>) {
       return { ...state, query: action.payload };
     },
@@ -48,6 +45,7 @@ const todosSlice = createSlice({
           ...state,
           items: action.payload.reverse(),
           isLoading: false,
+          error: null,
         };
       })
       .addCase(getTodos.rejected, (state, action) => {
@@ -95,8 +93,44 @@ const todosSlice = createSlice({
           isLoading: false,
           error: action.payload ? action.payload : 'An unknown error occured',
         };
+      })
+      .addCase(deleteTodo.pending, state => {
+        return { ...state, isLoading: true };
+      })
+      .addCase(deleteTodo.fulfilled, (state, action) => {
+        return {
+          ...state,
+          items: state.items.filter(todo => todo._id !== action.payload._id),
+          isLoading: false,
+          error: null,
+        };
+      })
+      .addCase(deleteTodo.rejected, (state, action) => {
+        return {
+          ...state,
+          isLoading: false,
+          error: action.payload ? action.payload : 'An unknown error occured',
+        };
+      })
+      .addCase(deleteCompleted.pending, state => {
+        return { ...state, isLoading: true };
+      })
+      .addCase(deleteCompleted.fulfilled, state => {
+        return {
+          ...state,
+          items: state.items.filter(todo => !todo.completed),
+          isLoading: false,
+          error: null,
+        };
+      })
+      .addCase(deleteCompleted.rejected, (state, action) => {
+        return {
+          ...state,
+          isLoading: false,
+          error: action.payload ? action.payload : 'An unknown error occured',
+        };
       }),
 });
 
-export const { removeTodo, clearCompleted, setQuery } = todosSlice.actions;
+export const { setQuery } = todosSlice.actions;
 export const todosReducer = todosSlice.reducer;

@@ -3,21 +3,17 @@ import { NotFound } from 'http-errors';
 
 import { Todo } from '@models';
 
-export const editTodo = async (req: Request, res: Response) => {
+export const deleteTodo = async (req: Request, res: Response) => {
   const { todoId } = req.params;
   const { _id } = req.user;
-  const updatedTodo = await Todo.findByIdAndUpdate(
-    {
-      owner: _id,
-      _id: todoId,
-    },
-    req.body,
-    { new: true }
-  ).select('-owner');
-  if (!updatedTodo) {
+  const removedTodo = await Todo.findByIdAndRemove({
+    owner: _id,
+    _id: todoId,
+  });
+  if (!removedTodo) {
     throw new NotFound(`Todo with id=${todoId} is not found`);
   }
   res.json({
-    todo: updatedTodo,
+    todo: removedTodo,
   });
 };

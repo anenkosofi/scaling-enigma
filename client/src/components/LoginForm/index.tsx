@@ -5,11 +5,10 @@ import { Oval } from 'react-loader-spinner';
 import { useAppDispatch, useAppSelector } from '@hooks';
 import { login } from '@store/auth/operations';
 import { selectIsLoading, selectError } from '@store/auth/selectors';
+import { Colors } from '@types';
 import { validateTextLength, validateEmail } from '@utils';
 
 import './LoginForm.scss';
-
-const GREEN_COLOR = '#6a983c';
 
 export const LoginForm: FC = () => {
   const dispatch = useAppDispatch();
@@ -164,10 +163,10 @@ export const LoginForm: FC = () => {
               <Oval
                 height={24}
                 width={24}
-                color={GREEN_COLOR}
+                color={Colors.ACCENT}
                 visible={true}
                 ariaLabel="oval-loading"
-                secondaryColor={GREEN_COLOR}
+                secondaryColor={Colors.ACCENT}
                 strokeWidth={8}
                 strokeWidthSecondary={2}
               />

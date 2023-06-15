@@ -2,6 +2,7 @@ import React, { FC, useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 
 import { addTodo } from '@store/todos/operations';
+import { selectError, selectIsLoading } from '@store/todos/selectors';
 import { FilterStatus } from '@types';
 import {
   getInputDate,
@@ -11,7 +12,7 @@ import {
   validateTextLength,
   getInitialDates,
 } from '@utils';
-import { useAppDispatch } from 'hooks';
+import { useAppDispatch, useAppSelector } from 'hooks';
 import { setFilterStatus } from 'store/filters/slice';
 import { editTodo } from 'store/todos/operations';
 
@@ -42,6 +43,8 @@ export const EditForm: FC<EditFormProps> = ({
   todo: { _id, text, time },
 }) => {
   const dispatch = useAppDispatch();
+  const todoError = useAppSelector(selectError);
+  const isLoading = useAppSelector(selectIsLoading);
 
   const [form, setForm] = useState({
     text: text,
@@ -116,7 +119,9 @@ export const EditForm: FC<EditFormProps> = ({
         },
       };
       dispatch(editTodo(updatedTodo));
-      toast.success('Todo updated successfully!');
+      if (!isLoading && !todoError) {
+        toast.success('Todo updated successfully!');
+      }
     }
 
     setForm({ text: '', start: '', end: '' });
