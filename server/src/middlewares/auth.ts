@@ -21,7 +21,9 @@ export const auth = async (req: Request, res: Response, next: NextFunction) => {
     req.user = user;
     next();
   } catch (error) {
-    if (error.message === 'Invalid signature') {
+    if (error instanceof jwt.TokenExpiredError) {
+      error = new Unauthorized('Token expired');
+    } else if (error.message === 'Invalid signature') {
       error.status = 401;
     }
     next(error);
