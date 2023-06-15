@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { Unauthorized, Forbidden } from 'http-errors';
+import { Unauthorized } from 'http-errors';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 
 import { User } from '@models';
@@ -23,9 +23,6 @@ export const auth = async (req: Request, res: Response, next: NextFunction) => {
   } catch (error) {
     if (error.message === 'Invalid signature') {
       error.status = 401;
-    }
-    if (error instanceof jwt.TokenExpiredError) {
-      throw new Unauthorized('Token expired');
     }
     next(error);
   }
