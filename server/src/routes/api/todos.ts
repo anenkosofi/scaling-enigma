@@ -31,4 +31,4 @@ todosRouter.patch(
 
 todosRouter.delete('/:todoId', auth, validateId, deleteTodo);
 
-todosRouter.delete('/todos/completed', auth, deleteCompleted);
+todosRouter.delete('/completed', auth, deleteCompleted);
