@@ -16,6 +16,7 @@ import {
   selectQuery,
 } from '@store/todos/selectors';
 import { setQuery } from '@store/todos/slice';
+import { Colors } from '@types';
 import { getMessage } from '@utils';
 
 import './TodoList.scss';
@@ -41,11 +42,11 @@ export const TodoList: FC = () => {
       toast.success('All completed tasks have been deleted!', {
         style: {
           fontSize: 16,
-          color: '#23262a',
+          color: Colors.DARK,
         },
         iconTheme: {
-          primary: '#8baa36',
-          secondary: '#fafafa',
+          primary: Colors.GREEN,
+          secondary: Colors.LIGHT,
         },
       });
     }

@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { ThreeDots } from 'react-loader-spinner';
 
-const GREEN_COLOR = '#6a983c';
+import { Colors } from '@types';
 
 export const Loader: FC = () => {
   return (
@@ -9,7 +9,7 @@ export const Loader: FC = () => {
       height="80"
       width="80"
       radius="9"
-      color={GREEN_COLOR}
+      color={Colors.ACCENT}
       ariaLabel="three-dots-loading"
       wrapperStyle={{
         justifyContent: 'center',
