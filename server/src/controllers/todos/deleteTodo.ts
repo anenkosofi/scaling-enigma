@@ -2,8 +2,9 @@ import { Request, Response } from 'express';
 import { NotFound } from 'http-errors';
 
 import { Todo } from '@models';
+import { controller } from '@utils';
 
-export const deleteTodo = async (req: Request, res: Response) => {
+export const deleteTodo = controller(async (req: Request, res: Response) => {
   const { todoId } = req.params;
   const { _id } = req.user;
   const removedTodo = await Todo.findByIdAndRemove({
@@ -16,4 +17,4 @@ export const deleteTodo = async (req: Request, res: Response) => {
   res.json({
     todo: removedTodo,
   });
-};
+});

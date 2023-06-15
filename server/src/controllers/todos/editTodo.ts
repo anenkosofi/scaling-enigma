@@ -2,8 +2,9 @@ import { Request, Response } from 'express';
 import { NotFound } from 'http-errors';
 
 import { Todo } from '@models';
+import { controller } from '@utils';
 
-export const editTodo = async (req: Request, res: Response) => {
+export const editTodo = controller(async (req: Request, res: Response) => {
   const { todoId } = req.params;
   const { _id } = req.user;
   const updatedTodo = await Todo.findByIdAndUpdate(
@@ -20,4 +21,4 @@ export const editTodo = async (req: Request, res: Response) => {
   res.json({
     todo: updatedTodo,
   });
-};
+});

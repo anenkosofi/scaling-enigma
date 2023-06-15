@@ -4,7 +4,7 @@ import jwt, { JwtPayload } from 'jsonwebtoken';
 
 import { User } from '@models';
 
-const { SECRET_KEY } = process.env;
+const { ACCESS_SECRET_KEY } = process.env;
 
 export const auth = async (req: Request, res: Response, next: NextFunction) => {
   const { authorization = '' } = req.headers;
@@ -13,13 +13,10 @@ export const auth = async (req: Request, res: Response, next: NextFunction) => {
     if (bearer !== 'Bearer') {
       throw new Unauthorized('Not authorized');
     }
-    const { id, exp } = jwt.verify(token, SECRET_KEY) as JwtPayload;
+    const { id } = jwt.verify(token, ACCESS_SECRET_KEY) as JwtPayload;
     const user = await User.findById(id);
-    if (!user || !user.token) {
+    if (!user || !user.accessToken) {
       throw new Unauthorized('Not authorized');
-    }
-    if (Date.now() >= exp * 1000) {
-      throw new Forbidden('Token has been expired');
     }
     req.user = user;
     next();

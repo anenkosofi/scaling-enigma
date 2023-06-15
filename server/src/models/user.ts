@@ -6,7 +6,8 @@ interface IUser {
   username: string;
   email: string;
   password: string;
-  token: string;
+  accessToken: string;
+  refreshToken: string;
 }
 
 interface IUserMethods {
@@ -31,7 +32,7 @@ const userSchema = new Schema<IUser, UserModel, IUserMethods>(
       required: [true, 'Email is required'],
       unique: true,
     },
-    token: {
+    accessToken: {
       type: String,
     },
   },

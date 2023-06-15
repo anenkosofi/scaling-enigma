@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
 
-export const getCurrent = async (req: Request, res: Response) => {
+import { controller } from '@utils';
+
+export const getCurrent = controller(async (req: Request, res: Response) => {
   const { email, username } = req.user;
   res.json({
     user: {
@@ -8,4 +10,4 @@ export const getCurrent = async (req: Request, res: Response) => {
       username,
     },
   });
-};
+});

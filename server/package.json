@@ -14,7 +14,8 @@
     "@routes/api": "build/routes/api",
     "@controllers": "build/controllers",
     "@middlewares": "build/middlewares",
-    "@models": "build/models"
+    "@models": "build/models",
+    "@utils": "build/utils"
   },
   "keywords": [],
   "engines": {
