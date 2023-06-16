@@ -18,7 +18,7 @@ export const login = controller(async (req: Request, res: Response) => {
   };
   const accessToken = jwt.sign(payload, ACCESS_SECRET_KEY, { expiresIn: '1m' });
   const refreshToken = jwt.sign(payload, REFRESH_SECRET_KEY, {
-    expiresIn: '1m',
+    expiresIn: '2m',
   });
   await User.findByIdAndUpdate(user._id, { accessToken, refreshToken });
   res.json({
