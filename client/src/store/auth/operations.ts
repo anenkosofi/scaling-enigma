@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { instance, setAuthHeader } from '@services';
 
+import { instance, setAuthHeader } from '@services';
 import { RootState } from '@store';
 import { LoggedUser } from '@types';
 
