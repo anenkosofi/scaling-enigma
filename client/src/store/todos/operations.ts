@@ -1,4 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
 
 import { instance } from '@services';
 import { Todo } from '@types';
@@ -12,8 +13,8 @@ export const getTodos = createAsyncThunk<
     const response = await instance.get('/todos');
     return response.data;
   } catch (e: unknown) {
-    if (e instanceof Error) {
-      return thunkAPI.rejectWithValue(e.message);
+    if (axios.isAxiosError(e) && e.response?.data?.message) {
+      return thunkAPI.rejectWithValue(e.response.data.message);
     }
     return thunkAPI.rejectWithValue('An unknown error occurred.');
   }
@@ -28,8 +29,8 @@ export const addTodo = createAsyncThunk<
     const response = await instance.post('/todos', todo);
     return response.data.todo;
   } catch (e: unknown) {
-    if (e instanceof Error) {
-      return thunkAPI.rejectWithValue(e.message);
+    if (axios.isAxiosError(e) && e.response?.data?.message) {
+      return thunkAPI.rejectWithValue(e.response.data.message);
     }
     return thunkAPI.rejectWithValue('An unknown error occurred.');
   }
@@ -44,8 +45,8 @@ export const editTodo = createAsyncThunk<
     const response = await instance.patch(`/todos/${_id}`, rest);
     return response.data.todo;
   } catch (e: unknown) {
-    if (e instanceof Error) {
-      return thunkAPI.rejectWithValue(e.message);
+    if (axios.isAxiosError(e) && e.response?.data?.message) {
+      return thunkAPI.rejectWithValue(e.response.data.message);
     }
     return thunkAPI.rejectWithValue('An unknown error occurred.');
   }
@@ -60,8 +61,8 @@ export const deleteTodo = createAsyncThunk<
     const response = await instance.delete(`/todos/${_id}`);
     return response.data.todo;
   } catch (e: unknown) {
-    if (e instanceof Error) {
-      return thunkAPI.rejectWithValue(e.message);
+    if (axios.isAxiosError(e) && e.response?.data?.message) {
+      return thunkAPI.rejectWithValue(e.response.data.message);
     }
     return thunkAPI.rejectWithValue('An unknown error occurred.');
   }
@@ -76,8 +77,8 @@ export const deleteCompleted = createAsyncThunk<
     const response = await instance.delete('todos/completed');
     return response.data.message;
   } catch (e: unknown) {
-    if (e instanceof Error) {
-      return thunkAPI.rejectWithValue(e.message);
+    if (axios.isAxiosError(e) && e.response?.data?.message) {
+      return thunkAPI.rejectWithValue(e.response.data.message);
     }
     return thunkAPI.rejectWithValue('An unknown error occurred.');
   }
