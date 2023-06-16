@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
 
+import { instance } from '@services';
 import { Todo } from '@types';
 
 export const getTodos = createAsyncThunk<
@@ -9,7 +9,7 @@ export const getTodos = createAsyncThunk<
   { rejectValue: string }
 >('todos/getAll', async (_, thunkAPI) => {
   try {
-    const response = await axios.get('/todos');
+    const response = await instance.get('/todos');
     return response.data;
   } catch (e: unknown) {
     if (e instanceof Error) {
@@ -25,7 +25,7 @@ export const addTodo = createAsyncThunk<
   { rejectValue: string }
 >('todos/addTodo', async (todo, thunkAPI) => {
   try {
-    const response = await axios.post('/todos', todo);
+    const response = await instance.post('/todos', todo);
     return response.data.todo;
   } catch (e: unknown) {
     if (e instanceof Error) {
@@ -41,7 +41,7 @@ export const editTodo = createAsyncThunk<
   { rejectValue: string }
 >('todos/editTodo', async ({ _id, ...rest }, thunkAPI) => {
   try {
-    const response = await axios.patch(`/todos/${_id}`, rest);
+    const response = await instance.patch(`/todos/${_id}`, rest);
     return response.data.todo;
   } catch (e: unknown) {
     if (e instanceof Error) {
@@ -57,7 +57,7 @@ export const deleteTodo = createAsyncThunk<
   { rejectValue: string }
 >('todo/deleteTodo', async (_id, thunkAPI) => {
   try {
-    const response = await axios.delete(`/todos/${_id}`);
+    const response = await instance.delete(`/todos/${_id}`);
     return response.data.todo;
   } catch (e: unknown) {
     if (e instanceof Error) {
@@ -73,7 +73,7 @@ export const deleteCompleted = createAsyncThunk<
   { rejectValue: string }
 >('todo/deleteCompleted', async (_, thunkAPI) => {
   try {
-    const response = await axios.delete('todos/completed');
+    const response = await instance.delete('todos/completed');
     return response.data.message;
   } catch (e: unknown) {
     if (e instanceof Error) {

@@ -1,12 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+import { setAuthHeader } from '@services';
 import { User } from '@types';
 
-import { login, refreshUser, clearAuthHeader } from './operations';
+import { login, refreshUser } from './operations';
 
 export interface AuthState {
   user: User | null;
-  token: string | null;
+  token: {
+    access: string | null;
+  };
   authenticated: boolean;
   isLoading: boolean;
   isRefreshing: boolean;
@@ -15,7 +18,9 @@ export interface AuthState {
 
 const authInitialState: AuthState = {
   user: null,
-  token: null,
+  token: {
+    access: null,
+  },
   authenticated: false,
   isLoading: false,
   isRefreshing: false,
@@ -27,11 +32,13 @@ const authSlice = createSlice({
   initialState: authInitialState,
   reducers: {
     logout(state) {
-      clearAuthHeader();
+      setAuthHeader();
       return {
         ...state,
         user: null,
-        token: null,
+        token: {
+          access: null,
+        },
         authenticated: false,
       };
     },

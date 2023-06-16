@@ -3,10 +3,11 @@ import { Unauthorized } from 'http-errors';
 import jwt from 'jsonwebtoken';
 
 import { User } from '@models';
+import { controller } from '@utils';
 
-const { SECRET_KEY } = process.env;
+const { ACCESS_SECRET_KEY } = process.env;
 
-export const login = async (req: Request, res: Response) => {
+export const login = controller(async (req: Request, res: Response) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
   if (!user || !user.comparePassword(password)) {
@@ -15,13 +16,15 @@ export const login = async (req: Request, res: Response) => {
   const payload = {
     id: user._id,
   };
-  const token = jwt.sign(payload, SECRET_KEY);
-  await User.findByIdAndUpdate(user._id, { token });
+  const accessToken = jwt.sign(payload, ACCESS_SECRET_KEY, { expiresIn: '1m' });
+  await User.findByIdAndUpdate(user._id, { accessToken });
   res.json({
-    token,
+    token: {
+      access: accessToken,
+    },
     user: {
       email,
       username: user.username,
     },
   });
-};
+});

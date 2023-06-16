@@ -11,7 +11,8 @@
       "@routes/*": ["routes/*"],
       "@controllers/*": ["controllers/*"],
       "@middlewares": ["middlewares"],
-      "@models": ["models"]
+      "@models": ["models"],
+      "@utils": ["utils"]
     }
   },
   "include": ["src/**/*.ts"],

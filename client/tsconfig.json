@@ -25,7 +25,8 @@
       "@styles/*": ["styles/*"],
       "@types": ["types"],
       "@hooks": ["hooks"],
-      "@utils": ["utils"]
+      "@utils": ["utils"],
+      "@services": ["services"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"]
