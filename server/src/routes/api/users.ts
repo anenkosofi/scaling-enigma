@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { login, register, getCurrent } from '@controllers/users';
+import { login, register, getCurrent, refresh } from '@controllers/users';
 import { validateBody, auth } from '@middlewares';
 import { userSchemas } from '@models';
 
@@ -13,5 +13,11 @@ usersRouter.post(
 );
 
 usersRouter.post('/login', validateBody(userSchemas.userLoginJoiSchema), login);
+
+usersRouter.post(
+  '/refresh',
+  validateBody(userSchemas.refreshTokenJoiSchema),
+  refresh
+);
 
 usersRouter.get('/current', auth, getCurrent);
