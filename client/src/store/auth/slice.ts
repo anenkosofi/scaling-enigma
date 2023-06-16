@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+import { setAuthHeader } from '@services';
 import { User } from '@types';
 
-import { login, refreshUser, setAuthHeader } from './operations';
+import { login, refreshUser } from './operations';
 
 export interface AuthState {
   user: User | null;
@@ -51,7 +52,6 @@ const authSlice = createSlice({
         };
       })
       .addCase(login.fulfilled, (state, action) => {
-        console.log(action);
         return {
           ...state,
           user: action.payload.user,

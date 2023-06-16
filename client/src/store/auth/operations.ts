@@ -1,33 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios, { AxiosError } from 'axios';
+import { instance, setAuthHeader } from '@services';
 
 import { RootState } from '@store';
-import { store } from '@store';
 import { LoggedUser } from '@types';
-
-import { logout } from './slice';
-
-export const instance = axios.create({
-  baseURL: 'https://todo-app-backend-igep.onrender.com/api',
-});
-
-export const setAuthHeader = (token?: string) => {
-  if (token) {
-    instance.defaults.headers.common.Authorization = `Bearer ${token}`;
-  } else {
-    delete instance.defaults.headers.common.Authorization;
-  }
-};
-
-instance.interceptors.response.use(
-  response => response,
-  (error: AxiosError) => {
-    if (error.response && error.response.status === 401) {
-      store.dispatch(logout());
-    }
-    return Promise.reject(error);
-  }
-);
 
 export const login = createAsyncThunk<
   LoggedUser,

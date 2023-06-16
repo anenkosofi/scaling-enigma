@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { instance } from '@store/auth/operations';
+import { instance } from '@services';
 import { Todo } from '@types';
 
 export const getTodos = createAsyncThunk<
