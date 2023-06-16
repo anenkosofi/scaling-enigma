@@ -22,7 +22,7 @@ export const refresh = controller(async (req: Request, res: Response) => {
       expiresIn: '1m',
     });
     const refreshToken = jwt.sign(payload, REFRESH_SECRET_KEY, {
-      expiresIn: '1m',
+      expiresIn: '2m',
     });
     await User.findByIdAndUpdate(id, { accessToken, refreshToken });
     res.json({
