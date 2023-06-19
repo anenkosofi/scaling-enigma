@@ -4,6 +4,7 @@ import jwt, { JwtPayload } from 'jsonwebtoken';
 
 import { User } from '@models';
 import { controller } from '@utils';
+import { TokenLifetime } from '@types';
 
 const { ACCESS_SECRET_KEY, REFRESH_SECRET_KEY } = process.env;
 
@@ -19,10 +20,10 @@ export const refresh = controller(async (req: Request, res: Response) => {
       id,
     };
     const accessToken = jwt.sign(payload, ACCESS_SECRET_KEY, {
-      expiresIn: '1m',
+      expiresIn: TokenLifetime.ACCESS,
     });
     const refreshToken = jwt.sign(payload, REFRESH_SECRET_KEY, {
-      expiresIn: '2m',
+      expiresIn: TokenLifetime.REFRESH,
     });
     await User.findByIdAndUpdate(id, { accessToken, refreshToken });
     res.json({

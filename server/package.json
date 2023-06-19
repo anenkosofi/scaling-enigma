@@ -15,7 +15,8 @@
     "@controllers": "build/controllers",
     "@middlewares": "build/middlewares",
     "@models": "build/models",
-    "@utils": "build/utils"
+    "@utils": "build/utils",
+    "@types": "build/types"
   },
   "keywords": [],
   "engines": {

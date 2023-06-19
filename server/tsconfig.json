@@ -12,7 +12,8 @@
       "@controllers/*": ["controllers/*"],
       "@middlewares": ["middlewares"],
       "@models": ["models"],
-      "@utils": ["utils"]
+      "@utils": ["utils"],
+      "@types": ["types"]
     }
   },
   "include": ["src/**/*.ts"],
