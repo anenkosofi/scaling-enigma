@@ -10,6 +10,9 @@ import { selectIsLoading, selectError } from '@store/auth/selectors';
 import { Colors, Pathname } from '@types';
 import { validateTextLength, validateEmail } from '@utils';
 
+import '@components/LoginForm/LoginForm.scss';
+import '@pages/Login/Login.scss';
+
 export const RegisterForm: FC = () => {
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector(selectIsLoading);
