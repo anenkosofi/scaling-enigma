@@ -29,6 +29,7 @@ export const register = controller(async (req: Request, res: Response) => {
   const refreshToken = jwt.sign(payload, REFRESH_SECRET_KEY, {
     expiresIn: TokenLifetime.REFRESH,
   });
+  await User.findByIdAndUpdate(newUser._id, { accessToken, refreshToken });
   res.status(201).json({
     token: {
       access: accessToken,
