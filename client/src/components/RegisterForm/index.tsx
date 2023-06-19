@@ -11,7 +11,7 @@ import { Colors, Pathname } from '@types';
 import { validateTextLength, validateEmail } from '@utils';
 
 import '@components/LoginForm/LoginForm.scss';
-import '@pages/Login/Login.scss';
+import '@pages/Auth/Auth.scss';
 
 export const RegisterForm: FC = () => {
   const dispatch = useAppDispatch();
