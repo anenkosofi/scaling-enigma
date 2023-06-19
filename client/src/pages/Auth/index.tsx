@@ -20,9 +20,9 @@ const AuthPage: FC = () => {
   }, [location.pathname]);
 
   return (
-    <div className={`auth theme-${theme}`}>
+    <section className={`auth theme-${theme}`}>
       <Container>{isLoginPage ? <LoginForm /> : <RegisterForm />}</Container>
-    </div>
+    </section>
   );
 };
 
