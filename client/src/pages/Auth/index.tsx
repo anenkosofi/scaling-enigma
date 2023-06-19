@@ -1,4 +1,4 @@
-import React, { FC, useContext } from 'react';
+import React, { FC, useContext, useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { Container } from '@components/Container';
@@ -13,7 +13,12 @@ const AuthPage: FC = () => {
   const { theme } = useContext(ThemeContext);
   const location = useLocation();
 
-  const isLoginPage = location.pathname === Pathname.LOGIN;
+  const [isLoginPage, setIsLoginPage] = useState(true);
+
+  useEffect(() => {
+    setIsLoginPage(location.pathname === Pathname.LOGIN);
+  }, [location.pathname]);
+
   return (
     <div className={`auth theme-${theme}`}>
       <Container>{isLoginPage ? <LoginForm /> : <RegisterForm />}</Container>
