@@ -7,7 +7,8 @@ import { PrivateRoute } from '@components/PrivateRoute';
 import { RestrictedRoute } from '@components/RestrictedRoute';
 import { Pathname } from '@types';
 const TodosPage = lazy(() => import('@pages/Todos'));
-const AuthPage = lazy(() => import('@pages/Auth'));
+const LoginPage = lazy(() => import('@pages/Login'));
+const RegisterPage = lazy(() => import('@pages/Register'));
 
 export const App = () => {
   return (
@@ -20,7 +21,7 @@ export const App = () => {
             element={
               <RestrictedRoute
                 redirectTo={Pathname.TODOS}
-                component={<AuthPage />}
+                component={<RegisterPage />}
               />
             }
           />
@@ -29,7 +30,7 @@ export const App = () => {
             element={
               <RestrictedRoute
                 redirectTo={Pathname.TODOS}
-                component={<AuthPage />}
+                component={<LoginPage />}
               />
             }
           />
@@ -37,7 +38,7 @@ export const App = () => {
             path={Pathname.TODOS}
             element={
               <PrivateRoute
-                redirectTo={Pathname.LOGIN}
+                redirectTo={Pathname.REGISTER}
                 component={<TodosPage />}
               />
             }
