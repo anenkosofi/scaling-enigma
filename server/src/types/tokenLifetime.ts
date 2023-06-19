@@ -1,4 +1,4 @@
 export enum TokenLifetime {
-  'ACCESS' = '1m',
-  'REFRESH' = '2m',
+  'ACCESS' = '15m',
+  'REFRESH' = '7d',
 }
