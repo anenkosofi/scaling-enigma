@@ -16,7 +16,7 @@ export const App = () => {
       <Routes>
         <Route path={Pathname.TODOS} element={<Layout />}>
           <Route
-            path={Pathname.REGISTER.slice(1)}
+            path={Pathname.LOGIN}
             element={
               <RestrictedRoute
                 redirectTo={Pathname.TODOS}
@@ -25,7 +25,7 @@ export const App = () => {
             }
           />
           <Route
-            path={Pathname.LOGIN.slice(1)}
+            path={Pathname.REGISTER}
             element={
               <RestrictedRoute
                 redirectTo={Pathname.TODOS}
@@ -34,7 +34,7 @@ export const App = () => {
             }
           />
           <Route
-            path={Pathname.TODOS.slice(1)}
+            path={Pathname.TODOS}
             element={
               <PrivateRoute
                 redirectTo={Pathname.LOGIN}
