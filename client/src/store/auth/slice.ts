@@ -3,7 +3,7 @@ import { createSlice, Reducer } from '@reduxjs/toolkit';
 import { setAuthHeader } from '@services';
 import { User, Token } from '@types';
 
-import { login, getTokens } from './operations';
+import { register, login, getTokens } from './operations';
 
 export interface AuthState {
   user: User | null;
@@ -37,6 +37,29 @@ const authSlice = createSlice({
   },
   extraReducers: builder =>
     builder
+      .addCase(register.pending, state => {
+        return {
+          ...state,
+          isLoading: true,
+        };
+      })
+      .addCase(register.fulfilled, (state, action) => {
+        return {
+          ...state,
+          user: action.payload.user,
+          token: action.payload.token,
+          authenticated: true,
+          isLoading: false,
+          error: null,
+        };
+      })
+      .addCase(register.rejected, (state, action) => {
+        return {
+          ...state,
+          error: action.payload ? action.payload : 'An unknown error occured',
+          isLoading: false,
+        };
+      })
       .addCase(login.pending, state => {
         return {
           ...state,

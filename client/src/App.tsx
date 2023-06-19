@@ -16,6 +16,15 @@ export const App = () => {
       <Routes>
         <Route path={Pathname.TODOS} element={<Layout />}>
           <Route
+            path={Pathname.REGISTER}
+            element={
+              <RestrictedRoute
+                redirectTo={Pathname.TODOS}
+                component={<AuthPage />}
+              />
+            }
+          />
+          <Route
             path={Pathname.LOGIN}
             element={
               <RestrictedRoute

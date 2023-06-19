@@ -5,6 +5,23 @@ import { instance, setAuthHeader } from '@services';
 import { RootState } from '@store';
 import { LoggedUser, Token } from '@types';
 
+export const register = createAsyncThunk<
+  LoggedUser,
+  { username: string; email: string; password: string },
+  { rejectValue: string }
+>('auth/register', async (credentials, thunkAPI) => {
+  try {
+    const response = await axios.post('/users/register', credentials);
+    setAuthHeader(response.data.token.access);
+    return response.data;
+  } catch (e: unknown) {
+    if (axios.isAxiosError(e) && e.response?.data?.message) {
+      return thunkAPI.rejectWithValue(e.response.data.message);
+    }
+    return thunkAPI.rejectWithValue('An unknown error occurred.');
+  }
+});
+
 export const login = createAsyncThunk<
   LoggedUser,
   { email: string; password: string },

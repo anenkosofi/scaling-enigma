@@ -1,18 +1,16 @@
 import React, { FC, useState, useRef } from 'react';
-import { FiMail, FiLock } from 'react-icons/fi';
+import { FiUser, FiMail, FiLock } from 'react-icons/fi';
 import { Oval } from 'react-loader-spinner';
 import { NavLink } from 'react-router-dom';
 
 import { FormField } from '@components/FormField';
 import { useAppDispatch, useAppSelector } from '@hooks';
-import { login } from '@store/auth/operations';
+import { register } from '@store/auth/operations';
 import { selectIsLoading, selectError } from '@store/auth/selectors';
 import { Colors, Pathname } from '@types';
 import { validateTextLength, validateEmail } from '@utils';
 
-import './LoginForm.scss';
-
-export const LoginForm: FC = () => {
+export const RegisterForm: FC = () => {
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector(selectIsLoading);
   const error = useAppSelector(selectError);
@@ -20,14 +18,17 @@ export const LoginForm: FC = () => {
   const passwordRef = useRef(null);
 
   const [form, setForm] = useState({
+    username: '',
     email: '',
     password: '',
   });
   const [errors, setErrors] = useState<{
+    username: string | null;
     email: string | null;
     password: string | null;
-  }>({ email: null, password: null });
+  }>({ username: null, email: null, password: null });
   const [focusedField, setFocusedField] = useState({
+    username: false,
     email: false,
     password: false,
   });
@@ -38,6 +39,7 @@ export const LoginForm: FC = () => {
   };
 
   const validateRequiredFields = () => {
+    let usernameError: string | null = null;
     let emailError: string | null = null;
     let passwordError: string | null = null;
     if (focusedField.email) {
@@ -48,8 +50,12 @@ export const LoginForm: FC = () => {
     if (focusedField.password) {
       passwordError = validateTextLength(form.password);
     }
+    if (focusedField.username) {
+      usernameError = validateTextLength(form.username);
+    }
     return setErrors(prevState => ({
       ...prevState,
+      name: usernameError,
       email: emailError,
       password: passwordError,
     }));
@@ -73,13 +79,13 @@ export const LoginForm: FC = () => {
 
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!form.email.length || !form.password.length) {
+    if (!form.email.length || !form.username.length || !form.password.length) {
       return validateRequiredFields();
     }
 
-    dispatch(login(form));
+    dispatch(register(form));
 
-    setForm({ email: '', password: '' });
+    setForm({ username: '', email: '', password: '' });
   };
 
   const setInputType = (type: string) => {
@@ -98,7 +104,7 @@ export const LoginForm: FC = () => {
   return (
     <div className="login">
       <div className="login__wrapper">
-        <h1 className="login__title">Sign in</h1>
+        <h1 className="login__title">Sign up</h1>
         <p className="login__error">{error}</p>
         <form
           className="login__form"
@@ -110,6 +116,18 @@ export const LoginForm: FC = () => {
             name="new-password"
             autoComplete="new-password"
             style={{ display: 'none' }}
+          />
+          <FormField
+            id="username"
+            type="text"
+            name="username"
+            label="Username"
+            value={form.username}
+            error={errors.username}
+            icon={FiUser}
+            onChange={onChangeHandler}
+            onBlur={onBlurHandler}
+            onFocus={onFocusHandler}
           />
           <FormField
             id="email"
@@ -164,15 +182,15 @@ export const LoginForm: FC = () => {
                 strokeWidthSecondary={2}
               />
             ) : (
-              'Sign in'
+              'Sign up'
             )}
           </button>
         </form>
       </div>
       <p className="login__question">
-        Don&apos;t have an account?
-        <NavLink to={Pathname.REGISTER} className="login__link">
-          Sign up
+        Alredy have an account?
+        <NavLink to={Pathname.LOGIN} className="login__link">
+          Sign in
         </NavLink>
       </p>
     </div>
