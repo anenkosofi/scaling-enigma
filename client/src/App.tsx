@@ -16,16 +16,7 @@ export const App = () => {
       <Routes>
         <Route path={Pathname.TODOS} element={<Layout />}>
           <Route
-            path={Pathname.LOGIN}
-            element={
-              <RestrictedRoute
-                redirectTo={Pathname.TODOS}
-                component={<AuthPage />}
-              />
-            }
-          />
-          <Route
-            path={Pathname.REGISTER}
+            path={Pathname.AUTH}
             element={
               <RestrictedRoute
                 redirectTo={Pathname.TODOS}
@@ -37,7 +28,7 @@ export const App = () => {
             path={Pathname.TODOS}
             element={
               <PrivateRoute
-                redirectTo={Pathname.LOGIN}
+                redirectTo={Pathname.AUTH}
                 component={<TodosPage />}
               />
             }

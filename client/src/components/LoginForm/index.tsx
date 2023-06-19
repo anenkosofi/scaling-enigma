@@ -1,18 +1,21 @@
 import React, { FC, useState, useRef } from 'react';
 import { FiMail, FiLock } from 'react-icons/fi';
 import { Oval } from 'react-loader-spinner';
-import { NavLink } from 'react-router-dom';
 
 import { FormField } from '@components/FormField';
 import { useAppDispatch, useAppSelector } from '@hooks';
 import { login } from '@store/auth/operations';
 import { selectIsLoading, selectError } from '@store/auth/selectors';
-import { Colors, Pathname } from '@types';
+import { Colors } from '@types';
 import { validateTextLength, validateEmail } from '@utils';
 
 import './LoginForm.scss';
 
-export const LoginForm: FC = () => {
+type LoginFormProps = {
+  toggleForm: () => void;
+};
+
+export const LoginForm: FC<LoginFormProps> = ({ toggleForm }) => {
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector(selectIsLoading);
   const error = useAppSelector(selectError);
@@ -171,9 +174,9 @@ export const LoginForm: FC = () => {
       </div>
       <p className="login__question">
         Don&apos;t have an account?
-        <NavLink to={Pathname.REGISTER} className="login__link">
+        <span className="login__link" onClick={toggleForm}>
           Sign up
-        </NavLink>
+        </span>
       </p>
     </div>
   );
