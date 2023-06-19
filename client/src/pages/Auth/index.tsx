@@ -17,6 +17,7 @@ const AuthPage: FC = () => {
 
   useEffect(() => {
     setIsLoginPage(location.pathname === Pathname.LOGIN);
+    console.log(location.pathname);
   }, [location.pathname]);
 
   return (
