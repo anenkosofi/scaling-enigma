@@ -1,8 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
 
 import { instance, setAuthHeader } from '@services';
 import { RootState } from '@store';
-import { LoggedUser } from '@types';
+import { LoggedUser, Token } from '@types';
 
 export const login = createAsyncThunk<
   LoggedUser,
@@ -17,31 +18,26 @@ export const login = createAsyncThunk<
     setAuthHeader(response.data.token.access);
     return response.data;
   } catch (e: unknown) {
-    if (e instanceof Error) {
-      return thunkAPI.rejectWithValue(e.message);
+    if (axios.isAxiosError(e) && e.response?.data?.message) {
+      return thunkAPI.rejectWithValue(e.response.data.message);
     }
     return thunkAPI.rejectWithValue('An unknown error occurred.');
   }
 });
 
-export const refreshUser = createAsyncThunk(
-  'auth/refresh',
-  async (_, thunkAPI) => {
-    const state = thunkAPI.getState() as RootState;
-    const persistedToken = state.auth.token.access;
-
-    if (persistedToken === null) {
-      return thunkAPI.rejectWithValue('Unable to get user!');
-    }
-    try {
-      setAuthHeader(persistedToken);
-      const response = await instance.get('/users/current');
-      return response.data;
-    } catch (e: unknown) {
-      if (e instanceof Error) {
-        return thunkAPI.rejectWithValue(e.message);
-      }
-      return thunkAPI.rejectWithValue('An unknown error occurred.');
-    }
+export const getTokens = createAsyncThunk<
+  Token,
+  undefined,
+  { rejectValue: string }
+>('auth/refresh', async (_, thunkAPI) => {
+  const state = thunkAPI.getState() as RootState;
+  const token = state.auth.token?.refresh;
+  try {
+    const response = await instance.post('/users/refresh', {
+      token,
+    });
+    return response.data.token as Token;
+  } catch (e: unknown) {
+    return thunkAPI.rejectWithValue('Session expired. Please log in again.');
   }
-);
+});

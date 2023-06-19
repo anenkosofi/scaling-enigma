@@ -35,6 +35,9 @@ const userSchema = new Schema<IUser, UserModel, IUserMethods>(
     accessToken: {
       type: String,
     },
+    refreshToken: {
+      type: String,
+    },
   },
   {
     versionKey: false,
@@ -64,9 +67,14 @@ const userRegisterJoiSchema = Joi.object({
   email: Joi.string().required(),
 });
 
+const refreshTokenJoiSchema = Joi.object({
+  token: Joi.string().required(),
+});
+
 export const userSchemas = {
   userLoginJoiSchema,
   userRegisterJoiSchema,
+  refreshTokenJoiSchema,
 };
 
 export const User = model<IUser, UserModel>('user', userSchema);

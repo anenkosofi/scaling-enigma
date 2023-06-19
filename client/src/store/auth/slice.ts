@@ -1,29 +1,23 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, Reducer } from '@reduxjs/toolkit';
 
 import { setAuthHeader } from '@services';
-import { User } from '@types';
+import { User, Token } from '@types';
 
-import { login, refreshUser } from './operations';
+import { login, getTokens } from './operations';
 
 export interface AuthState {
   user: User | null;
-  token: {
-    access: string | null;
-  };
+  token: Token | null;
   authenticated: boolean;
   isLoading: boolean;
-  isRefreshing: boolean;
   error: string | null;
 }
 
 const authInitialState: AuthState = {
   user: null,
-  token: {
-    access: null,
-  },
+  token: null,
   authenticated: false,
   isLoading: false,
-  isRefreshing: false,
   error: null,
 };
 
@@ -36,9 +30,7 @@ const authSlice = createSlice({
       return {
         ...state,
         user: null,
-        token: {
-          access: null,
-        },
+        token: null,
         authenticated: false,
       };
     },
@@ -68,24 +60,26 @@ const authSlice = createSlice({
           isLoading: false,
         };
       })
-      .addCase(refreshUser.pending, state => {
-        return { ...state, isRefreshing: true };
+      .addCase(getTokens.pending, state => {
+        return { ...state, isLoading: true };
       })
-      .addCase(refreshUser.fulfilled, (state, action) => {
+      .addCase(getTokens.fulfilled, (state, action) => {
         return {
           ...state,
-          user: action.payload.user,
-          authenticated: true,
-          isRefreshing: false,
+          token: action.payload,
+          isLoading: false,
         };
       })
-      .addCase(refreshUser.rejected, state => {
+      .addCase(getTokens.rejected, (state, action) => {
         return {
           ...state,
-          isRefreshing: false,
+          isLoading: false,
+          error: action.payload
+            ? action.payload
+            : 'Session expired. Please log in again.',
         };
       }),
 });
 
 export const { logout } = authSlice.actions;
-export const authReducer = authSlice.reducer;
+export const authReducer = authSlice.reducer as Reducer<AuthState>;

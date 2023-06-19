@@ -1,7 +1,7 @@
-import axios, { AxiosError } from 'axios';
-import { toast } from 'react-hot-toast';
+import axios from 'axios';
 
 import { store } from '@store';
+import { getTokens } from '@store/auth/operations';
 import { logout } from '@store/auth/slice';
 
 export const instance = axios.create({
@@ -16,12 +16,29 @@ export const setAuthHeader = (token?: string) => {
   }
 };
 
+instance.interceptors.request.use(config => {
+  const { auth } = store.getState();
+  const accessToken = auth.token?.access;
+  config.headers.Authorization = `Bearer ${accessToken}`;
+  return config;
+});
+
 instance.interceptors.response.use(
   response => response,
-  (error: AxiosError) => {
-    if (error.response && error.response.status === 401) {
-      store.dispatch(logout());
-      toast.error('Session expired. Please log in again.');
+  async error => {
+    const { status, data } = error.response;
+    if (status === 401 && data.message === 'Token expired') {
+      try {
+        const res = await store.dispatch(getTokens());
+        if (res.type == 'auth/refresh/fulfilled') {
+          return instance(error.config);
+        } else {
+          store.dispatch(logout());
+          return Promise.reject(error);
+        }
+      } catch (e) {
+        return Promise.reject(error);
+      }
     }
     return Promise.reject(error);
   }
