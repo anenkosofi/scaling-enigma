@@ -171,7 +171,7 @@ export const LoginForm: FC = () => {
       </div>
       <p className="login__question">
         Don&apos;t have an account?
-        <NavLink to={`/${Pathname.REGISTER}`} className="login__link">
+        <NavLink to={Pathname.REGISTER} className="login__link">
           Sign up
         </NavLink>
       </p>

@@ -38,7 +38,7 @@ export const App = () => {
             path={Pathname.TODOS}
             element={
               <PrivateRoute
-                redirectTo={Pathname.REGISTER}
+                redirectTo={Pathname.LOGIN}
                 component={<TodosPage />}
               />
             }

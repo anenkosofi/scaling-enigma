@@ -1,5 +1,5 @@
 export enum Pathname {
   'TODOS' = '/',
-  'LOGIN' = 'login',
-  'REGISTER' = 'register',
+  'LOGIN' = '/login',
+  'REGISTER' = '/register',
 }

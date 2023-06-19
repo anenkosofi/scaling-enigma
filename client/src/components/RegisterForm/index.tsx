@@ -192,7 +192,7 @@ export const RegisterForm: FC = () => {
       </div>
       <p className="login__question">
         Alredy have an account?
-        <NavLink to={`/${Pathname.LOGIN}`} className="login__link">
+        <NavLink to={Pathname.LOGIN} className="login__link">
           Sign in
         </NavLink>
       </p>
