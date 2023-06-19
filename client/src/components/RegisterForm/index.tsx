@@ -58,7 +58,7 @@ export const RegisterForm: FC = () => {
     }
     return setErrors(prevState => ({
       ...prevState,
-      name: usernameError,
+      username: usernameError,
       email: emailError,
       password: passwordError,
     }));
