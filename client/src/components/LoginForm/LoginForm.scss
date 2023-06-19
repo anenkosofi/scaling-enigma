@@ -178,6 +178,7 @@
     @include themify($themes) {
       color: themed('light-green');
     }
+    cursor: pointer;
 
     &:hover {
       text-decoration: underline;
