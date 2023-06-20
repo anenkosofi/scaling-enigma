@@ -1,12 +1,12 @@
 import React, { FC, useState, useRef } from 'react';
 import { FiMail, FiLock } from 'react-icons/fi';
-import { Oval } from 'react-loader-spinner';
 
+import { ButtonLoader } from '@components/ButtonLoader';
 import { FormField } from '@components/FormField';
 import { useAppDispatch, useAppSelector } from '@hooks';
 import { login } from '@store/auth/operations';
 import { selectIsLoading, selectError } from '@store/auth/selectors';
-import { Colors } from '@types';
+import { ButtonTextContent } from '@types';
 import { validateTextLength, validateEmail } from '@utils';
 
 import './LoginForm.scss';
@@ -155,20 +155,7 @@ export const LoginForm: FC<LoginFormProps> = ({ toggleForm }) => {
             )}
           </div>
           <button type="submit" className="login__button" disabled={isLoading}>
-            {isLoading ? (
-              <Oval
-                height={24}
-                width={24}
-                color={Colors.ACCENT}
-                visible={true}
-                ariaLabel="oval-loading"
-                secondaryColor={Colors.ACCENT}
-                strokeWidth={8}
-                strokeWidthSecondary={2}
-              />
-            ) : (
-              'Sign in'
-            )}
+            {isLoading ? <ButtonLoader /> : ButtonTextContent.SIGN_IN}
           </button>
         </form>
       </div>
