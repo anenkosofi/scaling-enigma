@@ -6,31 +6,22 @@ import { FilterStatus } from '@types';
 
 export const selectTodos = (state: RootState) => state.todos.items;
 
-export const selectQuery = (state: RootState) => state.todos.query;
-
 export const selectIsLoading = (state: RootState) => state.todos.isLoading;
 
 export const selectError = (state: RootState) => state.todos.error;
 
 export const selectVisibleTodos = createSelector(
-  [selectTodos, selectStatusFilter, selectQuery],
-  (todos, filter, query) => {
-    const searchQuery = query.trim().toLowerCase();
+  [selectTodos, selectStatusFilter],
+  (todos, filter) => {
+    switch (filter) {
+      case FilterStatus.ACTIVE:
+        return todos.filter(todo => !todo.completed);
 
-    return todos.filter(todo => {
-      const todoText = todo.text.trim().toLowerCase();
-      const isMatch = todoText.includes(searchQuery);
+      case FilterStatus.COMPLETED:
+        return todos.filter(todo => todo.completed);
 
-      switch (filter) {
-        case FilterStatus.ACTIVE:
-          return isMatch && !todo.completed;
-
-        case FilterStatus.COMPLETED:
-          return isMatch && todo.completed;
-
-        default:
-          return isMatch;
-      }
-    });
+      default:
+        return todos;
+    }
   }
 );

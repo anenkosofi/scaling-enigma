@@ -2,7 +2,13 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 import { instance } from '@services';
+import { RootState } from '@store';
 import { Todo } from '@types';
+
+type Params = {
+  query?: string;
+  completed?: boolean;
+};
 
 export const getTodos = createAsyncThunk<
   Todo[],
@@ -10,7 +16,20 @@ export const getTodos = createAsyncThunk<
   { rejectValue: string }
 >('todos/getAll', async (_, thunkAPI) => {
   try {
-    const response = await instance.get('/todos');
+    const state = thunkAPI.getState() as RootState;
+    const query = state.filters.query.trim().toLowerCase();
+    const params: Params = {};
+    if (query.length) {
+      params.query = query;
+    }
+    const response = await instance.get('/todos', {
+      params,
+      paramsSerializer: function paramsSerializer(params) {
+        return Object.entries(Object.assign({}, params))
+          .map(([key, value]) => `${key}=${value}`)
+          .join('&');
+      },
+    });
     return response.data;
   } catch (e: unknown) {
     if (axios.isAxiosError(e) && e.response?.data?.message) {

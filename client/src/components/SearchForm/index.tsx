@@ -1,25 +1,22 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC } from 'react';
+
+import { useAppSelector, useAppDispatch } from '@hooks';
+import { selectQuery } from '@store/filters/selectors';
+import { setQuery } from '@store/filters/slice';
 
 import './SearchForm.scss';
 
-type SearchFormProps = {
-  onGetQuery: (query: string) => void;
-};
-
-export const SearchForm: FC<SearchFormProps> = ({ onGetQuery }) => {
-  const [query, setQuery] = useState('');
-
-  useEffect(() => {
-    onGetQuery(query);
-  }, [onGetQuery, query]);
+export const SearchForm: FC = () => {
+  const dispatch = useAppDispatch();
+  const query = useAppSelector(selectQuery);
 
   const getQueryHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.currentTarget;
-    setQuery(value);
+    dispatch(setQuery(value));
   };
 
   const resetHandler: React.MouseEventHandler<HTMLButtonElement> = () =>
-    setQuery('');
+    dispatch(setQuery(''));
 
   return (
     <div className="search-form">
