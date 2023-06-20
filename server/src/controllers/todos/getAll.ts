@@ -14,7 +14,7 @@ interface UserRequest extends Request {
 
 type Params = {
   owner: string;
-  query?: string;
+  text?: string;
 };
 
 export const getAll = controller(async (req: UserRequest, res: Response) => {
@@ -24,7 +24,7 @@ export const getAll = controller(async (req: UserRequest, res: Response) => {
     owner: _id,
   };
   if (query) {
-    params.query = query;
+    params.text = query;
   }
   const todos = await Todo.find(params).select('-owner');
   res.json(todos);
