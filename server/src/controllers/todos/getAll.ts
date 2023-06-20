@@ -12,20 +12,23 @@ interface UserRequest extends Request {
   };
 }
 
-type Params = {
-  owner: string;
-  text?: string;
-};
-
 export const getAll = controller(async (req: UserRequest, res: Response) => {
   const { _id } = req.user;
   const { query } = req.query;
-  const params: Params = {
-    owner: _id,
-  };
-  if (query) {
-    params.text = query;
-  }
-  const todos = await Todo.find(params).select('-owner');
+
+  const todos = await Todo.aggregate([
+    {
+      $match: {
+        text: { $regex: new RegExp(query, 'i') },
+        owner: _id,
+      },
+    },
+    {
+      $project: {
+        owner: 0,
+      },
+    },
+  ]);
+
   res.json(todos);
 });
