@@ -1,21 +1,22 @@
 import React, { FC, useState, useRef } from 'react';
-import { FiMail, FiLock } from 'react-icons/fi';
+import { FiUser, FiMail, FiLock } from 'react-icons/fi';
 
 import { ButtonLoader } from '@components/ButtonLoader';
 import { FormField } from '@components/FormField';
 import { useAppDispatch, useAppSelector } from '@hooks';
-import { login } from '@store/auth/operations';
+import { register } from '@store/auth/operations';
 import { selectIsLoading, selectError } from '@store/auth/selectors';
 import { ButtonTextContent } from '@types';
 import { validateTextLength, validateEmail } from '@utils';
 
-import './LoginForm.scss';
+import '@components/LoginForm/LoginForm.scss';
+import '@pages/Auth/Auth.scss';
 
-type LoginFormProps = {
+type RegisterFormProps = {
   toggleForm: () => void;
 };
 
-export const LoginForm: FC<LoginFormProps> = ({ toggleForm }) => {
+export const RegisterForm: FC<RegisterFormProps> = ({ toggleForm }) => {
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector(selectIsLoading);
   const error = useAppSelector(selectError);
@@ -23,14 +24,17 @@ export const LoginForm: FC<LoginFormProps> = ({ toggleForm }) => {
   const passwordRef = useRef(null);
 
   const [form, setForm] = useState({
+    username: '',
     email: '',
     password: '',
   });
   const [errors, setErrors] = useState<{
+    username: string | null;
     email: string | null;
     password: string | null;
-  }>({ email: null, password: null });
+  }>({ username: null, email: null, password: null });
   const [focusedField, setFocusedField] = useState({
+    username: false,
     email: false,
     password: false,
   });
@@ -41,6 +45,7 @@ export const LoginForm: FC<LoginFormProps> = ({ toggleForm }) => {
   };
 
   const validateRequiredFields = () => {
+    let usernameError: string | null = null;
     let emailError: string | null = null;
     let passwordError: string | null = null;
     if (focusedField.email) {
@@ -51,8 +56,12 @@ export const LoginForm: FC<LoginFormProps> = ({ toggleForm }) => {
     if (focusedField.password) {
       passwordError = validateTextLength(form.password);
     }
+    if (focusedField.username) {
+      usernameError = validateTextLength(form.username);
+    }
     return setErrors(prevState => ({
       ...prevState,
+      username: usernameError,
       email: emailError,
       password: passwordError,
     }));
@@ -76,13 +85,13 @@ export const LoginForm: FC<LoginFormProps> = ({ toggleForm }) => {
 
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!form.email.length || !form.password.length) {
+    if (!form.email.length || !form.username.length || !form.password.length) {
       return validateRequiredFields();
     }
 
-    dispatch(login(form));
+    dispatch(register(form));
 
-    setForm({ email: '', password: '' });
+    setForm({ username: '', email: '', password: '' });
   };
 
   const setInputType = (type: string) => {
@@ -101,7 +110,7 @@ export const LoginForm: FC<LoginFormProps> = ({ toggleForm }) => {
   return (
     <div className="login">
       <div className="login__wrapper">
-        <h1 className="login__title">Sign in</h1>
+        <h1 className="login__title">Sign up</h1>
         <p className="login__error">{error}</p>
         <form
           className="login__form"
@@ -113,6 +122,18 @@ export const LoginForm: FC<LoginFormProps> = ({ toggleForm }) => {
             name="new-password"
             autoComplete="new-password"
             style={{ display: 'none' }}
+          />
+          <FormField
+            id="username"
+            type="text"
+            name="username"
+            label="Username"
+            value={form.username}
+            error={errors.username}
+            icon={FiUser}
+            onChange={onChangeHandler}
+            onBlur={onBlurHandler}
+            onFocus={onFocusHandler}
           />
           <FormField
             id="email"
@@ -155,14 +176,14 @@ export const LoginForm: FC<LoginFormProps> = ({ toggleForm }) => {
             )}
           </div>
           <button type="submit" className="login__button" disabled={isLoading}>
-            {isLoading ? <ButtonLoader /> : ButtonTextContent.SIGN_IN}
+            {isLoading ? <ButtonLoader /> : ButtonTextContent.SIGN_UP}
           </button>
         </form>
       </div>
       <p className="login__question">
-        Don&apos;t have an account?
+        Alredy have an account?
         <span className="login__link" onClick={toggleForm}>
-          Sign up
+          Sign in
         </span>
       </p>
     </div>

@@ -3,7 +3,7 @@ import { createSlice, Reducer } from '@reduxjs/toolkit';
 import { setAuthHeader } from '@services';
 import { User, Token } from '@types';
 
-import { login, getTokens } from './operations';
+import { register, login, getTokens } from './operations';
 
 export interface AuthState {
   user: User | null;
@@ -37,6 +37,30 @@ const authSlice = createSlice({
   },
   extraReducers: builder =>
     builder
+      .addCase(register.pending, state => {
+        return {
+          ...state,
+          isLoading: true,
+        };
+      })
+      .addCase(register.fulfilled, (state, action) => {
+        const { user, token } = action.payload;
+        return {
+          ...state,
+          user: user,
+          token: token,
+          authenticated: true,
+          isLoading: false,
+          error: null,
+        };
+      })
+      .addCase(register.rejected, (state, { payload }) => {
+        return {
+          ...state,
+          error: payload ? payload : 'An unknown error occured',
+          isLoading: false,
+        };
+      })
       .addCase(login.pending, state => {
         return {
           ...state,
@@ -44,39 +68,38 @@ const authSlice = createSlice({
         };
       })
       .addCase(login.fulfilled, (state, action) => {
+        const { user, token } = action.payload;
         return {
           ...state,
-          user: action.payload.user,
-          token: action.payload.token,
+          user: user,
+          token: token,
           authenticated: true,
           isLoading: false,
           error: null,
         };
       })
-      .addCase(login.rejected, (state, action) => {
+      .addCase(login.rejected, (state, { payload }) => {
         return {
           ...state,
-          error: action.payload ? action.payload : 'An unknown error occured',
+          error: payload ? payload : 'An unknown error occured',
           isLoading: false,
         };
       })
       .addCase(getTokens.pending, state => {
         return { ...state, isLoading: true };
       })
-      .addCase(getTokens.fulfilled, (state, action) => {
+      .addCase(getTokens.fulfilled, (state, { payload }) => {
         return {
           ...state,
-          token: action.payload,
+          token: payload,
           isLoading: false,
         };
       })
-      .addCase(getTokens.rejected, (state, action) => {
+      .addCase(getTokens.rejected, (state, { payload }) => {
         return {
           ...state,
           isLoading: false,
-          error: action.payload
-            ? action.payload
-            : 'Session expired. Please log in again.',
+          error: payload ? payload : 'Session expired. Please log in again.',
         };
       }),
 });

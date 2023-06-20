@@ -2,8 +2,10 @@
 
 .login {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 16px;
   height: 100vh;
 
   &__wrapper {
@@ -157,6 +159,29 @@
         background-color: themed('primary-light-white');
       }
       cursor: default;
+    }
+  }
+
+  &__question {
+    display: flex;
+    gap: 12px;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.5;
+    letter-spacing: -0.02em;
+    @include themify($themes) {
+      color: themed('primary-light-white');
+    }
+  }
+
+  &__link {
+    @include themify($themes) {
+      color: themed('light-green');
+    }
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
     }
   }
 }

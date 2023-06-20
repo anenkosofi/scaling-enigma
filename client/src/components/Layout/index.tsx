@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom';
 
 import { Loader } from '@components/Loader';
 
-const SharedLayout: FC = () => {
+const Layout: FC = () => {
   return (
     <main>
       <Suspense fallback={<Loader />}>
@@ -13,4 +13,4 @@ const SharedLayout: FC = () => {
   );
 };
 
-export default SharedLayout;
+export default Layout;
