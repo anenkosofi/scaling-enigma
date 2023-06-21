@@ -24,7 +24,7 @@ export const getAll = controller(async (req: Request, res: Response) => {
   }
 
   if (typeof completed === 'string') {
-    params.completed = Boolean(completed);
+    params.completed = completed === 'true';
   }
 
   const todos = await Todo.find(params).select('-owner');
