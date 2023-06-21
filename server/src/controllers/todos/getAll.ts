@@ -23,20 +23,10 @@ export const getAll = controller(async (req: Request, res: Response) => {
     params.text = { $regex: new RegExp(query, 'i') };
   }
 
-  if (typeof completed === 'boolean') {
-    params.completed = completed;
+  if (typeof completed === 'string') {
+    params.completed = Boolean(completed);
   }
 
-  const todos = await Todo.aggregate([
-    {
-      $match: params,
-    },
-    {
-      $project: {
-        owner: 0,
-      },
-    },
-  ]);
-
+  const todos = await Todo.find(params).select('-owner');
   res.json(todos);
 });
