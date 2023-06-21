@@ -64,13 +64,15 @@ export const addTodo = createAsyncThunk<
 });
 
 export const editTodo = createAsyncThunk<
-  Todo,
+  { todo: Todo; status: FilterStatus },
   Omit<Todo, 'completed'> | Pick<Todo, 'completed' | '_id'>,
   { rejectValue: string }
 >('todos/editTodo', async ({ _id, ...rest }, thunkAPI) => {
   try {
-    const response = await instance.patch(`/todos/${_id}`, rest);
-    return response.data.todo;
+    const state = thunkAPI.getState() as RootState;
+    const status = state.filters.status;
+    const { data } = await instance.patch(`/todos/${_id}`, rest);
+    return { todo: data.todo, status };
   } catch (e: unknown) {
     if (axios.isAxiosError(e) && e.response?.data?.message) {
       return thunkAPI.rejectWithValue(e.response.data.message);

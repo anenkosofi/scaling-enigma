@@ -1,6 +1,6 @@
 import { createSlice, Reducer } from '@reduxjs/toolkit';
 
-import { Todo } from '@types';
+import { FilterStatus, Todo } from '@types';
 
 import {
   getTodos,
@@ -73,13 +73,32 @@ const todosSlice = createSlice({
       .addCase(editTodo.pending, state => {
         return { ...state, isLoading: true };
       })
-      .addCase(editTodo.fulfilled, (state, action) => {
+      .addCase(editTodo.fulfilled, (state, { payload }) => {
+        const { todo, status } = payload;
+        const { _id, completed, ...rest } = todo;
+        if (status !== FilterStatus.ALL) {
+          const updatedItems = state.items.filter(todo => {
+            if (todo.completed !== completed) {
+              return todo._id !== _id;
+            }
+            return todo;
+          });
+
+          return {
+            ...state,
+            items: [...updatedItems],
+            isLoading: false,
+            error: null,
+          };
+        }
+
+        const updatedItems = state.items.map(todo =>
+          todo._id === _id ? { ...todo, completed, ...rest } : todo
+        );
+
         return {
           ...state,
-          items: state.items.map(todo => {
-            const { _id, ...rest } = action.payload;
-            return todo._id === _id ? { ...todo, ...rest } : todo;
-          }),
+          items: [...updatedItems],
           isLoading: false,
           error: null,
         };
