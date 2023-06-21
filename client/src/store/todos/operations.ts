@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import { instance } from '@services';
 import { RootState } from '@store';
-import { Todo } from '@types';
+import { Todo, FilterStatus } from '@types';
 
 type Params = {
   query?: string;
@@ -18,9 +18,15 @@ export const getTodos = createAsyncThunk<
   try {
     const state = thunkAPI.getState() as RootState;
     const query = state.filters.query;
+    const status = state.filters.status;
     const params: Params = {};
     if (query.length) {
       params.query = query;
+    }
+    if (status === FilterStatus.ACTIVE) {
+      params.completed = false;
+    } else if (status === FilterStatus.COMPLETED) {
+      params.completed = true;
     }
     const response = await instance.get('/todos', {
       params,
