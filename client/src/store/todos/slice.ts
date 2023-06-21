@@ -57,8 +57,8 @@ const todosSlice = createSlice({
         return {
           ...state,
           items: todo.text.trim().toLowerCase().includes(query)
-            ? state.items
-            : [todo, ...state.items],
+            ? [todo, ...state.items]
+            : state.items,
           isLoading: false,
           error: null,
         };
