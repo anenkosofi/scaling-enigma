@@ -9,7 +9,7 @@ export const ButtonLoader: FC = () => {
       height={24}
       width={24}
       color={Colors.ACCENT}
-      visible={true}
+      visible
       ariaLabel="oval-loading"
       secondaryColor={Colors.ACCENT}
       strokeWidth={8}

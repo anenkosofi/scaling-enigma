@@ -1,25 +1,31 @@
 import React, { FC, useState, useEffect } from 'react';
 
+import { useAppSelector, useAppDispatch } from '@hooks';
+import { selectQuery } from '@store/filters/selectors';
+import { setQuery } from '@store/filters/slice';
+
 import './SearchForm.scss';
 
-type SearchFormProps = {
-  onGetQuery: (query: string) => void;
-};
+export const SearchForm: FC = () => {
+  const dispatch = useAppDispatch();
+  const query = useAppSelector(selectQuery);
 
-export const SearchForm: FC<SearchFormProps> = ({ onGetQuery }) => {
-  const [query, setQuery] = useState('');
+  const [queryValue, setQueryValue] = useState(query);
 
   useEffect(() => {
-    onGetQuery(query);
-  }, [onGetQuery, query]);
+    const value = queryValue.trim().toLowerCase();
+    if (value !== query) {
+      dispatch(setQuery(value));
+    }
+  }, [queryValue]);
 
   const getQueryHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.currentTarget;
-    setQuery(value);
+    setQueryValue(value);
   };
 
   const resetHandler: React.MouseEventHandler<HTMLButtonElement> = () =>
-    setQuery('');
+    setQueryValue('');
 
   return (
     <div className="search-form">
@@ -31,7 +37,7 @@ export const SearchForm: FC<SearchFormProps> = ({ onGetQuery }) => {
           id="query"
           type="text"
           name="query"
-          value={query}
+          value={queryValue}
           placeholder="Enter a task text..."
           onChange={getQueryHandler}
           className="search-form__input"

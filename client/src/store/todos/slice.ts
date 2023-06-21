@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, Reducer } from '@reduxjs/toolkit';
 
 import { Todo } from '@types';
 
@@ -14,24 +14,18 @@ export interface TodosState {
   items: Todo[];
   isLoading: boolean;
   error: string | null;
-  query: string;
 }
 
 const todosInitialState: TodosState = {
   items: [],
   isLoading: false,
   error: null,
-  query: '',
 };
 
 const todosSlice = createSlice({
   name: 'todos',
   initialState: todosInitialState,
-  reducers: {
-    setQuery(state, action: PayloadAction<string>) {
-      return { ...state, query: action.payload };
-    },
-  },
+  reducers: {},
   extraReducers: builder =>
     builder
       .addCase(getTodos.pending, state => {
@@ -59,9 +53,12 @@ const todosSlice = createSlice({
         return { ...state, isLoading: true };
       })
       .addCase(addTodo.fulfilled, (state, action) => {
+        const { todo, query } = action.payload;
         return {
           ...state,
-          items: [action.payload, ...state.items],
+          items: todo.text.trim().toLowerCase().includes(query)
+            ? [todo, ...state.items]
+            : state.items,
           isLoading: false,
           error: null,
         };
@@ -132,5 +129,4 @@ const todosSlice = createSlice({
       }),
 });
 
-export const { setQuery } = todosSlice.actions;
-export const todosReducer = todosSlice.reducer;
+export const todosReducer = todosSlice.reducer as Reducer<TodosState>;

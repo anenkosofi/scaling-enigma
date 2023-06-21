@@ -14,12 +14,19 @@ import storage from 'redux-persist/lib/storage';
 import { authReducer } from './auth/slice';
 import { AuthState } from './auth/slice';
 import { filtersReducer } from './filters/slice';
+import { FiltersState } from './filters/slice';
 import { todosReducer } from './todos/slice';
 import { TodosState } from './todos/slice';
 
 const todosPersistConfig = {
   key: 'todos',
   storage,
+};
+
+const filtersPersistConfig = {
+  key: 'filters',
+  storage,
+  whitelist: ['query'],
 };
 
 const authPersistConfig = {
@@ -30,7 +37,7 @@ const authPersistConfig = {
 export const store = configureStore({
   reducer: {
     todos: persistReducer<TodosState>(todosPersistConfig, todosReducer),
-    filters: filtersReducer,
+    filters: persistReducer<FiltersState>(filtersPersistConfig, filtersReducer),
     auth: persistReducer<AuthState>(authPersistConfig, authReducer),
   },
   middleware: getDefaultMiddleware =>

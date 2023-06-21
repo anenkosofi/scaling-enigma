@@ -7,15 +7,14 @@ import { StatusFilter } from '@components/StatusFilter';
 import { TodoItem } from '@components/TodoItem';
 import { useAppSelector, useAppDispatch } from '@hooks';
 import { selectStatusFilter } from '@store/filters/selectors';
+import { selectQuery } from '@store/filters/selectors';
 import { deleteCompleted } from '@store/todos/operations';
 import {
   selectError,
   selectIsLoading,
   selectTodos,
   selectVisibleTodos,
-  selectQuery,
 } from '@store/todos/selectors';
-import { setQuery } from '@store/todos/slice';
 import { Colors } from '@types';
 import { getMessage } from '@utils';
 
@@ -57,13 +56,11 @@ export const TodoList: FC = () => {
     setMessage(message);
   }, [statusFilter, query]);
 
-  const getQuery = (query: string) => dispatch(setQuery(query));
-
   return (
     <section className="todo-list__section">
       <Container>
         <h1 className="todo-list__title">Tasks</h1>
-        <SearchForm onGetQuery={getQuery} />
+        <SearchForm />
         <div className="todo-list__button-wrapper">
           <StatusFilter />
           <button
