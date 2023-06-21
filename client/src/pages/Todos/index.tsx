@@ -15,7 +15,7 @@ const TodosPage: FC = () => {
 
   useEffect(() => {
     dispatch(getTodos());
-  }, [query]);
+  }, [query, dispatch]);
 
   return (
     <div className={`theme-${theme}`}>

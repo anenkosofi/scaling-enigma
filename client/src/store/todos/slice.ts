@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, Reducer } from '@reduxjs/toolkit';
 
 import { Todo } from '@types';
 
@@ -53,9 +53,12 @@ const todosSlice = createSlice({
         return { ...state, isLoading: true };
       })
       .addCase(addTodo.fulfilled, (state, action) => {
+        const { todo, query } = action.payload;
         return {
           ...state,
-          items: [action.payload, ...state.items],
+          items: todo.text.trim().toLowerCase().includes(query)
+            ? state.items
+            : [todo, ...state.items],
           isLoading: false,
           error: null,
         };
@@ -126,4 +129,4 @@ const todosSlice = createSlice({
       }),
 });
 
-export const todosReducer = todosSlice.reducer;
+export const todosReducer = todosSlice.reducer as Reducer<TodosState>;

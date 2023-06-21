@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 
 import { useAppSelector, useAppDispatch } from '@hooks';
 import { selectQuery } from '@store/filters/selectors';
@@ -10,13 +10,22 @@ export const SearchForm: FC = () => {
   const dispatch = useAppDispatch();
   const query = useAppSelector(selectQuery);
 
+  const [queryValue, setQueryValue] = useState(query);
+
+  useEffect(() => {
+    const value = queryValue.trim().toLowerCase();
+    if (value !== query) {
+      dispatch(setQuery(value));
+    }
+  }, [queryValue]);
+
   const getQueryHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.currentTarget;
-    dispatch(setQuery(value));
+    setQueryValue(value);
   };
 
   const resetHandler: React.MouseEventHandler<HTMLButtonElement> = () =>
-    dispatch(setQuery(''));
+    setQueryValue('');
 
   return (
     <div className="search-form">
@@ -28,7 +37,7 @@ export const SearchForm: FC = () => {
           id="query"
           type="text"
           name="query"
-          value={query}
+          value={queryValue}
           placeholder="Enter a task text..."
           onChange={getQueryHandler}
           className="search-form__input"

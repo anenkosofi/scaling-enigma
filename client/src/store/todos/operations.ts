@@ -17,7 +17,7 @@ export const getTodos = createAsyncThunk<
 >('todos/getAll', async (_, thunkAPI) => {
   try {
     const state = thunkAPI.getState() as RootState;
-    const query = state.filters.query.trim().toLowerCase();
+    const query = state.filters.query;
     const params: Params = {};
     if (query.length) {
       params.query = query;
@@ -40,13 +40,15 @@ export const getTodos = createAsyncThunk<
 });
 
 export const addTodo = createAsyncThunk<
-  Todo,
+  { todo: Todo; query: string },
   Omit<Todo, '_id'>,
   { rejectValue: string }
 >('todos/addTodo', async (todo, thunkAPI) => {
   try {
-    const response = await instance.post('/todos', todo);
-    return response.data.todo;
+    const state = thunkAPI.getState() as RootState;
+    const query = state.filters.query;
+    const { data } = await instance.post('/todos', todo);
+    return { todo: data.todo, query };
   } catch (e: unknown) {
     if (axios.isAxiosError(e) && e.response?.data?.message) {
       return thunkAPI.rejectWithValue(e.response.data.message);
