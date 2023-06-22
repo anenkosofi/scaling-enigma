@@ -13,7 +13,7 @@ import {
   getInitialDates,
 } from '@utils';
 import { useAppDispatch, useAppSelector } from 'hooks';
-import { setFilterStatus } from 'store/filters/slice';
+import { setFilterStatus, setPage } from 'store/filters/slice';
 import { editTodo } from 'store/todos/operations';
 
 import './EditForm.scss';
@@ -106,8 +106,8 @@ export const EditForm: FC<EditFormProps> = ({
 
     if (!_id) {
       dispatch(addTodo(newTodo));
-
       dispatch(setFilterStatus(FilterStatus.ALL));
+      dispatch(setPage(1));
       clearInput?.();
     } else {
       const updatedTodo = {
