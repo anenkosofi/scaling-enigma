@@ -11,9 +11,14 @@ type Params = {
   completed?: boolean;
 };
 
+type Options = {
+  skip: number;
+  limit: number;
+};
+
 export const getAll = controller(async (req: Request, res: Response) => {
   const { _id } = req.user as User;
-  const { query, completed } = req.query as Query;
+  const { page = '1', limit = '10', query, completed } = req.query as Query;
 
   const params: Params = {
     owner: _id,
@@ -27,6 +32,18 @@ export const getAll = controller(async (req: Request, res: Response) => {
     params.completed = completed === 'true';
   }
 
-  const todos = await Todo.find(params).select('-owner');
-  res.json(todos);
+  const options: Options = {
+    skip: (Number(page) - 1) * Number(limit),
+    limit: Number(limit),
+  };
+
+  const [todos, total] = await Promise.all([
+    Todo.find(params, '', options).select('-owner'),
+    Todo.countDocuments(params),
+  ]);
+
+  res.json({
+    todos,
+    total,
+  });
 });
