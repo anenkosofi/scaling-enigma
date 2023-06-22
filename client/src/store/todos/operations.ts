@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import { instance } from '@services';
 import { RootState } from '@store';
-import { Todo } from '@types';
+import { Todo, FilterStatus } from '@types';
 
 type Params = {
   query?: string;
@@ -18,9 +18,15 @@ export const getTodos = createAsyncThunk<
   try {
     const state = thunkAPI.getState() as RootState;
     const query = state.filters.query;
+    const status = state.filters.status;
     const params: Params = {};
     if (query.length) {
       params.query = query;
+    }
+    if (status === FilterStatus.ACTIVE) {
+      params.completed = false;
+    } else if (status === FilterStatus.COMPLETED) {
+      params.completed = true;
     }
     const response = await instance.get('/todos', {
       params,
@@ -58,13 +64,15 @@ export const addTodo = createAsyncThunk<
 });
 
 export const editTodo = createAsyncThunk<
-  Todo,
+  { todo: Todo; status: FilterStatus },
   Omit<Todo, 'completed'> | Pick<Todo, 'completed' | '_id'>,
   { rejectValue: string }
 >('todos/editTodo', async ({ _id, ...rest }, thunkAPI) => {
   try {
-    const response = await instance.patch(`/todos/${_id}`, rest);
-    return response.data.todo;
+    const state = thunkAPI.getState() as RootState;
+    const status = state.filters.status;
+    const { data } = await instance.patch(`/todos/${_id}`, rest);
+    return { todo: data.todo, status };
   } catch (e: unknown) {
     if (axios.isAxiosError(e) && e.response?.data?.message) {
       return thunkAPI.rejectWithValue(e.response.data.message);

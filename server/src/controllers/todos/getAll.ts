@@ -1,34 +1,32 @@
 import { Request, Response } from 'express';
+import { ObjectId } from 'mongoose';
 
 import { Todo } from '@models';
 import { controller } from '@utils';
+import { Query, User } from '@types';
 
-interface UserRequest extends Request {
-  user: {
-    _id: string;
+type Params = {
+  owner: ObjectId;
+  text?: { $regex: RegExp };
+  completed?: boolean;
+};
+
+export const getAll = controller(async (req: Request, res: Response) => {
+  const { _id } = req.user as User;
+  const { query, completed } = req.query as Query;
+
+  const params: Params = {
+    owner: _id,
   };
-  query: {
-    query: string;
-  };
-}
 
-export const getAll = controller(async (req: UserRequest, res: Response) => {
-  const { _id } = req.user;
-  const { query } = req.query;
+  if (query) {
+    params.text = { $regex: new RegExp(query, 'i') };
+  }
 
-  const todos = await Todo.aggregate([
-    {
-      $match: {
-        text: { $regex: new RegExp(query, 'i') },
-        owner: _id,
-      },
-    },
-    {
-      $project: {
-        owner: 0,
-      },
-    },
-  ]);
+  if (typeof completed === 'string') {
+    params.completed = completed === 'true';
+  }
 
+  const todos = await Todo.find(params).select('-owner');
   res.json(todos);
 });

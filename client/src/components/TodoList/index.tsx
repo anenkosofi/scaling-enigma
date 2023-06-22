@@ -13,7 +13,6 @@ import {
   selectError,
   selectIsLoading,
   selectTodos,
-  selectVisibleTodos,
 } from '@store/todos/selectors';
 import { Colors } from '@types';
 import { getMessage } from '@utils';
@@ -25,7 +24,6 @@ export const TodoList: FC = () => {
   const todos = useAppSelector(selectTodos);
   const query = useAppSelector(selectQuery);
   const statusFilter = useAppSelector(selectStatusFilter);
-  const visibleTodos = useAppSelector(selectVisibleTodos);
   const error = useAppSelector(selectError);
   const isLoading = useAppSelector(selectIsLoading);
 
@@ -72,9 +70,9 @@ export const TodoList: FC = () => {
             Clear completed
           </button>
         </div>
-        {visibleTodos.length ? (
+        {todos.length ? (
           <ul className="todo-list">
-            {visibleTodos.map(todo => (
+            {todos.map(todo => (
               <TodoItem key={todo._id} item={todo} />
             ))}
           </ul>

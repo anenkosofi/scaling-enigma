@@ -5,17 +5,18 @@ import { ThemeContext } from '@components/ThemeProvider';
 import { TodoForm } from '@components/TodoForm';
 import { TodoList } from '@components/TodoList';
 import { useAppDispatch, useAppSelector } from '@hooks';
-import { selectQuery } from '@store/filters/selectors';
+import { selectQuery, selectStatusFilter } from '@store/filters/selectors';
 import { getTodos } from '@store/todos/operations';
 
 const TodosPage: FC = () => {
   const dispatch = useAppDispatch();
   const { theme } = useContext(ThemeContext);
   const query = useAppSelector(selectQuery);
+  const status = useAppSelector(selectStatusFilter);
 
   useEffect(() => {
     dispatch(getTodos());
-  }, [query, dispatch]);
+  }, [query, status]);
 
   return (
     <div className={`theme-${theme}`}>
