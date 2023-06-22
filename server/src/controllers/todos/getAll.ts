@@ -14,6 +14,9 @@ type Params = {
 type Options = {
   skip: number;
   limit: number;
+  sort: {
+    _id: number;
+  };
 };
 
 export const getAll = controller(async (req: Request, res: Response) => {
@@ -35,6 +38,7 @@ export const getAll = controller(async (req: Request, res: Response) => {
   const options: Options = {
     skip: (Number(page) - 1) * Number(limit),
     limit: Number(limit),
+    sort: { _id: -1 },
   };
 
   const [todos, total] = await Promise.all([
