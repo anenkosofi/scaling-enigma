@@ -9,12 +9,14 @@ import { selectTotal } from '@store/todos/selectors';
 
 import './Pagination.scss';
 
+const LIMIT = 10;
+
 export const Pagination: FC = () => {
   const dispatch = useAppDispatch();
   const selectedPage = useAppSelector(selectPage);
   const todos = useAppSelector(selectTotal);
 
-  const pages = Math.ceil(todos / 10);
+  const pages = Math.ceil(todos / LIMIT);
   const nextPage = selectedPage + 1;
   const prevPage = selectedPage - 1;
 

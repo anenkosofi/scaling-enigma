@@ -20,11 +20,16 @@ $white: #fafafa;
     display: flex;
     flex-direction: column;
     gap: 48px;
-    width: 500px;
-    padding: 44px 50px;
-    background-color: $secondary-dark;
-    box-shadow: 0px 4px 48px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    padding: 44px 0;
+    background-color: $primary-dark;
     border-radius: 30px;
+    @media screen and (min-width: 520px) {
+      width: 500px;
+      padding: 44px 50px;
+      background-color: $secondary-dark;
+      box-shadow: 0px 4px 48px rgba(0, 0, 0, 0.1);
+    }
   }
 
   &__title {
@@ -64,9 +69,12 @@ $white: #fafafa;
     padding: 4px;
     font-size: 16px;
     color: $white;
-    background-color: $secondary-dark;
+    background-color: $primary-dark;
     pointer-events: none;
     transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    @media screen and (min-width: 520px) {
+      background-color: $secondary-dark;
+    }
   }
 
   &__input {
@@ -149,6 +157,7 @@ $white: #fafafa;
 
   &__question {
     display: flex;
+    flex-wrap: wrap;
     gap: 12px;
     font-weight: 400;
     font-size: 18px;
