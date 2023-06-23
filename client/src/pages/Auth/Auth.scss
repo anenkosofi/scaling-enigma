@@ -1,5 +1,7 @@
 @import '@styles/shared.scss';
 
+$primary-dark: #22252a;
+
 .auth {
-  background-color: #22252a;
+  background-color: $primary-dark;
 }

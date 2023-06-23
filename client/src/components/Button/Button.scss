@@ -30,7 +30,6 @@
     @include themify($themes) {
       color: themed('secondary-dark-accent');
       background-color: themed('light-green');
-
       border-color: themed('light-green');
     }
   }

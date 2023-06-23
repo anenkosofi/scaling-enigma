@@ -77,7 +77,11 @@ export const LoginForm: FC<LoginFormProps> = ({ toggleForm }) => {
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!form.email.length || !form.password.length) {
-      return validateRequiredFields();
+      return setErrors(prevState => ({
+        ...prevState,
+        email: validateTextLength(form.email),
+        password: validateTextLength(form.password),
+      }));
     }
 
     dispatch(login(form));

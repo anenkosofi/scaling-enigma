@@ -1,16 +1,18 @@
 import React, { FC } from 'react';
 
+import { ButtonType } from '@types';
+
 import './Button.scss';
 
 type ButtonProps = {
   selected: boolean;
-  type?: 'button';
+  type?: ButtonType;
   children: React.ReactNode;
 } & React.HTMLProps<HTMLButtonElement>;
 
 export const Button: FC<ButtonProps> = ({
   selected = false,
-  type = 'button',
+  type = ButtonType.BUTTON,
   children,
   ...otherProps
 }) => {

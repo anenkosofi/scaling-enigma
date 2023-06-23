@@ -1,15 +1,12 @@
-import React, { FC, useContext, useState } from 'react';
+import React, { FC, useState } from 'react';
 
 import { Container } from '@components/Container';
 import { LoginForm } from '@components/LoginForm';
 import { RegisterForm } from '@components/RegisterForm';
-import { ThemeContext } from '@components/ThemeProvider';
 
 import './Auth.scss';
 
 const AuthPage: FC = () => {
-  const { theme } = useContext(ThemeContext);
-
   const [isLoginPage, setIsLoginPage] = useState(true);
 
   const switchFormHandler = () => {
@@ -17,7 +14,7 @@ const AuthPage: FC = () => {
   };
 
   return (
-    <section className={`auth theme-${theme}`}>
+    <section className="auth">
       <Container>
         {isLoginPage ? (
           <LoginForm toggleForm={switchFormHandler} />

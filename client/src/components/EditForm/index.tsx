@@ -129,46 +129,56 @@ export const EditForm: FC<EditFormProps> = ({
     closeModal();
   };
 
+  const inputFields = [
+    {
+      label: 'Add a task',
+      id: 'text',
+      type: 'text',
+      name: 'text',
+      placeholder: 'Add a task',
+      value: form.text,
+      onChange: changeHandler,
+      error: error.text,
+    },
+    {
+      label: 'Start date',
+      id: 'start',
+      type: 'datetime-local',
+      name: 'start',
+      value: form.start,
+      onChange: changeHandler,
+      error: error.start,
+    },
+    {
+      label: 'Due date',
+      id: 'end',
+      type: 'datetime-local',
+      name: 'end',
+      value: form.end,
+      onChange: changeHandler,
+      error: error.end,
+    },
+  ];
+
   return (
     <form className="form" onSubmit={submitHandler} autoComplete="off">
-      <div className="form__field">
-        <label htmlFor="text">Add a task</label>
-        <input
-          id="text"
-          type="text"
-          name="text"
-          value={form.text}
-          placeholder="Add a task"
-          onChange={changeHandler}
-          className="form__input"
-          title="Description may contain only letters, numbers and spaces."
-        />
-        {error.text !== null && <p className="error-message">{error.text}</p>}
-      </div>
-      <div className="form__field">
-        <label htmlFor="start">Start date</label>
-        <input
-          id="start"
-          type="datetime-local"
-          name="start"
-          value={form.start}
-          className="form__input"
-          onChange={changeHandler}
-        />
-        {error.start !== null && <p className="error-message">{error.start}</p>}
-      </div>
-      <div className="form__field">
-        <label htmlFor="end">Due date</label>
-        <input
-          id="end"
-          type="datetime-local"
-          name="end"
-          value={form.end}
-          className="form__input"
-          onChange={changeHandler}
-        />
-        {error.end !== null && <p className="error-message">{error.end}</p>}
-      </div>
+      {inputFields.map(
+        ({ label, id, type, name, placeholder, value, onChange, error }) => (
+          <div className="form__field" key={id}>
+            <label htmlFor={id}>{label}</label>
+            <input
+              id={id}
+              type={type}
+              name={name}
+              value={value}
+              {...(placeholder && { placeholder })}
+              onChange={onChange}
+              className="form__input"
+            />
+            {error && <p className="error-message">{error}</p>}
+          </div>
+        )
+      )}
       <div className="button-wrapper">
         <button type="submit" className="save-button">
           Save
