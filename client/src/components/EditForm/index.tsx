@@ -1,10 +1,10 @@
 import React, { FC, useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 
+import { todoModalInputs } from '@constants';
 import { addTodo } from '@store/todos/operations';
 import { selectError, selectIsLoading } from '@store/todos/selectors';
 import { FilterStatus } from '@types';
-import { todoModalInputs } from '@constants';
 import {
   getInputDate,
   getFormattedDate,
