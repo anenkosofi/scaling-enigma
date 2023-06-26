@@ -86,7 +86,12 @@ export const RegisterForm: FC<RegisterFormProps> = ({ toggleForm }) => {
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!form.email.length || !form.username.length || !form.password.length) {
-      return validateRequiredFields();
+      return setErrors(prevState => ({
+        ...prevState,
+        username: validateTextLength(form.username),
+        email: validateTextLength(form.email),
+        password: validateTextLength(form.password),
+      }));
     }
 
     dispatch(register(form));

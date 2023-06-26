@@ -1,6 +1,7 @@
 import React, { FC, useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 
+import { todoModalInputs } from '@constants';
 import { addTodo } from '@store/todos/operations';
 import { selectError, selectIsLoading } from '@store/todos/selectors';
 import { FilterStatus } from '@types';
@@ -13,7 +14,7 @@ import {
   getInitialDates,
 } from '@utils';
 import { useAppDispatch, useAppSelector } from 'hooks';
-import { setFilterStatus } from 'store/filters/slice';
+import { setFilterStatus, setPage } from 'store/filters/slice';
 import { editTodo } from 'store/todos/operations';
 
 import './EditForm.scss';
@@ -106,8 +107,8 @@ export const EditForm: FC<EditFormProps> = ({
 
     if (!_id) {
       dispatch(addTodo(newTodo));
-
       dispatch(setFilterStatus(FilterStatus.ALL));
+      dispatch(setPage(1));
       clearInput?.();
     } else {
       const updatedTodo = {
@@ -131,44 +132,23 @@ export const EditForm: FC<EditFormProps> = ({
 
   return (
     <form className="form" onSubmit={submitHandler} autoComplete="off">
-      <div className="form__field">
-        <label htmlFor="text">Add a task</label>
-        <input
-          id="text"
-          type="text"
-          name="text"
-          value={form.text}
-          placeholder="Add a task"
-          onChange={changeHandler}
-          className="form__input"
-          title="Description may contain only letters, numbers and spaces."
-        />
-        {error.text !== null && <p className="error-message">{error.text}</p>}
-      </div>
-      <div className="form__field">
-        <label htmlFor="start">Start date</label>
-        <input
-          id="start"
-          type="datetime-local"
-          name="start"
-          value={form.start}
-          className="form__input"
-          onChange={changeHandler}
-        />
-        {error.start !== null && <p className="error-message">{error.start}</p>}
-      </div>
-      <div className="form__field">
-        <label htmlFor="end">Due date</label>
-        <input
-          id="end"
-          type="datetime-local"
-          name="end"
-          value={form.end}
-          className="form__input"
-          onChange={changeHandler}
-        />
-        {error.end !== null && <p className="error-message">{error.end}</p>}
-      </div>
+      {todoModalInputs.map(({ label, id, type, name, placeholder }) => (
+        <div className="form__field" key={id}>
+          <label htmlFor={id}>{label}</label>
+          <input
+            id={id}
+            type={type}
+            name={name}
+            value={form[name as keyof typeof form]}
+            {...(placeholder && { placeholder })}
+            onChange={changeHandler}
+            className="form__input"
+          />
+          {error[name as keyof typeof error] && (
+            <p className="error-message">{error[name as keyof typeof error]}</p>
+          )}
+        </div>
+      ))}
       <div className="button-wrapper">
         <button type="submit" className="save-button">
           Save

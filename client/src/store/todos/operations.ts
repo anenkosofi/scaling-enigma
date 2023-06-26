@@ -6,20 +6,24 @@ import { RootState } from '@store';
 import { Todo, FilterStatus } from '@types';
 
 type Params = {
+  page: number;
+  limit: number;
   query?: string;
   completed?: boolean;
 };
 
 export const getTodos = createAsyncThunk<
-  Todo[],
+  { todos: Todo[]; total: number },
   undefined,
   { rejectValue: string }
 >('todos/getAll', async (_, thunkAPI) => {
   try {
     const state = thunkAPI.getState() as RootState;
-    const query = state.filters.query;
-    const status = state.filters.status;
-    const params: Params = {};
+    const { query, status, page, limit } = state.filters;
+    const params: Params = {
+      page,
+      limit,
+    };
     if (query.length) {
       params.query = query;
     }

@@ -16,7 +16,7 @@ export const Loader: FC = () => {
         alignItems: 'center',
         height: '100vh',
       }}
-      visible={true}
+      visible
     />
   );
 };

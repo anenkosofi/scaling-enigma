@@ -4,7 +4,7 @@ import { HiPlus } from 'react-icons/hi';
 import { Container } from '@components/Container';
 import { TodoModal } from '@components/TodoModal';
 import { useAppDispatch } from '@hooks';
-import { setFilterStatus } from '@store/filters/slice';
+import { setFilterStatus, setPage } from '@store/filters/slice';
 import { addTodo } from '@store/todos/operations';
 import { FilterStatus } from '@types';
 import {
@@ -57,6 +57,7 @@ export const TodoForm: FC = () => {
       })
     );
     dispatch(setFilterStatus(FilterStatus.ALL));
+    dispatch(setPage(1));
     clearInputHandler();
   };
 

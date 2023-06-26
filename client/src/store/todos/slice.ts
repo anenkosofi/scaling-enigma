@@ -12,12 +12,14 @@ import {
 
 export interface TodosState {
   items: Todo[];
+  total: number;
   isLoading: boolean;
   error: string | null;
 }
 
 const todosInitialState: TodosState = {
   items: [],
+  total: 0,
   isLoading: false,
   error: null,
 };
@@ -34,10 +36,12 @@ const todosSlice = createSlice({
           isLoading: true,
         };
       })
-      .addCase(getTodos.fulfilled, (state, action) => {
+      .addCase(getTodos.fulfilled, (state, { payload }) => {
+        const { todos, total } = payload;
         return {
           ...state,
-          items: action.payload.reverse(),
+          items: todos,
+          total,
           isLoading: false,
           error: null,
         };
@@ -54,11 +58,17 @@ const todosSlice = createSlice({
       })
       .addCase(addTodo.fulfilled, (state, action) => {
         const { todo, query } = action.payload;
+
+        let updatedItems = state.items;
+        if (state.items.length === 10) {
+          updatedItems = todo.text.trim().toLowerCase().includes(query)
+            ? [todo, ...state.items.slice(0, 9)]
+            : state.items;
+        }
+
         return {
           ...state,
-          items: todo.text.trim().toLowerCase().includes(query)
-            ? [todo, ...state.items]
-            : state.items,
+          items: updatedItems,
           isLoading: false,
           error: null,
         };
