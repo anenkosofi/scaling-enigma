@@ -1,3 +1,4 @@
+import { todoModalInputs } from '@constants';
 import React, { FC, useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 
@@ -129,56 +130,25 @@ export const EditForm: FC<EditFormProps> = ({
     closeModal();
   };
 
-  const inputFields = [
-    {
-      label: 'Add a task',
-      id: 'text',
-      type: 'text',
-      name: 'text',
-      placeholder: 'Add a task',
-      value: form.text,
-      onChange: changeHandler,
-      error: error.text,
-    },
-    {
-      label: 'Start date',
-      id: 'start',
-      type: 'datetime-local',
-      name: 'start',
-      value: form.start,
-      onChange: changeHandler,
-      error: error.start,
-    },
-    {
-      label: 'Due date',
-      id: 'end',
-      type: 'datetime-local',
-      name: 'end',
-      value: form.end,
-      onChange: changeHandler,
-      error: error.end,
-    },
-  ];
-
   return (
     <form className="form" onSubmit={submitHandler} autoComplete="off">
-      {inputFields.map(
-        ({ label, id, type, name, placeholder, value, onChange, error }) => (
-          <div className="form__field" key={id}>
-            <label htmlFor={id}>{label}</label>
-            <input
-              id={id}
-              type={type}
-              name={name}
-              value={value}
-              {...(placeholder && { placeholder })}
-              onChange={onChange}
-              className="form__input"
-            />
-            {error && <p className="error-message">{error}</p>}
-          </div>
-        )
-      )}
+      {todoModalInputs.map(({ label, id, type, name, placeholder }) => (
+        <div className="form__field" key={id}>
+          <label htmlFor={id}>{label}</label>
+          <input
+            id={id}
+            type={type}
+            name={name}
+            value={form[name as keyof typeof form]}
+            {...(placeholder && { placeholder })}
+            onChange={changeHandler}
+            className="form__input"
+          />
+          {error[name as keyof typeof error] && (
+            <p className="error-message">{error[name as keyof typeof error]}</p>
+          )}
+        </div>
+      ))}
       <div className="button-wrapper">
         <button type="submit" className="save-button">
           Save

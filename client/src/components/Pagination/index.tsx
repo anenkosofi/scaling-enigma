@@ -11,6 +11,13 @@ import './Pagination.scss';
 
 const LIMIT = 10;
 
+enum PageNumber {
+  'ONE' = 1,
+  'THREE' = 3,
+  'FOUR' = 4,
+  'FIVE' = 5,
+}
+
 export const Pagination: FC = () => {
   const dispatch = useAppDispatch();
   const selectedPage = useAppSelector(selectPage);
@@ -23,157 +30,61 @@ export const Pagination: FC = () => {
   const setPageHandler = (page: number) => {
     dispatch(setPage(page));
   };
+
+  const getPageNumberMarkup = (i: number) => (
+    <li
+      key={i}
+      onClick={() => setPageHandler(i)}
+      className={
+        selectedPage === i
+          ? 'page-list__item page-list__item_active'
+          : 'page-list__item'
+      }
+    >
+      {i}
+    </li>
+  );
+
+  const getEllipsisMarkup = () => (
+    <li
+      key="elleipsis-left"
+      className="page-list__item page-list__item_ellipsis"
+    >
+      ...
+    </li>
+  );
+
   const renderPageNumbers = () => {
     const pageNumbers: React.ReactElement[] = [];
-    if (pages <= 5) {
-      for (let i = 1; i <= pages; i++) {
-        pageNumbers.push(
-          <li
-            key={i}
-            onClick={() => setPageHandler(i)}
-            className={
-              selectedPage === i
-                ? 'page-list__item page-list__item_active'
-                : 'page-list__item'
-            }
-          >
-            {i}
-          </li>
-        );
+    if (pages <= PageNumber.FIVE) {
+      for (let i = PageNumber.ONE; i <= pages; i++) {
+        pageNumbers.push(getPageNumberMarkup(i));
       }
     } else {
-      if (selectedPage <= 3) {
-        for (let i = 1; i <= 4; i++) {
-          pageNumbers.push(
-            <li
-              key={i}
-              onClick={() => setPageHandler(i)}
-              className={
-                selectedPage === i
-                  ? 'page-list__item page-list__item_active'
-                  : 'page-list__item'
-              }
-            >
-              {i}
-            </li>
-          );
+      if (selectedPage <= PageNumber.THREE) {
+        for (let i = PageNumber.ONE; i <= PageNumber.FOUR; i++) {
+          pageNumbers.push(getPageNumberMarkup(i));
         }
-        pageNumbers.push(
-          <li
-            key="elleipsis-left"
-            className="page-list__item page-list__item_ellipsis"
-          >
-            ...
-          </li>
-        );
-        pageNumbers.push(
-          <li
-            key={pages}
-            onClick={() => setPageHandler(pages)}
-            className={
-              selectedPage === pages
-                ? 'page-list__item page-list__item_active'
-                : 'page-list__item'
-            }
-          >
-            {pages}
-          </li>
-        );
-      } else if (selectedPage > pages - 3) {
-        pageNumbers.push(
-          <li
-            key={1}
-            onClick={() => setPageHandler(1)}
-            className={
-              selectedPage === 1
-                ? 'page-list__item page-list__item_active'
-                : 'page-list__item'
-            }
-          >
-            1
-          </li>
-        );
-        pageNumbers.push(
-          <li
-            key="ellipsis-right"
-            className="page-list__item page-list__item_ellipsis"
-          >
-            ...
-          </li>
-        );
-        for (let i = pages - 3; i <= pages; i++) {
-          pageNumbers.push(
-            <li
-              key={i}
-              onClick={() => setPageHandler(i)}
-              className={
-                selectedPage === i
-                  ? 'page-list__item page-list__item_active'
-                  : 'page-list__item'
-              }
-            >
-              {i}
-            </li>
-          );
+        pageNumbers.push(getEllipsisMarkup());
+        pageNumbers.push(getPageNumberMarkup(pages));
+      } else if (selectedPage > pages - PageNumber.THREE) {
+        pageNumbers.push(getPageNumberMarkup(PageNumber.ONE));
+        pageNumbers.push(getEllipsisMarkup());
+        for (let i = pages - PageNumber.THREE; i <= pages; i++) {
+          pageNumbers.push(getPageNumberMarkup(i));
         }
       } else {
-        pageNumbers.push(
-          <li
-            key={1}
-            onClick={() => setPageHandler(1)}
-            className={
-              selectedPage === 1
-                ? 'page-list__item page-list__item_active'
-                : 'page-list__item'
-            }
-          >
-            1
-          </li>
-        );
-        pageNumbers.push(
-          <li
-            key="ellipsis-left"
-            className="page-list__item page-list__item_ellipsis"
-          >
-            ...
-          </li>
-        );
-        for (let i = selectedPage - 1; i <= selectedPage + 1; i++) {
-          pageNumbers.push(
-            <li
-              key={i}
-              onClick={() => setPageHandler(i)}
-              className={
-                selectedPage === i
-                  ? 'page-list__item page-list__item_active'
-                  : 'page-list__item'
-              }
-            >
-              {i}
-            </li>
-          );
+        pageNumbers.push(getPageNumberMarkup(PageNumber.ONE));
+        pageNumbers.push(getEllipsisMarkup());
+        for (
+          let i = selectedPage - PageNumber.ONE;
+          i <= selectedPage + PageNumber.ONE;
+          i++
+        ) {
+          pageNumbers.push(getPageNumberMarkup(i));
         }
-        pageNumbers.push(
-          <li
-            key="ellipsis-right"
-            className="page-list__item page-list__item_ellipsis"
-          >
-            ...
-          </li>
-        );
-        pageNumbers.push(
-          <li
-            key={pages}
-            onClick={() => setPageHandler(pages)}
-            className={
-              selectedPage === pages
-                ? 'page-list__item page-list__item_active'
-                : 'page-list__item'
-            }
-          >
-            {pages}
-          </li>
-        );
+        pageNumbers.push(getEllipsisMarkup());
+        pageNumbers.push(getPageNumberMarkup(pages));
       }
     }
 
